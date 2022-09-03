@@ -60,7 +60,7 @@ class UserController extends Controller
 
             Sentinel::authenticate($request->all());
 
-            return redirect()->route('home');
+            return redirect()->route('dashboard');
 
         } catch (NotActivatedException $e) {
 
