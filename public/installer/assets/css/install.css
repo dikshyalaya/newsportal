@@ -41,7 +41,7 @@ hr{
     border-bottom: none;
 }
 .tab-title.active{
-    background: #f60002;
+    background: #00b881;
     color: #fff;
 }
 .form-group{
@@ -61,7 +61,7 @@ hr{
     margin: 20px 0;                
 }
 .panel-install>.panel-heading{
-    background-color: #01091A;
+    background-color: #005a96;
     color: #93a4c3;
     border-bottom: none;
 }
@@ -69,7 +69,7 @@ hr{
     padding: 0;
 }
 .btn-info{
-    background-color: #f60002;
+    background-color: #00b327;
     border: none;
     width: 100%;
     padding: 15px;

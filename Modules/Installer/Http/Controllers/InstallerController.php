@@ -31,17 +31,17 @@ class InstallerController extends Controller
         return view('installer::index');
     }
 
-    public function do_install(Request $request){
+    public function do_install(Request $request)
+    {
 
-         $request->validate([
+        $request->validate([
             'host'       => 'required',
             'dbuser'       => 'required',
             'dbname'       => 'required',
             'first_name'       => 'required',
             'last_name'       => 'required',
             'email'       => 'required|email',
-            'password'       => 'required',
-            'purchase_code'       => 'required',
+            'password'       => 'required'
         ]);
 
         ini_set('max_execution_time', 300); //300 seconds
@@ -52,17 +52,10 @@ class InstallerController extends Controller
 
         $first_name     = $request->first_name;
         $last_name      = $request->last_name;
-        $admin_name     = $request->first_name.' '.$request->last_name;
         $email          = $request->email;
         $login_password = $request->password ? $request->password : "";
 
-        $purchase_code  = $request->purchase_code;
 
-        //check required fields
-        // if (!($host && $dbuser && $dbname && $first_name && $last_name && $email && $login_password && $purchase_code)) {
-        //     echo json_encod.e(array("success" => false, "message" => "Please input all fields."));
-        //     exit();
-        // }
 
         //check for valid database connection
         $mysqli = @new \mysqli($host, $dbuser, $dbpassword, $dbname);
@@ -82,14 +75,6 @@ class InstallerController extends Controller
             // exit();
         }
 
-        // validate purchase code
-        $verification = $this->valid_purchase_code($purchase_code);
-        if (!$verification || $verification != "verified") {
-            return redirect()->back()->with('error', 'Please enter a valid purchase code.')->withInput($request->all());
-            // echo json_encode(array("success" => false, "message" => "Please enter a valid purchase code."));
-            // exit();
-        }
-
         //  set database details
         $this->endWrite('DB_HOST', $host);
         $this->endWrite('DB_DATABASE', $dbname);
@@ -103,17 +88,15 @@ class InstallerController extends Controller
         Session::put('login_password', $login_password);
 
         return redirect()->route('final');
-
     }
 
-    public function finish(){
-
-
+    public function finish()
+    {
         \DB::statement('SET FOREIGN_KEY_CHECKS = 0;');
-       foreach(\DB::select('SHOW TABLES') as $table) {
-           $table_array = get_object_vars($table);
-           \Schema::drop($table_array[key($table_array)]);
-       }
+        foreach (\DB::select('SHOW TABLES') as $table) {
+            $table_array = get_object_vars($table);
+            \Schema::drop($table_array[key($table_array)]);
+        }
 
 
         \Artisan::call('key:generate');
@@ -139,7 +122,6 @@ class InstallerController extends Controller
         $this->endWrite('APP_URL', route('home'));
 
         return redirect()->route('home');
-
     }
 
     public function install()
@@ -147,22 +129,14 @@ class InstallerController extends Controller
 
         Session::put('step', 2);
         return redirect()->route('check_environment');
-
     }
 
 
     public function checkEnvironment()
     {
-        if(Session::get('step') == 1 || Session::get('step') == ""){
-
+        if (Session::get('step') == 1 || Session::get('step') == "") {
             return redirect()->route('install');
-
-        }elseif(Session::get('step') == 3) {
-
-            return redirect()->route('purchase_code_database');
-
-        }elseif(Session::get('step') == 4) {
-
+        } elseif (Session::get('step') == 3) {
             return redirect()->route('system-setup-info');
         }
 
@@ -184,7 +158,7 @@ class InstallerController extends Controller
         try {
             if (phpversion() >= '7.2' && OPENSSL_VERSION_NUMBER > 0x009080bf && extension_loaded('mbstring') && extension_loaded('tokenizer') && extension_loaded('xml') && extension_loaded('ctype')  && extension_loaded('json') && extension_loaded('bcmath') && extension_loaded('ctype') && extension_loaded('fileinfo')) {
                 Session::put('step', 3);
-                return redirect()->route('purchase_code_database');
+                return redirect()->route('system-setup-info');
             } else {
 
                 return redirect()->back()->with("message-danger", "Ops! Extension are disabled.  Please check requirements!");
@@ -194,93 +168,8 @@ class InstallerController extends Controller
         }
     }
 
-    public function purchaseCodeVerification()
+    private function endWrite($key, $value)
     {
-        if(Session::get('step') == 1 || Session::get('step') == ""){
-
-            return redirect()->route('install');
-
-        }elseif(Session::get('step') == 2){
-
-            return redirect()->route('check_environment');
-
-        }elseif(Session::get('step') == 4) {
-
-            return redirect()->route('system-setup-info');
-        }
-
-
-        return view('installer::purchase_code_verification');
-    }
-
-    public function purchaseCodeVerificationPost(Request $request)
-    {
-        $request->validate([
-            'envatoUser' => 'required',
-            'purchaseCode' => 'required',
-            'databaseName' => 'required',
-            'databaseUsername' => 'required',
-        ]);
-
-        try {
-
-            $envatouser = htmlspecialchars($request->input('envatoUser'));
-            $purchasecode = htmlspecialchars($request->input('purchaseCode'));
-            $UserData = Envato::verifyPurchase($purchasecode);
-
-            if (!empty($UserData['verify-purchase']['item_id'])) {
-
-                $this->endWrite('DB_DATABASE', $request->databaseName);
-                $this->endWrite('DB_USERNAME', $request->databaseUsername);
-                $this->endWrite('DB_PASSWORD', $request->databasePassword);
-
-                Session::put('step', 4);
-
-                return redirect()->route('system-setup-info');
-
-            } else {
-
-                return redirect()->back()->with("message-danger", "Ops! Purchase Code is not valid. Please try again.");
-            }
-
-        } catch (\Exception $e) {
-            return redirect()->back()->with("message-danger", "Ops! Something went wrong, please try again!");
-        }
-    }
-
-    function valid_purchase_code($purchase_code =''){
-		//nulled
-		return 'verified';
-        $purchase_code = urlencode($purchase_code);
-        $verified  = "unverified";
-        if(!empty($purchase_code) && $purchase_code !='' && $purchase_code !=NULL && strlen($purchase_code) > 24):
-            $url = 'https://api.envato.com/v3/market/author/sale?code='.$purchase_code;
-            $ch = curl_init($url);
-            curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-            curl_setopt($ch, CURLOPT_USERAGENT, 'Mozilla/5.0 (compatible; Envato API Wrapper PHP)');
-
-            $header = array();
-            $header[] = 'Content-length: 0';
-            $header[] = 'Content-type: application/json';
-            $header[] = 'Authorization: Bearer 5CZXrrM34RPf7ukUzCKqod2BAcQJNKE6';
-
-            curl_setopt($ch, CURLOPT_HTTPHEADER, $header);
-            curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
-
-            $data = curl_exec($ch);
-            curl_getinfo($ch,CURLINFO_HTTP_CODE);
-            curl_close($ch);
-            if( !empty($data) ):
-                $result = json_decode($data,true);
-                if(isset($result['buyer']) && isset($result['item']['id'])):
-                    $verified  = "verified";
-                endif;
-            endif;
-        endif;
-        return $verified;
-    }
-
-    private function endWrite($key, $value){
         $env = file_get_contents(isset($env_path) ? $env_path : base_path('.env')); //fet .env file
         $env = str_replace("$key=" . env($key), "$key=", $env); //replace value
 
@@ -296,17 +185,12 @@ class InstallerController extends Controller
 
     public function systemSetupInfo()
     {
-        if(Session::get('step') == 1 || Session::get('step') == ""){
+        if (Session::get('step') == 1 || Session::get('step') == "") {
 
             return redirect()->route('install');
-
-        }elseif(Session::get('step') == 2){
+        } elseif (Session::get('step') == 2) {
 
             return redirect()->route('check_environment');
-
-        }elseif(Session::get('step') == 3) {
-
-            return redirect()->route('purchase_code_database');
         }
 
         return view('installer::system_setup_page');
@@ -327,7 +211,7 @@ class InstallerController extends Controller
             set_time_limit(2700);
 
             \DB::statement('SET FOREIGN_KEY_CHECKS = 0;');
-            foreach(\DB::select('SHOW TABLES') as $table) {
+            foreach (\DB::select('SHOW TABLES') as $table) {
                 $table_array = get_object_vars($table);
                 \Schema::drop($table_array[key($table_array)]);
             }
@@ -351,12 +235,9 @@ class InstallerController extends Controller
             Session::put('step', '');
             $this->endWrite('APP_INSTALLED', 'yes');
             return redirect('/');
-
         } catch (\Exception $e) {
             return redirect()->back()->with("message-danger", "Ops! Something went wrong, please try again!");
         }
-
-
     }
 
     public function systemAdminCreate()
