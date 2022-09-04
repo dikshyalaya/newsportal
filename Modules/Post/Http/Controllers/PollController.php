@@ -42,9 +42,7 @@ class PollController extends Controller
      */
     public function store(Request $request)
     {
-        if (strtolower(\Config::get('app.demo_mode')) == 'yes'):
-            return redirect()->back()->with('error', __('You are not allowed to add/modify in demo mode.'));
-        endif;
+        
         Validator::make($request->all(), [
             'question'      => 'required|min:2',
             'option'        => 'required|min:2',
@@ -116,9 +114,7 @@ class PollController extends Controller
      */
     public function update(Request $request, $id)
     {
-        if (strtolower(\Config::get('app.demo_mode')) == 'yes'):
-            return redirect()->back()->with('error', __('You are not allowed to add/modify in demo mode.'));
-        endif;
+        
         Validator::make($request->all(), [
             'question'      => 'required|min:2',
             'auth_required' => 'required',

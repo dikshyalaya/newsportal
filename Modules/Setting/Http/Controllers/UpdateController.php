@@ -87,9 +87,7 @@ class UpdateController extends Controller
 
     public function updateDatabaseStore(Request $request)
     {
-        if (strtolower(\Config::get('app.demo_mode')) == 'yes'):
-            return redirect()->back()->with('error', __('You are not allowed to add/modify in demo mode.'));
-        endif;
+        
 
         $setting        = Setting::firstOrNew(array('title' => 'version'));
         $setting->title = 'version';

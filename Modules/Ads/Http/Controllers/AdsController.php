@@ -44,9 +44,7 @@ class AdsController extends Controller
      */
     public function store(Request $request)
     {
-        if (strtolower(\Config::get('app.demo_mode')) == 'yes'):
-            return redirect()->back()->with('error', 'You are not allowed to add/modify in demo mode.');
-        endif;
+        
         Validator::make($request->all(), [
             'ad_name'   => 'required|min:2|max:100',
             'ad_type'   => 'required',
@@ -103,9 +101,7 @@ class AdsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        if (strtolower(\Config::get('app.demo_mode')) == 'yes'):
-            return redirect()->back()->with('error', 'You are not allowed to add/modify in demo mode.');
-        endif;
+        
         Validator::make($request->all(), [
             'ad_name' => 'required|min:2|max:100',
             'ad_type' => 'required',

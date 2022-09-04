@@ -56,9 +56,7 @@ class RolesPermissionsController extends Controller
     //update permission
     public function postEditRole(Request $request, $id)
     {
-        if (strtolower(\Config::get('app.demo_mode')) == 'yes'):
-            return redirect()->back()->with('error', __('You are not allowed to add/modify in demo mode.'));
-        endif;
+        
         $role           = Sentinel::findRoleById($id);
         $role->name     = $request->role_name;
         $req_data       = $request->all();
@@ -89,13 +87,7 @@ class RolesPermissionsController extends Controller
     //change permission by module
     public function changeRolePermissionByModule(Request $request)
     {
-        if (strtolower(\Config::get('app.demo_mode')) == 'yes'):
-            $data['status']     = "error";
-            $data['message']    =  __('You are not allowed to add/modify in demo mode.');
-
-            echo json_encode($data);
-            exit();
-        endif;
+       
         $role = Sentinel::findRoleById($request->role_id);
         $permissions = $role->permissions;
         if (!empty($permissions)) :
@@ -132,9 +124,7 @@ class RolesPermissionsController extends Controller
 
     public function postAddRole(Request $request)
     {
-        if (strtolower(\Config::get('app.demo_mode')) == 'yes'):
-            return redirect()->back()->with('error', __('You are not allowed to add/modify in demo mode.'));
-        endif;
+        
         Validator::make($request->all(), [
             'name' => 'required|min:2|max:30',
             'slug' => 'required|unique:roles|min:2|max:30|regex:/^\S*$/u',
@@ -166,9 +156,7 @@ class RolesPermissionsController extends Controller
     //change user role
     public function changeRole(Request $request, $user_id, $role_id)
     {
-        if (strtolower(\Config::get('app.demo_mode')) == 'yes'):
-            return redirect()->back()->with('error', __('You are not allowed to add/modify in demo mode.'));
-        endif;
+        
         $user       = Sentinel::findUserById($user_id);
         $slug       = $request->slug;
         $role       = Sentinel::findRoleBySlug($slug);
@@ -188,9 +176,7 @@ class RolesPermissionsController extends Controller
 
     public function banUser($user_id)
     {
-        if (strtolower(\Config::get('app.demo_mode')) == 'yes'):
-            return redirect()->back()->with('error', __('You are not allowed to add/modify in demo mode.'));
-        endif;
+        
         User::where('id', $user_id)
           ->update(['is_user_banned' => 0]);
 
@@ -199,9 +185,7 @@ class RolesPermissionsController extends Controller
 
     public function unBanUser($user_id)
     {
-        if (strtolower(\Config::get('app.demo_mode')) == 'yes'):
-            return redirect()->back()->with('error', __('You are not allowed to add/modify in demo mode.'));
-        endif;
+        
         User::where('id', $user_id)
           ->update(['is_user_banned' => 1]);
 
@@ -218,9 +202,7 @@ class RolesPermissionsController extends Controller
     //update permission
     public function updatePermission(Request $request, $id)
     {
-        if (strtolower(\Config::get('app.demo_mode')) == 'yes'):
-            return redirect()->back()->with('error', __('You are not allowed to add/modify in demo mode.'));
-        endif;
+        
         $permission     = Permission::find($id);
 
         Validator::make($request->all(), [

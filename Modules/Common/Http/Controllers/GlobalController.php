@@ -44,13 +44,7 @@ class GlobalController extends Controller
 
     public function postDelete(Request $request)
     {
-        if (strtolower(\Config::get('app.demo_mode')) == 'yes'):
-            $data['status']     = "error";
-            $data['message']    = __('You are not allowed to add/modify in demo mode.');
-
-            echo json_encode($data);
-            exit();
-        endif;
+        
         $tablename      = $request->table_name;
         $id             = $request->row_id;
         if ($tablename == 'users') :

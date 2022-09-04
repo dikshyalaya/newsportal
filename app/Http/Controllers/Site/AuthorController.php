@@ -69,9 +69,7 @@ class AuthorController extends Controller
         return view('site.pages.author.edit_profile');
     }
     public function  myProfileUpdate(Request $request){
-        if (strtolower(\Config::get('app.demo_mode')) == 'yes'):
-            return redirect()->back()->with('error', 'You are not allowed to add/modify in demo mode.');
-        endif;
+       
         $validation = Validator::make($request->all(), [
             'first_name' => 'required',
             'last_name' => 'required|min:2|max:30',

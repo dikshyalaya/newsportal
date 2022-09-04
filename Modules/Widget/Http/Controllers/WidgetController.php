@@ -39,9 +39,7 @@ class WidgetController extends Controller
 
     public function store(Request $request)
     {
-        if (strtolower(\Config::get('app.demo_mode')) == 'yes'):
-            return redirect()->back()->with('error', __('You are not allowed to add/modify in demo mode.'));
-        endif;
+        
         Validator::make($request->all(), [
             'title'     => 'required',
         ])->validate();
@@ -100,9 +98,7 @@ class WidgetController extends Controller
 
     public function update(Request $request, $id)
     {
-        if (strtolower(\Config::get('app.demo_mode')) == 'yes'):
-            return redirect()->back()->with('error', __('You are not allowed to add/modify in demo mode.'));
-        endif;
+        
         Validator::make($request->all(), [
             'title'     => 'required',
         ])->validate();

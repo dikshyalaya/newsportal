@@ -17,7 +17,7 @@ class SeedPollTableSeeder extends Seeder
      */
     public function run()
     {
-        if (strtolower(\Config::get('app.demo_mode')) == 'yes'):
+       
             Poll::create([
                 'question'      => 'How are you?',
                 'start_date'   => date('Y-m-d H:i:s'),
@@ -37,7 +37,7 @@ class SeedPollTableSeeder extends Seeder
                 'option'   => 'Bad',
                 'order'    => 1
             ]);
-        endif;
+       
 
         Model::unguard();
     }

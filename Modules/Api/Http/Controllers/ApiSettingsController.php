@@ -42,9 +42,7 @@ class ApiSettingsController extends Controller
 
 	public function addIntro (Request $request)
 	{
-        if (strtolower(\Config::get('app.demo_mode')) == 'yes'):
-            return redirect()->back()->with('error', 'You are not allowed to add/modify in demo mode.');
-        endif;
+        
         Validator::make($request->all(), [
             'title' => 'required|min:2',
             'description' => 'required|min:2',
@@ -115,9 +113,7 @@ class ApiSettingsController extends Controller
 
 	public function updateIntro(Request $request)
 	{
-        if (strtolower(\Config::get('app.demo_mode')) == 'yes'):
-            return redirect()->back()->with('error', 'You are not allowed to add/modify in demo mode.');
-        endif;
+        
         Validator::make($request->all(), [
             'title' => 'required|min:2',
             'intro_id' => 'required',

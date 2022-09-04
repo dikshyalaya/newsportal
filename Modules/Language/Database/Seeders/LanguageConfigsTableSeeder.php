@@ -24,14 +24,7 @@ class LanguageConfigsTableSeeder extends Seeder
             "native"        => "English",
             "regional"      => "en_GB"
         ]);
-        if (strtolower(\Config::get('app.demo_mode')) == 'yes'):
-            LanguageConfig::create([
-                "language_id"   =>2,
-                'name'          => 'Arabic',
-                'script'        => 'Arb',
-                'native'        => 'عربى',
-                'regional'      => 'ar_AR'
-            ]);
-        endif;
+       
+       
     }
 }

@@ -86,13 +86,7 @@ class MenuItemController extends Controller
 
     public function changeMenuOrder(Request $request)
     {
-        if (strtolower(\Config::get('app.demo_mode')) == 'yes'):
-            $data['status']     = "error";
-            $data['message']    = __('You are not allowed to add/modify in demo mode.');
-
-            echo json_encode($data);
-            exit();
-        endif;
+        
 
         $data   = \json_decode($request->data);
         $order  = 0;
@@ -137,9 +131,7 @@ class MenuItemController extends Controller
 
     public function menuItemSave(Request $request){
 
-        if (strtolower(\Config::get('app.demo_mode')) == 'yes'):
-            return redirect()->back()->with('error', 'You are not allowed to add/modify in demo mode.');
-        endif;
+        
 
 
         Validator::make($request->all(), [
@@ -269,9 +261,7 @@ class MenuItemController extends Controller
 
     public function menuItemUpdate(Request $request){
 
-        if (strtolower(\Config::get('app.demo_mode')) == 'yes'):
-            return redirect()->back()->with('error', 'You are not allowed to add/modify in demo mode.');
-        endif;
+        
         if(blank($request->label) || blank($request->menu_item_id)){
 
             return redirect()->back()->with('error', __('not_found'));
@@ -339,13 +329,7 @@ class MenuItemController extends Controller
     }
 
     public function menuItemDelete(Request $request){
-        if (strtolower(\Config::get('app.demo_mode')) == 'yes'):
-            $data['status']     = "error";
-            $data['message']    =  __('You are not allowed to add/modify in demo mode.');
-
-            echo json_encode($data);
-            exit();
-        endif;
+       
         $query= MenuItem::where('id',$request->row_id)->with(['children'])->first();
 
         if ($query->count() > 0) :

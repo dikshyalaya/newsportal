@@ -56,9 +56,7 @@ class RssController extends Controller
      */
     public function saveNewRss(Request $request)
     {
-        if (strtolower(\Config::get('app.demo_mode')) == 'yes'):
-            return redirect()->back()->with('error', __('You are not allowed to add/modify in demo mode.'));
-        endif;
+        
 //        dd($request->all());
 
         Validator::make($request->all(), [
@@ -124,9 +122,7 @@ class RssController extends Controller
      */
     public function updateRss(Request $request, $id)
     {
-        if (strtolower(\Config::get('app.demo_mode')) == 'yes'):
-            return redirect()->back()->with('error', __('You are not allowed to add/modify in demo mode.'));
-        endif;
+        
         Validator::make($request->all(), [
             'name'              => 'required|min:2',
             'feed_url'          => 'required',
@@ -178,9 +174,7 @@ class RssController extends Controller
     }
 
     public function manualImport($id){
-        if (strtolower(\Config::get('app.demo_mode')) == 'yes'):
-            return redirect()->back()->with('error', __('You are not allowed to add/modify in demo mode.'));
-        endif;
+        
         $feed = RssFeed::findOrfail($id);
 
         $invalidUrl = false;

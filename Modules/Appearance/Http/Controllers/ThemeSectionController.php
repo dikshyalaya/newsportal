@@ -33,9 +33,7 @@ class ThemeSectionController extends Controller
     }
 
     public function saveNewSection(Request $request){
-        if (strtolower(\Config::get('app.demo_mode')) == 'yes'):
-            return redirect()->back()->with('error', __('You are not allowed to add/modify in demo mode.'));
-        endif;
+        
 
         if($request->type == \Modules\Appearance\Enums\ThemeSectionType::CATEGORY):
 
@@ -121,9 +119,7 @@ class ThemeSectionController extends Controller
     }
 
     public function updateThemeSection(Request $request){
-        if (strtolower(\Config::get('app.demo_mode')) == 'yes'):
-            return redirect()->back()->with('error', __('You are not allowed to add/modify in demo mode.'));
-        endif;
+        
 
         if($request->type == \Modules\Appearance\Enums\ThemeSectionType::CATEGORY):
 
@@ -200,9 +196,7 @@ class ThemeSectionController extends Controller
 
     public function updateSectionOrder(Request $request)
     {
-        if (strtolower(\Config::get('app.demo_mode')) == 'yes'):
-            return redirect()->back()->with('error', __('You are not allowed to add/modify in demo mode.'));
-        endif;
+        
 
         foreach($request->sections as $section){
 

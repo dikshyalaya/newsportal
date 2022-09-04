@@ -25,9 +25,7 @@ class CategoryController extends Controller
 
     public function saveNewCategory(Request $request)
     {
-        if (strtolower(\Config::get('app.demo_mode')) == 'yes'):
-            return redirect()->back()->with('error', __('You are not allowed to add/modify in demo mode.'));
-        endif;
+        
         Validator::make($request->all(), [
             'category_name' => 'required|unique:categories|min:2|max:40',
             'slug'          => 'nullable|min:2|unique:categories|max:30|regex:/^\S*$/u',
@@ -69,9 +67,7 @@ class CategoryController extends Controller
 
     public function updateCategory(Request $request)
     {
-        if (strtolower(\Config::get('app.demo_mode')) == 'yes'):
-            return redirect()->back()->with('error', __('You are not allowed to add/modify in demo mode.'));
-        endif;
+        
         Validator::make($request->all(), [
             'category_name'     => 'required|min:2|max:40|unique:categories,category_name,' . $request->category_id,
             'slug'              => 'nullable|min:2|max:30|regex:/^\S*$/u|unique:categories,slug,' . $request->category_id,
@@ -114,9 +110,7 @@ class CategoryController extends Controller
 
     public function subCategoriesAdd(Request $request)
     {
-        if (strtolower(\Config::get('app.demo_mode')) == 'yes'):
-            return redirect()->back()->with('error', __('You are not allowed to add/modify in demo mode.'));
-        endif;
+        
         Validator::make($request->all(), [
             'sub_category_name' => 'required|unique:sub_categories|min:2|max:40',
             'language'          => 'required',
@@ -158,9 +152,7 @@ class CategoryController extends Controller
 
     public function updateSubCategory(Request $request)
     {
-        if (strtolower(\Config::get('app.demo_mode')) == 'yes'):
-            return redirect()->back()->with('error', __('You are not allowed to add/modify in demo mode.'));
-        endif;
+        
         Validator::make($request->all(), [
             'sub_category_name'     => 'required|min:2|max:40|unique:sub_categories,sub_category_name,' . $request->sub_category_id,
             'language'              => 'required',

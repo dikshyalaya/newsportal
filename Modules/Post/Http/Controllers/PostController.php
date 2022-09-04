@@ -49,9 +49,7 @@ class PostController extends Controller
         return view('post::article_create',compact('categories', 'subCategories', 'activeLang', 'countImage', 'countVideo'));
     }
     public function saveNewPost(Request $request,$type){
-        if (strtolower(\Config::get('app.demo_mode')) == 'yes'):
-            return redirect()->back()->with('error', __('You are not allowed to add/modify in demo mode.'));
-        endif;
+        
 
 //        dd($request->all());
 
@@ -327,9 +325,7 @@ class PostController extends Controller
     }
 
     public function updatePost(Request $request,$type,$id){
-        if (strtolower(\Config::get('app.demo_mode')) == 'yes'):
-            return redirect()->back()->with('error', __('You are not allowed to add/modify in demo mode.'));
-        endif;
+        
         // return $request;
         Validator::make($request->all(), [
             'title'             => 'required|min:2',
@@ -464,13 +460,7 @@ class PostController extends Controller
     }
 
     public function removePostFrom(Request $request){
-        if (strtolower(\Config::get('app.demo_mode')) == 'yes'):
-            $data['status']     = "error";
-            $data['message']    =  __('You are not allowed to add/modify in demo mode.');
-
-            echo json_encode($data);
-            exit();
-        endif;
+       
         $feature        = $request->feature;
         $post           = Post::find($request->post_id);
         $post->$feature = 0;
@@ -502,13 +492,7 @@ class PostController extends Controller
     }
 
     public function addPostTo(Request $request){
-        if (strtolower(\Config::get('app.demo_mode')) == 'yes'):
-            $data['status']     = "error";
-            $data['message']    =  __('You are not allowed to add/modify in demo mode.');
-
-            echo json_encode($data);
-            exit();
-        endif;
+       
         $feature            = $request->feature;
         $post               = Post::find($request->post_id);
 
@@ -539,9 +523,7 @@ class PostController extends Controller
     }
 
     public function updateSliderOrder(Request $request){
-        if (strtolower(\Config::get('app.demo_mode')) == 'yes'):
-            return redirect()->back()->with('error', __('You are not allowed to add/modify in demo mode.'));
-        endif;
+        
 
         for($i=0;$i<count($request->post_id);$i++):
             $post               =   Post::find($request->post_id[$i]);
@@ -555,9 +537,7 @@ class PostController extends Controller
         return redirect()->back()->with('success',__('successfully_updated'));
     }
     public function updateFeaturedOrder(Request $request){
-        if (strtolower(\Config::get('app.demo_mode')) == 'yes'):
-            return redirect()->back()->with('error', __('You are not allowed to add/modify in demo mode.'));
-        endif;
+        
 
         for($i=0;$i<count($request->post_id);$i++):
             $post                   = Post::find($request->post_id[$i]);
@@ -568,9 +548,7 @@ class PostController extends Controller
         return redirect()->back()->with('success',__('successfully_updated'));
     }
     public function updateBreakingOrder(Request $request){
-        if (strtolower(\Config::get('app.demo_mode')) == 'yes'):
-            return redirect()->back()->with('error', __('You are not allowed to add/modify in demo mode.'));
-        endif;
+        
 
         for($i=0;$i<count($request->post_id);$i++){
             $post                   = Post::find($request->post_id[$i]);
@@ -584,9 +562,7 @@ class PostController extends Controller
         return redirect()->back()->with('success',__('successfully_updated'));
     }
     public function updateRecommendedOrder(Request $request){
-        if (strtolower(\Config::get('app.demo_mode')) == 'yes'):
-            return redirect()->back()->with('error', __('You are not allowed to add/modify in demo mode.'));
-        endif;
+        
         for($i=0;$i<count($request->post_id);$i++){
             $post                   = Post::find($request->post_id[$i]);
             $post->recommended_order= $request->order[$i];
@@ -597,9 +573,7 @@ class PostController extends Controller
     }
 
     public function updateEditorPicksOrder(Request $request){
-        if (strtolower(\Config::get('app.demo_mode')) == 'yes'):
-            return redirect()->back()->with('error', __('You are not allowed to add/modify in demo mode.'));
-        endif;
+        
 
         for($i=0;$i<count($request->post_id);$i++):
             $post                   = Post::find($request->post_id[$i]);

@@ -42,9 +42,7 @@ class PageController extends Controller
      */
     public function store(Request $request)
     {
-        if (strtolower(\Config::get('app.demo_mode')) == 'yes'):
-            return redirect()->back()->with('error', __('You are not allowed to add/modify in demo mode.'));
-        endif;
+        
         Validator::make($request->all(), [
             'title' => 'required|unique:pages|min:2|max:40',
 
@@ -101,9 +99,7 @@ class PageController extends Controller
      */
     public function update(Request $request, $id)
     {
-        if (strtolower(\Config::get('app.demo_mode')) == 'yes'):
-            return redirect()->back()->with('error', __('You are not allowed to add/modify in demo mode.'));
-        endif;
+        
         Validator::make($request->all(), [
             'title' => 'required|min:2|max:40|unique:pages,title,' . $id,
 
