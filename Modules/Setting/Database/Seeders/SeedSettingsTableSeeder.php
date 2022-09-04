@@ -5,7 +5,7 @@ namespace Modules\Setting\Database\Seeders;
 use Modules\Setting\Entities\Setting;
 use Illuminate\Database\Seeder;
 use Illuminate\Database\Eloquent\Model;
-use Faker\Factory as Faker;
+
 
 
 class SeedSettingsTableSeeder extends Seeder
@@ -17,7 +17,7 @@ class SeedSettingsTableSeeder extends Seeder
      */
     public function run()
     {
-        $faker = Faker::create('en_US');
+       
 
         Setting::create(['title' => 'default_language', 'value' => 'en', 'lang' => 'en']);
         Setting::create(['title' => 'timezone', 'value' => 'Asia/Kathmandu', 'lang' => 'en']);
@@ -60,7 +60,7 @@ class SeedSettingsTableSeeder extends Seeder
         Setting::create(['title' => 'seo_title', 'value' => 'News and Magazine', 'lang' => 'en']);
         Setting::create(['title' => 'seo_keywords', 'value' => '', 'lang' => 'en']);
         Setting::create(['title' => 'seo_meta_description', 'value' => '', 'lang' => 'en']);
-        Setting::create(['title' => 'author_name', 'value' => 'ByteRays', 'lang' => 'en']);
+        Setting::create(['title' => 'author_name', 'value' => 'Admin', 'lang' => 'en']);
         Setting::create(['title' => 'og_title', 'value' => 'Your Website Title', 'lang' => 'en']);
         Setting::create(['title' => 'og_description', 'value' => '', 'lang' => 'en']);
         Setting::create(['title' => 'og_image', 'value' => 'images/20221018123322_og_image_49.png', 'lang' => 'en']);
@@ -85,14 +85,14 @@ class SeedSettingsTableSeeder extends Seeder
         Setting::create(['title' => 'website', 'value' => 'byterays.com', 'lang' => 'en']);
         Setting::create(['title' => 'company_registration', 'value' => '', 'lang' => 'en']);
         Setting::create(['title' => 'tax_number', 'value' => '', 'lang' => 'en']);
-        Setting::create(['title' => 'about_us_description', 'value' => htmlspecialchars($faker->realText(300)), 'lang' => 'en']);
+        Setting::create(['title' => 'about_us_description', 'value' => 'Description about your news website goes here', 'lang' => 'en']);
 
         //captcha setting
         Setting::create(['title' => 'captcha_secret', 'value' => '', 'lang' => 'en']);
         Setting::create(['title' => 'captcha_sitekey', 'value' => '', 'lang' => 'en']);
         Setting::create(['title' => 'captcha_visibility', 'value' => '0', 'lang' => 'en']);
 
-        Setting::create(['title' => 'copyright_text', 'value' => 'Copyright © 2022 News and Magazine - All Rights Reserved.', 'lang' => 'en']);
+        Setting::create(['title' => 'copyright_text', 'value' => 'Copyright © '.date('Y').' News and Magazine - All Rights Reserved.', 'lang' => 'en']);
         Setting::create(['title' => 'signature', 'value' => 'Best Regards', 'lang' => 'en']);
 
         //comment settings
@@ -122,7 +122,7 @@ class SeedSettingsTableSeeder extends Seeder
         Setting::create(['title' => 'google_visibility', 'value' => '0', 'lang' => 'en']);
         Setting::create(['title' => 'google_callback_url', 'value' => '', 'lang' => 'en']);
         Setting::create(['title' => 'preloader_option', 'value' => '0', 'lang' => 'en']);
-        Setting::create(['title' => 'submit_news_status', 'value' => '1', 'lang' => 'en']);
+        Setting::create(['title' => 'submit_news_status', 'value' => '0', 'lang' => 'en']);
         Setting::create(['title' => 'version', 'value' => '142', 'lang' => 'en']);
 
         Model::unguard();

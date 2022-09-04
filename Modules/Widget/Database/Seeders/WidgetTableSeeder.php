@@ -167,90 +167,7 @@ class WidgetTableSeeder extends Seeder
                 'content_type'  => '8',
             ]);
 
-            // for arabic
-
-            Widget::create([
-                'title'         => 'منشورات شائعة' ,
-                'short_code'    => 'منشورات شائعة' ,
-                'language'      => 'ar',
-                'order'         => '1',
-                'is_custom'     => '1',
-                'status'        => '1',
-                'location'      => '1',
-                'content_type'  => '1'
-            ]);
-
-            Widget::create([
-                'title'         => 'تابعنا',
-                'short_code'    => 'تابعنا',
-                'language'      => 'ar',
-                'order'         => '2',
-                'is_custom'     => '1',
-                'status'        => '1',
-                'location'      => '1',
-                'content_type'  => '5'
-            ]);
-
-            Widget::create([
-                'title'         => 'النشرة الإخبارية',
-                'short_code'    => 'النشرة الإخبارية',
-                'language'      => 'ar',
-                'order'         => '3',
-                'is_custom'     => '1',
-                'status'        => '1',
-                'location'      => '1',
-                'content_type'  => '4'
-            ]);
-
-            Widget::create([
-                'title'         => 'النشرة الإخبارية',
-                'language'      => 'ar',
-                'order'         => '3',
-                'is_custom'     => '1',
-                'status'        => '1',
-                'location'      => '3',
-                'content_type'  => '9',
-                'ad_id'         => 1
-            ]);
-
-            Widget::create([
-                'title'         => 'اشتري الآن',
-                'language'      => 'ar',
-                'order'         => '3',
-                'is_custom'     => '1',
-                'status'        => '1',
-                'location'      => '2',
-                'content_type'  => '9',
-                'ad_id'         => 2
-            ]);
-            // arabic footer
-            Widget::create([
-                'title'         => 'منشورات شائعة',
-                'language'      => 'ar',
-                'order'         => '1',
-                'is_custom'     => '1',
-                'status'        => '1',
-                'location'      => '2',
-                'content_type'  => '1'
-                ]);
-            Widget::create([
-                'title'         => 'اختيارات المحرر',
-                'language'      => 'ar',
-                'order'         => '2',
-                'is_custom'     => '1',
-                'status'        => '1',
-                'location'      => '2',
-                'content_type'  => '12'
-                ]);
-            Widget::create([
-                'title'         => 'النشرة الإخبارية',
-                'language'      => 'ar',
-                'order'         => '3',
-                'is_custom'     => '1',
-                'status'        => '1',
-                'location'      => '2',
-                'content_type'  => '4'
-            ]);
+            
         else:
             Widget::create([
                 'title'         => 'Popular Posts',
@@ -284,7 +201,6 @@ class WidgetTableSeeder extends Seeder
                 'location'      => '1',
                 'content_type'  => '4'
             ]);
-
 
 
             Widget::create([

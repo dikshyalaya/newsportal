@@ -34,22 +34,6 @@ class UserTableSeeder extends Seeder
         $activation = Activation::create($superAdmin);
         Activation::complete($superAdmin, $activation->code);
         $superAdminRole->users()->attach($superAdmin);
-
-        if (strtolower(\Config::get('app.demo_mode')) == 'yes'):
-            // Start superadmin
-            $demoAdmin = User::create([
-                'first_name'        => 'Admin',
-                'last_name'         => 'Admin',
-                'email'             => 'admin@admin.com',
-                'permissions'       => $permissions,
-                'password'          => bcrypt(123456),
-                'newsletter_enable' => '0',
-            ]);
-
-            $activation = Activation::create($demoAdmin);
-            Activation::complete($demoAdmin, $activation->code);
-            $demoAdminRole->users()->attach($demoAdmin);
-        endif;
     }
 
 }

@@ -19,13 +19,7 @@ class SeedAdsTableSeeder extends Seeder
     {
     	DB::statement('SET FOREIGN_KEY_CHECKS=0;');
 
-    	$ad              = new Ad();
-        $ad->ad_name     = 'Buy Now';
-        $ad->ad_size     = "970*90";
-        $ad->ad_type     = 'image';
-        $ad->ad_url      = '';
-		$ad->ad_image_id = 51;
-        $ad->save();
+    	
 
         Model::unguard();
     }
