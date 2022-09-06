@@ -1,4 +1,8 @@
-<div class="add-new-page content_{{$content_count}} bg-white p-20 m-b-20" id="image_content_{{$content_count}}">
+<div class="card add-new-page content_{{$content_count}}" id="image_content_{{$content_count}}">
+
+    <div class="card-header">
+        <div class=""
+    </div>
     <input type="hidden" value="{{ $content_count }}" id="content_count">
     <div class="row">
         <div class="col-12">
