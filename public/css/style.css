@@ -3119,10 +3119,7 @@ clip-path: polygon(10% 25%, 10% 0, 35% 0%, 65% 0%, 90% 0, 90% 25%, 90% 50%, 91% 
     font-size: 12px;
 }
 
-.btn-sm {
-    padding: 5px 12px;
-    font-size: 14px;
-}
+
 
 .btn-lg {
     padding: 11px 20px;
@@ -3210,7 +3207,7 @@ btn-link
 -------------------------*/
 
 .card {
-    margin-bottom: 30px;
+    margin-bottom: 15px;
     border: none;
     -webkit-box-shadow: 0px 1px 2px 1px rgba(154, 154, 204, 0.22);
     -moz-box-shadow: 0px 1px 2px 1px rgba(154, 154, 204, 0.22);
@@ -3228,7 +3225,9 @@ btn-link
     font-size: 14px;
 }
 
-.card-body {}
+.card-body {
+    padding:15px;
+}
 
 .card-text {}
 
@@ -7098,8 +7097,8 @@ td>.post-image {
     margin-bottom: 25px;
 }
 .cat-block-img {
-    max-width: 100px;
-    max-height: 100px;
+    max-width: 50px;
+   
     margin: 0 auto;
 }
 .label-default {
@@ -7127,9 +7126,7 @@ input[type=color]{
     padding: 0px;
     height: 45px;
 }
-.btn {
-    margin-right: 5px;
-}
+
 /*drag and drop css*/
 .drag-drop-upload{
     height: 450px;
