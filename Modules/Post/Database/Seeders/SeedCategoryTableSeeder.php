@@ -43,6 +43,29 @@ class SeedCategoryTableSeeder extends Seeder
             'order'         => '4'
         ]);
 
+
+
+
+        Category::create([
+            'sub_category_name' => 'Nepal',
+            'parent_id'         => 1,
+            'slug'              => 'politics',
+            'category_id'       => '1',
+            'language'          => 'en',
+        ]);
+
+
+
+        Category::create([
+            'sub_category_name' => 'Computer Science',
+            'parent_id'         => 2,
+            'slug'              => 'computer-science',
+            'category_id'       => '2',
+            'language'          => 'en',
+        ]);
+
+      
+
         Model::unguard();
 
         // $this->call("OthersTableSeeder");

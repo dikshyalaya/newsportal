@@ -43,6 +43,8 @@
     "password": "Password",
     "confirm_password": "Confirm Password",
     "image": "Image",
+    "featured_image":"Featured Image",
+    
     "administrators": "Administrators",
     "last_login": "Last Login",
     "options": "Options",
@@ -102,6 +104,7 @@
     "password_confirmation": "Password Confirmation",
     "update_language": "Update Language",
     "add_image": "Add Image",
+    "set_featured_image":"Set Featured Image",
     "save_change": "Save Change",
     "general_settings": "General Settings",
     "company_informations": "Company Informations",
@@ -216,6 +219,7 @@
     "custom": "Custom",
     "page": "Page",
     "post": "Post",
+    
     "source": "Source",
     "url": "URL",
     "post_id": "Post id",
@@ -256,7 +260,7 @@
     "add_to_breaking": "Add to breaking",
     "add_to_slider": "Add to slider",
     "add_to_recommended": "Add to recommended",
-    "show_only_to_authenticate_users": "Show only to authenticated users",
+    "show_only_to_authenticate_users": "Priviliged Content",
     "seo_details": "SEO Details",
     "tags": "Tags",
     "sub_category": "Sub Category",

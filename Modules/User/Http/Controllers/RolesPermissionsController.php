@@ -43,7 +43,7 @@ class RolesPermissionsController extends Controller
     public function editRole($id)
     {
         $role           = Sentinel::findRoleById($id);
-        $allPermission  = Permission::select('name')->groupBy('name')->orderBy('name', 'ASC')->get();
+        $allPermission  = Permission::select('name')->where("enable",1)->groupBy('name')->orderBy('name', 'ASC')->get();
 
         $permissions    = $role->permissions;
         if ($permissions == null) :

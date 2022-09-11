@@ -31,7 +31,7 @@ class PostController extends Controller
 {
     public function index()
     {
-        $categories     = Category::all();
+        $categories       = Category::with('childrenRecursive')->where('parent_id', 0)->get();
         $activeLang     = Language::where('status', 'active')->orderBy('name', 'ASC')->get();
         $posts          = Post::orderBy('id', 'desc')->with('image', 'video', 'category', 'subCategory', 'user')->paginate('15');
 
@@ -40,13 +40,15 @@ class PostController extends Controller
 
     public function createArticle()
     {
-        $categories     = Category::where('language', LaravelLocalization::setLocale() ?? settingHelper('default_language'))->get();
-        $subCategories  = SubCategory::all();
+        // $categories     = Category::where('language', LaravelLocalization::setLocale() ?? settingHelper('default_language'))->get();
+
+        $categories       = Category::with('childrenRecursive')->where('parent_id', 0)->get();
+      
         $activeLang     = Language::where('status', 'active')->orderBy('name', 'ASC')->get();
         $countImage     = galleryImage::count();
         $countVideo     = Video::count();
 
-        return view('post::article_create', compact('categories', 'subCategories', 'activeLang', 'countImage', 'countVideo'));
+        return view('post::article_create', compact('categories',  'activeLang', 'countImage', 'countVideo'));
     }
 
     public function createVideoPost()
@@ -71,8 +73,8 @@ class PostController extends Controller
 
         return view('post::audio_post_create', compact('categories', 'subCategories', 'activeLang', 'countImage', 'countAudio', 'countVideo'));
     }
-    
-    public function saveNewPost(Request $request, $type)
+
+    public function saveNewPost(Request $request)
     {
 
 
@@ -80,14 +82,20 @@ class PostController extends Controller
 
         Validator::make($request->all(), [
             'title'             => 'required|min:2|unique:posts',
+            'post_type'         => 'required',
             'content'           => 'required',
             'language'          => 'required',
             'category_id'       => 'required',
             'slug'              => 'nullable|min:2|unique:posts|regex:/^\S*$/u',
+            'categories_id' => ['required', 'array', 'min:1'],
+            'categories_id.*' => ['required', 'integer', 'exists:categories,id'],
         ])->validate();
 
         $post               =   new Post();
+
         $post->title        =   $request->title;
+        $type =        $request->post_type;
+        $post->post_type    =  $type;
         if ($request->slug != null) :
             $post->slug = $request->slug;
         else :
@@ -143,8 +151,9 @@ class PostController extends Controller
         $post->tags             = $request->tags;
         $post->meta_description = $request->meta_description;
         $post->language         = $request->language;
-        $post->category_id      = $request->category_id;
-        $post->sub_category_id  = $request->sub_category_id;
+        //$post->category_id      = $request->category_id;
+        $post->categories()->attach($request->categories_id);
+        //$post->sub_category_id  = $request->sub_category_id;
         $post->image_id         = $request->image_id;
         if ($type == 'video') :
             if ($request->video_url_type != null) {
@@ -152,7 +161,7 @@ class PostController extends Controller
                     'video_thumbnail_id' => 'required'
                 ])->validate();
             }
-            $post->post_type            = 'video';
+
             $post->video_id             = $request->video_id;
             $post->video_url_type       = $request->video_url_type;
             $post->video_url            = $request->video_url;
@@ -164,10 +173,9 @@ class PostController extends Controller
                 'audio' => 'required'
             ])->validate();
 
-            $post->post_type            = 'audio';
+           
             $post->audio()->attach($request->audio_id);
-        else :
-            $post->post_type            = 'article';
+       
         endif;
 
         if ($request->status == 2) :
@@ -622,7 +630,7 @@ class PostController extends Controller
         return redirect()->back()->with('success', __('successfully_updated'));
     }
 
-    
+
 
     public function createTriviaQuiz()
     {

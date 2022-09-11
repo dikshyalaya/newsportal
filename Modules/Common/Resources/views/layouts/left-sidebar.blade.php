@@ -39,30 +39,20 @@
                                 <li class="nav-item">
                                     <a class="nav-link @yield('create_article')" href="{{ route('create-article') }}">{{ __('create_article') }} </a>
                                 </li>
-                                <li class="nav-item">
-                                    <a class="nav-link @yield('create_video')" href="{{ route('create-video-post') }}">{{ __('create_video_post') }} </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link @yield('create_audio')" href="{{ route('create-audio-post') }}">{{ __('create_audio_post') }} </a>
-                                </li>
+                               
 
                                 @endif
 
-                                
-
-                                <li class="nav-item">
+                                <!-- <li class="nav-item">
                                     <a class="nav-link @yield('submitted-post-active')" href="{{ route('submitted-posts') }}">{{ __('submitted_posts') }}</a>
-                                </li>
+                                </li> -->
+                                
                                 @if(Sentinel::getUser()->hasAccess(['category_read']) || Sentinel::getUser()->hasAccess(['category_write']) || Sentinel::getUser()->hasAccess(['category_delete']))
                                 <li class="nav-item">
                                     <a class="nav-link @yield('category-active')" href="{{ route('categories') }}">{{__('categories')}}</a>
                                 </li>
                                 @endif
-                                @if(Sentinel::getUser()->hasAccess(['sub_category_read']) || Sentinel::getUser()->hasAccess(['sub_category_write']) || Sentinel::getUser()->hasAccess(['sub_category_delete']))
-                                <li class="nav-item">
-                                    <a class="nav-link @yield('sub-category-active')" href="{{ route('sub-categories') }}">{{__('sub_categories')}}</a>
-                                </li>
-                                @endif
+                               
                             </ul>
                         </div>
                     </li>
@@ -328,11 +318,11 @@
                                 {{__('email_settings')}}
                             </a>
                         </li>
-                        <li class="nav-item ">
+                        <!-- <li class="nav-item ">
                             <a class="nav-link @yield('setting-storage')" href="{{ route('setting-storage') }}">
                                 {{__('storage_settings')}}
                             </a>
-                        </li>
+                        </li> -->
                         <li class="nav-item ">
                             <a class="nav-link @yield('setting-seo')" href="{{ route('setting-seo') }}">
                                 {{__('seo_settings')}}
@@ -350,11 +340,11 @@
                             </a>
                         </li>
 
-                        <li class="nav-item ">
+                        <!-- <li class="nav-item ">
                             <a class="nav-link @yield('setting-ffmpeg')" href="{{ route('settings-ffmpeg') }}">
                                 {{__('ffmpeg_settings')}}
                             </a>
-                        </li>
+                        </li> -->
 
                         <li class="nav-item ">
                             <a class="nav-link @yield('setting-custom')" href="{{ route('setting-custom-header-footer') }}">
@@ -362,17 +352,13 @@
                             </a>
                         </li>
 
-                        <li class="nav-item ">
+                        <!-- <li class="nav-item ">
                             <a class="nav-link @yield('cron-information')" href="{{ route('cron-information') }}">
                                 {{__('cron_information')}}
                             </a>
-                        </li>
+                        </li> -->
 
-                        <li class="nav-item ">
-                            <a class="nav-link @yield('setting-preference')" href="{{ route('preferene-control') }}">
-                                {{__('preference_setting')}}
-                            </a>
-                        </li>
+                        
 
                         <li class="nav-item ">
                             <a class="nav-link @yield('email_temp')" href="{{ route('email-templates')}}">
@@ -390,11 +376,7 @@
                                 {{__('cache')}}
                             </a>
                         </li>
-                        <li class="nav-item ">
-                            <a class="nav-link @yield('update-database')" href="{{ route('update-database') }}">
-                                {{__('update')}}
-                            </a>
-                        </li>
+                        
 
                     </ul>
                 </div>

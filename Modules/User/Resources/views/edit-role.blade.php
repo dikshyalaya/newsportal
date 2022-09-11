@@ -64,7 +64,7 @@
                                             @foreach ($allPermission as $p_item)
 
                                                 <tr>
-                                                    <td><strong>{{ $p_item->name }}</strong></td>
+                                                    <td><strong>{{ __($p_item->name) }}</strong></td>
                                                     <td>
                                                         <label class="custom-control custom-checkbox">
                                                             <input type="checkbox"

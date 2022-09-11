@@ -12,6 +12,11 @@ class Post extends Model implements Feedable
 {
     protected $fillable = ['title'];
 
+    public function categories()
+    {
+        return $this->belongsToMany('Modules\Post\Entities\Category');
+    }
+
     public function image(){
         //   return $this->hasOne(Media::class ,'id', 'avatar_id');
         return $this->belongsTo('Modules\Gallery\Entities\Image');

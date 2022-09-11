@@ -16,18 +16,17 @@ use LaravelLocalization;
 class CategoryController extends Controller
 {
     public function categories()
-    {
-        $categories     = Category::orderBy('id', 'ASC')->paginate(10);
+    {        
+        $categories       = Category::with('childrenRecursive')->where('parent_id',0)->paginate(10);
         $activeLang     = Language::where('status', 'active')->orderBy('name', 'ASC')->get();
-
         return view('post::categories', compact('activeLang', 'categories'));
     }
 
     public function saveNewCategory(Request $request)
     {
-        
+
         Validator::make($request->all(), [
-            'category_name' => 'required|unique:categories|min:2|max:40',
+            'category_name' => 'required|min:2|max:40',
             'slug'          => 'nullable|min:2|unique:categories|max:30|regex:/^\S*$/u',
             'language'      => 'required'
         ])->validate();
@@ -35,20 +34,21 @@ class CategoryController extends Controller
         $category                   = new Category();
 
         $category->category_name    = $request->category_name;
+        $category->parent_id        = $request->parent_id;
         $category->language         = $request->language;
         $category->is_featured      = $request->is_featured;
 
-        if ($request->slug != null) :
+        if ($request->slug != null):
             $category->slug = $request->slug;
-        else :
-            $category->slug = $this->make_slug($request->category_name);
+        else:            
+            $category->slug  = $this->unique_slug($request->category_name, 'categories', $field = 'slug', $key = NULL, $value = NULL);
         endif;
 
         $category->meta_description     = $request->meta_description;
         $category->meta_keywords        = $request->meta_keywords;
         $category->order                = $request->order;
-       // $category->show_on_menu         = $request->show_on_menu;
-//        $category->block_style          = $request->block_style;
+        // $category->show_on_menu         = $request->show_on_menu;
+        //        $category->block_style          = $request->block_style;
 
         $category->save();
 
@@ -67,7 +67,7 @@ class CategoryController extends Controller
 
     public function updateCategory(Request $request)
     {
-        
+
         Validator::make($request->all(), [
             'category_name'     => 'required|min:2|max:40|unique:categories,category_name,' . $request->category_id,
             'slug'              => 'nullable|min:2|max:30|regex:/^\S*$/u|unique:categories,slug,' . $request->category_id,
@@ -83,14 +83,15 @@ class CategoryController extends Controller
         if ($request->slug != null) :
             $category->slug     = $request->slug;
         else :
-            $category->slug     = $this->make_slug($request->category_name);
+            
+            $category->slug  = $this->unique_slug($request->category_name, 'categories', $field = 'slug', $key = NULL, $value = NULL);
         endif;
 
         $category->meta_description = $request->meta_description;
         $category->meta_keywords    = $request->meta_keywords;
         $category->order            = $request->order;
- //       $category->show_on_menu     = $request->show_on_menu;
-//        $category->block_style      = $request->block_style;
+        //       $category->show_on_menu     = $request->show_on_menu;
+        //        $category->block_style      = $request->block_style;
 
         $category->save();
 
@@ -110,7 +111,7 @@ class CategoryController extends Controller
 
     public function subCategoriesAdd(Request $request)
     {
-        
+
         Validator::make($request->all(), [
             'sub_category_name' => 'required|unique:sub_categories|min:2|max:40',
             'language'          => 'required',
@@ -131,7 +132,7 @@ class CategoryController extends Controller
 
         $subCategory->meta_description  = $request->meta_description;
         $subCategory->meta_keywords     = $request->meta_keywords;
-       // $subCategory->show_on_menu      = $request->show_on_menu;
+        // $subCategory->show_on_menu      = $request->show_on_menu;
         $subCategory->category_id       = $request->category_id;
 
         $subCategory->save();
@@ -152,7 +153,7 @@ class CategoryController extends Controller
 
     public function updateSubCategory(Request $request)
     {
-        
+
         Validator::make($request->all(), [
             'sub_category_name'     => 'required|min:2|max:40|unique:sub_categories,sub_category_name,' . $request->sub_category_id,
             'language'              => 'required',
@@ -167,12 +168,13 @@ class CategoryController extends Controller
         if ($request->slug != null) :
             $subCategory->slug  = $request->slug;
         else :
-            $subCategory->slug  = $this->make_slug($request->sub_category_name);
+            //$subCategory->slug  = $this->make_slug($request->sub_category_name);
+            $subCategory->slug  = $this->unique_slug($request->sub_category_name, 'categories', $field = 'slug', $key = NULL, $value = NULL);
         endif;
 
         $subCategory->meta_description  = $request->meta_description;
         $subCategory->meta_keywords     = $request->meta_keywords;
-     //   $subCategory->show_on_menu      = $request->show_on_menu;
+        //   $subCategory->show_on_menu      = $request->show_on_menu;
         $subCategory->category_id       = $request->category_id;
 
         $subCategory->save();
@@ -182,17 +184,39 @@ class CategoryController extends Controller
         return redirect()->route('sub-categories')->with('success', __('successfully_added'));
     }
 
-    private function make_slug($string, $delimiter = '-') {
+    private function make_slug($string, $delimiter = '-')
+    {
 
         $string = preg_replace("/[~`{}.'\"\!\@\#\$\%\^\&\*\(\)\_\=\+\/\?\>\<\,\[\]\:\;\|\\\]/", "", $string);
 
         $string = preg_replace("/[\/_|+ -]+/", $delimiter, $string);
         $result = mb_strtolower($string);
 
-        if ($result):
+        if ($result) :
             return $result;
-        else:
+        else :
             return $string;
         endif;
+    }
+
+    function unique_slug($string, $table, $field = 'slug', $key = NULL, $value = NULL)
+    {
+        $slug = $this->make_slug($string);
+        $slug = strtolower($slug);
+        $i = 0;
+        $params = array();
+        $params[$field] = $slug;
+
+        if ($key) $params["$key !="] = $value;
+
+        while (DB::table($table)->where('slug', $params)->first()) {
+            if (!preg_match('/-{1}[0-9]+$/', $slug))
+                $slug .= '-' . ++$i;
+            else
+                $slug = preg_replace('/[0-9]+$/', ++$i, $slug);
+
+            $params[$field] = $slug;
+        }
+        return $slug;
     }
 }
