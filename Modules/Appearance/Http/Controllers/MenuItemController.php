@@ -24,7 +24,8 @@ class MenuItemController extends Controller
         $menus              = Menu::all();
         $selectedMenu       = Menu::first();
         $selectedLanguage   = settingHelper('default_language');
-        $categories         = Category::orderBy('id','ASC')->where('language',$selectedLanguage)->get();
+        //$categories         = Category::orderBy('id','ASC')->where('language',$selectedLanguage)->get();
+        $categories       = Category::with('childrenRecursive')->where('parent_id', 0)->get();
 
         $menuItems          = MenuItem::with(['children'])
                                     ->where('parent', null)

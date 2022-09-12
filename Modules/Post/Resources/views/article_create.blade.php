@@ -25,14 +25,14 @@ active
 <div class="dashboard-ecommerce">
     <div class="container-fluid dashboard-content ">
         <!-- page info start-->
-        {!! Form::open(['route' => ['save-new-post','article'],'method' => 'post','enctype'=>'multipart/form-data']) !!}
+        {!! Form::open(['route' => ['save-new-post'],'method' => 'post','enctype'=>'multipart/form-data']) !!}
         <input type="hidden" id="images" value="{{ $countImage }}">
         <input type="hidden" id="videos" value="{{ $countVideo }}">
         <input type="hidden" id="imageCount" value="1" class="imageCount">
         <input type="hidden" id="videoCount" value="1">
         <div class="row clearfix">
             <div class="col-12">
-                
+
                 <div class="row">
                     <div class="col-12">
                         @if(session('error'))
@@ -103,62 +103,62 @@ active
                                                 <div class="card-body">
                                                     <div class="row">
                                                         <div class="col-md-1 pr-0 text-center area">
-                                                            <div class="item" onclick="addContent('text')">
+                                                            <div class="item content-item" onclick="addContent('text')">
                                                                 <img src="{{static_asset('default-image/content-icon/text.png') }}">
                                                                 <!-- <label>{{ __('text') }}</label> -->
                                                             </div>
                                                         </div>
                                                         <div class="col-md-1 pr-0 text-center area">
-                                                            <div class="item" onclick="addContent('image')">
+                                                            <div class="item content-item" onclick="addContent('image')">
                                                                 <img src="{{static_asset('default-image/content-icon/image.png') }}">
                                                                 <!-- <label>{{ __('image') }}</label> -->
                                                             </div>
                                                         </div>
                                                         <div class="col-md-1 pr-0 text-center area">
-                                                            <div class="item" onclick="addContent('image-text')">
+                                                            <div class="item content-item" onclick="addContent('image-text')">
                                                                 <img src="{{static_asset('default-image/content-icon/image-text.png') }}">
                                                                 <!-- <label>{{ __('image_left') }}</label> -->
                                                             </div>
                                                         </div>
                                                         <div class="col-md-1 pr-0 text-center area">
-                                                            <div class="item" onclick="addContent('text-image')">
+                                                            <div class="item content-item" onclick="addContent('text-image')">
                                                                 <img src="{{static_asset('default-image/content-icon/text-image.png') }}">
                                                                 <!-- <label>{{ __('image_right') }}</label> -->
                                                             </div>
                                                         </div>
                                                         <div class="col-md-1 pr-0 text-center area">
-                                                            <div class="item" onclick="addContent('text-image-text')">
+                                                            <div class="item content-item" onclick="addContent('text-image-text')">
                                                                 <img src="{{static_asset('default-image/content-icon/text-image-text.png') }}">
                                                                 <!-- <label>{{ __('image_center') }}</label> -->
                                                             </div>
                                                         </div>
                                                         <div class="col-md-1 pr-0 text-center area">
-                                                            <div class="item" onclick="addContent('video')">
+                                                            <div class="item content-item" onclick="addContent('video')">
                                                                 <img src="{{static_asset('default-image/content-icon/video.png') }}">
                                                                 <!-- <label>{{ __('video') }}</label> -->
                                                             </div>
                                                         </div>
 
                                                         <div class="col-md-1 pr-0 text-center area">
-                                                            <div class="item" onclick="addContent('code')">
+                                                            <div class="item content-item" onclick="addContent('code')">
                                                                 <img src="{{static_asset('default-image/content-icon/code.png') }}">
                                                                 <!-- <label>{{ __('code') }}</label> -->
                                                             </div>
                                                         </div>
                                                         <div class="col-md-1 pr-0 text-center area">
-                                                            <div class="item" onclick="addContent('twitter-embed')">
+                                                            <div class="item content-item" onclick="addContent('twitter-embed')">
                                                                 <img src="{{static_asset('default-image/content-icon/twitter.png') }}">
                                                                 <!-- <label>{{ __('twitter') }}</label> -->
                                                             </div>
                                                         </div>
                                                         <div class="col-md-1 pr-0 text-center area">
-                                                            <div class="item" onclick="addContent('vimeo-embed')">
+                                                            <div class="item content-item" onclick="addContent('vimeo-embed')">
                                                                 <img src="{{static_asset('default-image/content-icon/vimeo.png') }}">
                                                                 <!-- <label>{{ __('vimeo') }}</label> -->
                                                             </div>
                                                         </div>
                                                         <div class="col-md-1 pr-0 text-center area">
-                                                            <div class="item" onclick="addContent('youtube-embed')">
+                                                            <div class="item content-item" onclick="addContent('youtube-embed')">
                                                                 <img src="{{static_asset('default-image/content-icon/youtube.png') }}">
                                                                 <!-- <label>{{ __('youtube') }}</label> -->
                                                             </div>
@@ -246,7 +246,7 @@ active
 
                         <div class="card">
                             <div class="card-header">
-                                <h4 class="card-title"> {{ __('publish') }}*</h4>
+                                <h4 class="card-title"> {{ __('status') }}</h4>
                             </div>
                             <div class="card-body">
                                 <div class="form-group">
@@ -266,7 +266,8 @@ active
                                 </div>
 
                                 <div class="form-group">
-                                    <button type="submit" name="btnSubmit" class="btn btn-primary pull-right"><i class="m-r-10 mdi mdi-floppy"></i>{{ __('save') }}</button>
+                                    <a href="{{ route('post') }}" class="btn btn-light"><i class="fas fa-chevron-circle-left"></i> {{ __('cancel') }} </a>
+                                    <button type="submit" name="btnSubmit" class="btn btn-primary pull-right"><i class="fas fa-save"></i> {{ __('save') }}</button>
                                     <label class="" for="btnSubmit"></label>
                                 </div>
 
@@ -290,7 +291,7 @@ active
                                         </select>
                                     </div>
                                 </div>
-                                <div class="col-12">
+                                <div class="col-12-">
                                     <div class="form-group">
 
 

@@ -33,7 +33,7 @@ class PostController extends Controller
     {
         $categories       = Category::with('childrenRecursive')->where('parent_id', 0)->get();
         $activeLang     = Language::where('status', 'active')->orderBy('name', 'ASC')->get();
-        $posts          = Post::orderBy('id', 'desc')->with('image', 'video', 'category', 'subCategory', 'user')->paginate('15');
+        $posts          = Post::orderBy('id', 'desc')->with('image', 'video', 'categories', 'user')->paginate('15');
 
         return view('post::index', compact('posts', 'categories', 'activeLang'));
     }
@@ -85,7 +85,7 @@ class PostController extends Controller
             'post_type'         => 'required',
             'content'           => 'required',
             'language'          => 'required',
-            'category_id'       => 'required',
+           
             'slug'              => 'nullable|min:2|unique:posts|regex:/^\S*$/u',
             'categories_id' => ['required', 'array', 'min:1'],
             'categories_id.*' => ['required', 'integer', 'exists:categories,id'],
@@ -151,9 +151,7 @@ class PostController extends Controller
         $post->tags             = $request->tags;
         $post->meta_description = $request->meta_description;
         $post->language         = $request->language;
-        //$post->category_id      = $request->category_id;
-        $post->categories()->attach($request->categories_id);
-        //$post->sub_category_id  = $request->sub_category_id;
+        
         $post->image_id         = $request->image_id;
         if ($type == 'video') :
             if ($request->video_url_type != null) {
@@ -191,11 +189,15 @@ class PostController extends Controller
         endif;
 
         $post->contents = $request->new_content;
+
+
         $post->save();
 
         if ($type == 'audio') :
             $post->audio()->attach($request->audio);
         endif;
+
+        $post->categories()->attach($request->categories_id);
 
         Cache::forget('primarySectionPosts');
         Cache::forget('primarySectionPostsAuth');

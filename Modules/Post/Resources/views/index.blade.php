@@ -99,7 +99,7 @@ active
                                             <input type="checkbox" class="checkbox-table" id="checkAll">
                                         </th> --}}
                     <th width="20">#</th>
-                    <th>{{ __('post') }}</th>  
+                    <th>{{ __('post') }}</th>
                     <th>{{ __('category') }}</th>
                     @if(Sentinel::getUser()->hasAccess(['post_write']) || Sentinel::getUser()->hasAccess(['post_delete']))
                     <th>{{ __('options') }}</th>
@@ -170,10 +170,16 @@ active
                                 @endif
                             </div>
                         </div>
-                    </td> 
+                    </td>
                     <td>
-                        <label class="category-label m-r-5 label-table" id="breaking-post-bgc">
-                            {{ @$post->category['category_name'] }} </label>
+
+
+                        @foreach($post->categories as $category)
+                        <label class="category-label bg-aqua label-table">
+                            {{@$category->category_name}}
+                        </label>
+                        @endforeach
+
 
                     </td>
 
@@ -191,10 +197,10 @@ active
                         @endif
 
                         @if(Sentinel::getUser()->hasAccess(['post_delete']))
-                        
-                            <a class="btn btn-sm btn-danger" href="javascript:void(0)" onclick="delete_item('posts','{{ $post->id }}')"><i class="fa fa-trash option-icon"></i>
-                            </a>
-                        
+
+                        <a class="btn btn-sm btn-danger" href="javascript:void(0)" onclick="delete_item('posts','{{ $post->id }}')"><i class="fa fa-trash option-icon"></i>
+                        </a>
+
                         @endif
 
 
@@ -292,7 +298,7 @@ active
                                     </a>
                                     @endif
                                 </li>
-                               
+
 
                             </ul>
                         </div>

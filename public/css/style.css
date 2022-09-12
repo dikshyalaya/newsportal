@@ -160,7 +160,7 @@ body {
     font-family: 'Roboto', sans-serif;
     font-style: normal;
     font-weight: normal;
-    font-size: 14px;
+    font-size: 12px;
     color: #71748d;
     background-color: #efeff6;
     -webkit-font-smoothing: antialiased;
@@ -1264,7 +1264,7 @@ Top Header
 
 .navbar-right-top .nav-item .nav-link {
     padding: 13px 20px;
-    font-size: 16px;
+    font-size: 12px;
     line-height: 2;
     color: #82849f;
 }

@@ -25,7 +25,7 @@
                             <h3 class="entry-title"><a href="{{ route('article.detail', ['id' => $firstPost->slug]) }}">{!! $firstPost->title !!}</a></h3>
                             <div class="entry-meta mb-2">
                                 <ul class="global-list">
-                                    <li>{{__('post_by')}} <a href="{{ route('site.author',['id' => $firstPost['user']->id]) }}">{{ data_get($firstPost, 'user.first_name') }}</a></li>
+                                    <li><a href="{{ route('site.author',['id' => $firstPost['user']->id]) }}">{{ data_get($firstPost, 'user.first_name') }}</a></li>
                                     <li><a href="{{route('article.date', date('Y-m-d', strtotime($firstPost->updated_at)))}}">{{ $firstPost->updated_at->format('F j, Y') }}</a></li>
                                 </ul>
                             </div>
@@ -38,14 +38,14 @@
             <div class="col-lg-6">
                 <div class="row">
                     @foreach($blockPosts as $post)
-                        <div class="col-md-6">
+                        <div class="col-md-6 px-1">
                             <div class="sg-post small-post">
                                 @include('site.partials.home.category.block')
                                 <div class="entry-content">
                                     <a href="{{ route('article.detail', ['id' => $post->slug]) }}"><p>{!! \Illuminate\Support\Str::limit($post->title, 25) !!}</p></a>
                                     <div class="entry-meta">
                                         <ul class="global-list">
-                                            <li>{{ __('post_by') }} <a href="{{ route('site.author',['id' => $post->user->id]) }}">{{ data_get($post, 'user.first_name') }}</a></li>
+                                            <li><a href="{{ route('site.author',['id' => $post->user->id]) }}">{{ data_get($post, 'user.first_name') }}</a></li>
                                             <li><a href="{{route('article.date', date('Y-m-d', strtotime($post->updated_at)))}}"> {{ $post->updated_at->format('F j, Y') }}</a></li>
                                         </ul>
                                     </div>

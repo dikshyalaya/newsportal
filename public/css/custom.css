@@ -864,16 +864,33 @@ span.album-cover {
     padding: 0;
 }
 
+.nav-tabs {   
+    padding: 5px 5px 0;
+    border-bottom: none;
+}
+
 .img-thumbnail {
     max-width: 50px !important;
 }
 
 ul.post_categories_select_list, ul.post_categories_select_list li{
      list-style: none;
-     padding: 0;
+     padding: 2px 5px;
      margin: 0;
 }
 
 ul.post_categories_select_list ul.child-list li {
-    padding-left: 20px;
+    padding-left: 10px;
 }
+
+.content-item {
+    padding:2px;
+    border: 1px solid #ffffff;
+    border-radius: 5px;
+}
+.content-item:hover{
+    border:1px solid #999999;
+}
+
+
+

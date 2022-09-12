@@ -115,7 +115,7 @@ class HomeController extends Controller
                         ->when(Sentinel::check() == false, function ($query) {
                             $query->where('auth_required', 0);
                         })
-                        ->limit(10)->get();
+                        ->limit(5)->get();
                 });
             else:
 

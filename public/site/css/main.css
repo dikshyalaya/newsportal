@@ -2,7 +2,7 @@ body,
 html {
     font-weight: 400;
     color: #484848;
-    font-size: 16px;
+    font-size: 13px;
     background-color: #f2f2f2;
     font-family: var(--primary-font);
     -webkit-font-smoothing: antialiased
@@ -142,10 +142,10 @@ textarea:focus {
 }
 
 .form-control {
-    height: 45px;
+    
     border-radius: 4px;
     padding: 6px 20px;
-    margin-bottom: 30px;
+    margin-bottom: 10px;
     border: 1px solid #d8e2e9
 }
 
@@ -535,8 +535,8 @@ textarea:focus {
 .sg-menu .navbar-nav li a {
     color: #333;
     display: block;
-    font-weight: 300;
-    padding: 10px
+   
+    padding:11px 5px;
 }
 
 .sg-menu .navbar-nav li span {
@@ -771,7 +771,7 @@ textarea:focus {
 .navbar-nav .mega-menu-content li a {
     padding: 0;
     border: 0;
-    font-size: 14px;
+    font-size: 12px;
     font-weight: 400;
     background-color: transparent
 }
@@ -853,7 +853,7 @@ textarea:focus {
 .sg-post {
     position: relative;
     overflow: hidden;
-    margin-bottom: 30px;
+    margin-bottom: 15px;
     background-color: #fff;
     -webkit-box-shadow: 0 6px 12px rgba(0, 0, 0, .075);
     -moz-box-shadow: 0 6px 12px rgba(0, 0, 0, .075);
@@ -936,7 +936,7 @@ textarea:focus {
 }
 
 .sg-post .entry-content {
-    padding: 10px 15px;
+    padding: 10px;
     font-size: 14px
 }
 
@@ -966,18 +966,18 @@ textarea:focus {
 }
 
 .entry-meta ul li {
-    margin-right: 20px;
+    margin-right: 10px;
     position: relative
 }
 
 .entry-meta ul li:after {
     position: absolute;
     content: "";
-    right: -10px;
-    top: 4px;
-    width: 1px;
-    height: 15px;
-    background-color: #aaa
+    right: -7px;
+    top: 10px;
+    width: 3px;
+    height: 3px;
+    background-color: #aaa;
 }
 
 .sg-post.featured-post .entry-meta ul li:after {
@@ -1016,9 +1016,8 @@ a.read-more {
 }
 
 .small-post .entry-content {
-    font-size: 13px;
-    -ms-flex-item-align: center !important;
-    align-self: center !important
+    font-size: 12px;
+   width:100%;
 }
 
 .small-post .entry-meta {
@@ -1066,7 +1065,7 @@ a.read-more {
 }
 
 .medium-post-style-1 .entry-thumbnail {
-    width: 350px
+    width: 250px
 }
 
 .video-icon {
@@ -1250,7 +1249,7 @@ a.read-more {
 }
 
 .sg-widget {
-    margin-bottom: 30px
+    margin-bottom: 15px
 }
 
 .widget-title {
@@ -1258,13 +1257,13 @@ a.read-more {
     color: #fff;
     font-size: 14px;
     padding: 8px 20px;
-    margin-bottom: 20px;
+    margin-bottom: 0px;
     text-transform: uppercase;
     background-color: var(--primary-color)
 }
 
 .widget-social ul {
-    padding: 30px 30px 10px;
+    padding: 10px 10px 0;
     overflow: hidden;
     background-color: #fff;
     -webkit-box-shadow: 0 6px 12px rgba(0, 0, 0, .075);
@@ -1277,7 +1276,7 @@ a.read-more {
 .widget-social ul li {
     width: 50%;
     float: left;
-    margin-bottom: 20px;
+    margin-bottom: 10px;
     font-size: 12px;
     overflow: hidden;
     text-align: center
@@ -1358,7 +1357,7 @@ a.read-more {
 }
 
 .widget-newsletter {
-    padding: 20px 30px;
+    padding: 10px 15px;
     background-color: #fff;
     -webkit-box-shadow: 0 6px 12px rgba(0, 0, 0, .075);
     -moz-box-shadow: 0 6px 12px rgba(0, 0, 0, .075);
@@ -1369,7 +1368,7 @@ a.read-more {
 
 .widget-newsletter .icon {
     color: #d9d9d9;
-    font-size: 80px
+    
 }
 
 .widget-newsletter form {

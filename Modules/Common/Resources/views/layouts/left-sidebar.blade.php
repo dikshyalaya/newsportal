@@ -31,28 +31,21 @@
                         </a>
                         <div id="submenu-2" class="collapse submenu @yield('post-show')">
                             <ul class="nav flex-column">
-
-                                <li class="nav-item">
-                                    <a class="nav-link @yield('post-active')" href="{{ route('post') }}">{{ __('all_post') }}</a>
-                                </li>
                                 @if(Sentinel::getUser()->hasAccess(['post_write']))
                                 <li class="nav-item">
                                     <a class="nav-link @yield('create_article')" href="{{ route('create-article') }}">{{ __('create_article') }} </a>
                                 </li>
-                               
-
                                 @endif
+                                <li class="nav-item">
+                                    <a class="nav-link @yield('post-active')" href="{{ route('post') }}">{{ __('all_post') }}</a>
+                                </li>
 
-                                <!-- <li class="nav-item">
-                                    <a class="nav-link @yield('submitted-post-active')" href="{{ route('submitted-posts') }}">{{ __('submitted_posts') }}</a>
-                                </li> -->
-                                
                                 @if(Sentinel::getUser()->hasAccess(['category_read']) || Sentinel::getUser()->hasAccess(['category_write']) || Sentinel::getUser()->hasAccess(['category_delete']))
                                 <li class="nav-item">
                                     <a class="nav-link @yield('category-active')" href="{{ route('categories') }}">{{__('categories')}}</a>
                                 </li>
                                 @endif
-                               
+
                             </ul>
                         </div>
                     </li>
@@ -151,7 +144,7 @@
                         </a>
                     </li>
                     @endif
-                   
+
 
                     @if(Sentinel::getUser()->hasAccess(['menu_read']) || Sentinel::getUser()->hasAccess(['menu_write']) || Sentinel::getUser()->hasAccess(['menu_delete']) ||
                     Sentinel::getUser()->hasAccess(['menu_item_read']) || Sentinel::getUser()->hasAccess(['menu_item_write']) || Sentinel::getUser()->hasAccess(['menu_item_delete']) ||
@@ -358,7 +351,7 @@
                             </a>
                         </li> -->
 
-                        
+
 
                         <li class="nav-item ">
                             <a class="nav-link @yield('email_temp')" href="{{ route('email-templates')}}">
@@ -376,7 +369,7 @@
                                 {{__('cache')}}
                             </a>
                         </li>
-                        
+
 
                     </ul>
                 </div>
@@ -429,7 +422,7 @@
                     </ul>
                 </div>
             </li>
-            @endif          
+            @endif
 
             </ul>
     </div>

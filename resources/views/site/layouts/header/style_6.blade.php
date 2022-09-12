@@ -10,7 +10,7 @@
                     </div>
                 </div>
                 <!-- /.left-contennt -->
-                <div class="right-content d-flex align-self-center">
+                <div class="right-content d-flex ">
                     @if(settingHelper('submit_news_status')==1)
                         <div class="d-flex">
                             <div class="submit-news d-none d-md-block">
@@ -70,7 +70,7 @@
     <div class="header-bottom">
         <div class="container">
             <div class="text-center">
-                <a class="navbar-brand align-self-center" href="{{ route('home') }}"><img src="{{ static_asset(settingHelper('logo')) }}" alt="Logo" class="img-fluid"></a>
+                <a class="navbar-brand " href="{{ route('home') }}"><img src="{{ static_asset(settingHelper('logo')) }}" alt="Logo" class="img-fluid"></a>
             </div>
         </div><!-- /.container -->
     </div><!-- /.header-bottom -->
@@ -155,7 +155,7 @@
                                                                                         <a href="{{ route('article.detail', ['id' => $item->slug]) }}"><p>{!!Str::limit( $item->title , 35)!!}</p></a>
                                                                                         <div class="entry-meta">
                                                                                             <ul class="global-list">
-                                                                                               <li>{{ __('post_by') }} <a href="{{ route('site.author',['id' => $item->user->id]) }}">{{$item->user->first_name}} </a> <a href="{{route('article.date', date('Y-m-d', strtotime($item->updated_at)))}}"> {{date('d F Y', strtotime($item->created_at))}}</a></li>
+                                                                                               <li><a href="{{ route('site.author',['id' => $item->user->id]) }}">{{$item->user->first_name}} </a> <a href="{{route('article.date', date('Y-m-d', strtotime($item->updated_at)))}}"> {{date('d F Y', strtotime($item->created_at))}}</a></li>
                                                                                             </ul>
                                                                                         </div><!-- /.entry-meta -->
                                                                                     </div><!-- /.entry-content -->

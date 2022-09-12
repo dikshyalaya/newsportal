@@ -753,7 +753,7 @@
                                                             <li><a href="https://ohno-news-and-magazine-cms-laravel.dev/category/life-style">Life Style</a></li>
                                                     </ul>
                     </div>
-                    <div class="entry-content align-self-center">
+                    <div class="entry-content ">
                         <h3 class="entry-title"><a
                                 href="https://ohno-news-and-magazine-cms-laravel.dev/story/temporibus-aut-sequi-voluptatem-ut-blanditiis-et-ut-ullam-30">I don't know where Dinn may be,' said the cook. The King looked a...</a>
                         </h3>
@@ -782,7 +782,7 @@
                                                             <li><a href="https://ohno-news-and-magazine-cms-laravel.dev/category/life-style">Life Style</a></li>
                                                     </ul>
                     </div>
-                    <div class="entry-content align-self-center">
+                    <div class="entry-content ">
                         <h3 class="entry-title"><a
                                 href="https://ohno-news-and-magazine-cms-laravel.dev/story/iusto-delectus-incidunt-aperiam-et-29">Alice took up the fan and two or three of her own courage. 'It's...</a>
                         </h3>
@@ -811,7 +811,7 @@
                                                             <li><a href="https://ohno-news-and-magazine-cms-laravel.dev/category/life-style">Life Style</a></li>
                                                     </ul>
                     </div>
-                    <div class="entry-content align-self-center">
+                    <div class="entry-content ">
                         <h3 class="entry-title"><a
                                 href="https://ohno-news-and-magazine-cms-laravel.dev/story/libero-qui-nostrum-cupiditate-qui-quidem-consequuntur-28">Alice to herself. Imagine her surprise, when the White Rabbit, wi...</a>
                         </h3>
@@ -840,7 +840,7 @@
                                                             <li><a href="https://ohno-news-and-magazine-cms-laravel.dev/category/life-style">Life Style</a></li>
                                                     </ul>
                     </div>
-                    <div class="entry-content align-self-center">
+                    <div class="entry-content ">
                         <h3 class="entry-title"><a
                                 href="https://ohno-news-and-magazine-cms-laravel.dev/story/distinctio-non-repudiandae-omnis-ad-27">Duchess replied, in a hurry to get very tired of this. I vote the...</a>
                         </h3>
@@ -869,7 +869,7 @@
                                                             <li><a href="https://ohno-news-and-magazine-cms-laravel.dev/category/life-style">Life Style</a></li>
                                                     </ul>
                     </div>
-                    <div class="entry-content align-self-center">
+                    <div class="entry-content ">
                         <h3 class="entry-title"><a
                                 href="https://ohno-news-and-magazine-cms-laravel.dev/story/in-id-molestiae-numquam-culpa-et-non-omnis-26">Alice. 'Why, you don't know what you had been for some time in si...</a>
                         </h3>
@@ -898,7 +898,7 @@
                                                             <li><a href="https://ohno-news-and-magazine-cms-laravel.dev/category/life-style">Life Style</a></li>
                                                     </ul>
                     </div>
-                    <div class="entry-content align-self-center">
+                    <div class="entry-content ">
                         <h3 class="entry-title"><a
                                 href="https://ohno-news-and-magazine-cms-laravel.dev/story/et-aperiam-placeat-et-ea-sint-veritatis-25">Rabbit in a low trembling voice, 'Let us get to twenty at that ra...</a>
                         </h3>

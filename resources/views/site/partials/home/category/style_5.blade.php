@@ -18,13 +18,13 @@
         @if(!blank($firstPost))
             <div class="sg-post medium-post-style-1">
                 @include('site.partials.home.category.first_post')
-                <div class="entry-content align-self-center">
+                <div class="entry-content ">
                     <h3 class="entry-title"><a
                             href="{{ route('article.detail', ['id' => $firstPost->slug]) }}">{!! \Illuminate\Support\Str::limit($firstPost->title, 65) !!}</a>
                     </h3>
                     <div class="entry-meta mb-2">
                         <ul class="global-list">
-                            <li>{{__('post_by')}} <a href="{{ route('site.author',['id' => $firstPost->user->id]) }}">{{ data_get($firstPost, 'user.first_name') }}</a></li>
+                            <li><a href="{{ route('site.author',['id' => $firstPost->user->id]) }}">{{ data_get($firstPost, 'user.first_name') }}</a></li>
                             <li><a href="{{route('article.date', date('Y-m-d', strtotime($firstPost->updated_at)))}}">{{ $firstPost->updated_at->format('F j, Y') }}</a></li>
                         </ul>
                     </div>
@@ -39,10 +39,10 @@
                         <div class="sg-post small-post post-style-1">
                             @include('site.partials.home.category.post_block')
                             <div class="entry-content">
-                                <a href="{{ route('article.detail', ['id' => $post->slug]) }}"><p>{!! \Illuminate\Support\Str::limit($post->title, 25) !!}</p></a>
+                                <a href="{{ route('article.detail', ['id' => $post->slug]) }}"><p>{!! \Illuminate\Support\Str::limit($post->title, 40) !!}</p></a>
                                 <div class="entry-meta">
                                     <ul class="global-list">
-                                        <li>{{ __('post_by') }} <a href="{{ route('site.author',['id' => $firstPost->user->id]) }}">{{ data_get($firstPost, 'user.first_name') }}</a></li>
+                                        <li><a href="{{ route('site.author',['id' => $firstPost->user->id]) }}">{{ data_get($firstPost, 'user.first_name') }}</a></li>
                                         <li><a href="{{route('article.date', date('Y-m-d', strtotime($post->updated_at)))}}"> {{ $post->updated_at->format('F j, Y') }}</a></li>
                                     </ul>
                                 </div>

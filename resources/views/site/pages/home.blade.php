@@ -9,7 +9,7 @@
     ])
     @endif
 
-    <div class="sg-main-content mb-4">
+    
         <div class="container">
             <div class="row">
                 @php
@@ -20,12 +20,12 @@
                         @include('site.partials.home.category_section')
                     </div>
                 </div>
-                <div class="col-md-5 col-lg-4 sg-sticky">
+                <div class="col-md-5 col-lg-4 sg-sticky pt-4">
                     <div class="sg-sidebar theiaStickySidebar">
                         @include('site.partials.right_sidebar_widgets')
                     </div>
                 </div>
             </div>
         </div>
-    </div>
+    
 @endsection
