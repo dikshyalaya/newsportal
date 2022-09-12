@@ -221,127 +221,96 @@
 </div>
 
 @push('include_js')
-<!-- chartjs js-->
-<script src="{{static_asset('vendor')}}/charts/charts-bundle/Chart.bundle.js"></script>
-<script src="{{static_asset('vendor')}}/charts/charts-bundle/chartjs.js"></script>
+    <!-- chartjs js-->
+    <script src="{{static_asset('vendor')}}/charts/charts-bundle/Chart.bundle.js"></script>
+    <script src="{{static_asset('vendor')}}/charts/charts-bundle/chartjs.js"></script>
 
-<!-- dashboard sales js-->
-<script>
-    var ctx = document.getElementById('revenue').getContext('2d');
-    var myChart = new Chart(ctx, {
-        type: 'line',
-        data: {
-            labels: [{
-                {
-                    $data['dates']
-                }
-            }],
-            datasets: [{
-                label: '{{__('
-                current_month_visits ')}}',
-                data: [{
-                    {
-                        $data['visits']
-                    }
-                }],
-                backgroundColor: "rgba(89, 105, 255,0.5)",
-                borderColor: "rgba(89, 105, 255,0.7)",
-                borderWidth: 2
-
-            }, {
-                label: '{{__('
-                current_month_visitors ')}}',
-                data: [{
-                    {
-                        $data['visitors']
-                    }
-                }],
-                backgroundColor: "rgba(255, 64, 123,0.5)",
-                borderColor: "rgba(255, 64, 123,0.7)",
-                borderWidth: 2
-            }]
-        },
-        options: {
-
-            legend: {
-                display: true,
-                position: 'bottom',
-
-                labels: {
-                    fontColor: '#71748d',
-                    fontFamily: 'Circular Std Book',
-                    fontSize: 14,
-                }
+    <!-- dashboard sales js-->
+    <script>
+        var ctx = document.getElementById('revenue').getContext('2d');
+        var myChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: [{{$data['dates']}}],
+                datasets: [{
+                    label: '{{__('current_month_visits')}}',
+                    data: [{{$data['visits']}}],
+                    backgroundColor: "rgba(89, 105, 255,0.5)",
+                    borderColor: "rgba(89, 105, 255,0.7)",
+                    borderWidth: 2
+                }, {
+                    label: '{{__('current_month_visitors')}}',
+                    data: [{{$data['visitors']}}],
+                    backgroundColor: "rgba(255, 64, 123,0.5)",
+                    borderColor: "rgba(255, 64, 123,0.7)",
+                    borderWidth: 2
+                }]
             },
-            scales: {
-                yAxes: [{
-                    ticks: {
-                        // Include a dollar sign in the ticks
-                        callback: function(value, index, values) {
-                            return '$' + value;
+            options: {
+                legend: {
+                    display: true,
+                    position: 'bottom',
+                    labels: {
+                        fontColor: '#71748d',
+                        fontFamily: 'Circular Std Book',
+                        fontSize: 14,
+                    }
+                },
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            // Include a dollar sign in the ticks
+                            callback: function(value, index, values) {
+                                return '$' + value;
+                            }
                         }
-                    }
+                    }]
+                },
+                scales: {
+                    xAxes: [{
+                        ticks: {
+                            fontSize: 14,
+                            fontFamily: 'Circular Std Book',
+                            fontColor: '#71748d',
+                        }
+                    }],
+                    yAxes: [{
+                        ticks: {
+                            fontSize: 14,
+                            fontFamily: 'Circular Std Book',
+                            fontColor: '#71748d',
+                        }
+                    }]
+                }
+            }
+        });
+        // ==============================================================
+        // Total Sale
+        // ==============================================================
+        @php
+            $browserNames = implode(',', $browserNames);
+            $browserCounts = implode(',', $browserCounts);
+            $browserColors = implode(',', $browserColors);
+        @endphp
+        var ctx = document.getElementById("total-sale").getContext('2d');
+        var myChart = new Chart(ctx, {
+            type: 'doughnut',
+            data: {
+                labels: [{!!$browserNames!!}],
+                datasets: [{
+                    backgroundColor: [{!!$browserColors!!}],
+                    data: [{!!$browserCounts!!}]
                 }]
             },
-
-            scales: {
-                xAxes: [{
-                    ticks: {
-                        fontSize: 14,
-                        fontFamily: 'Circular Std Book',
-                        fontColor: '#71748d',
-                    }
-                }],
-                yAxes: [{
-                    ticks: {
-                        fontSize: 14,
-                        fontFamily: 'Circular Std Book',
-                        fontColor: '#71748d',
-                    }
-                }]
+            options: {
+                legend: {
+                    display: false
+                }
             }
-
-        }
-    });
-
-    // ==============================================================
-    // Total Sale
-    // ==============================================================
-
-    @php
-    $browserNames = implode(',', $browserNames);
-    $browserCounts = implode(',', $browserCounts);
-    $browserColors = implode(',', $browserColors);
-    @endphp
-
-    var ctx = document.getElementById("total-sale").getContext('2d');
-    var myChart = new Chart(ctx, {
-        type: 'doughnut',
-        data: {
-            labels: [{
-                !!$browserNames!!
-            }],
-            datasets: [{
-                backgroundColor: [{
-                    !!$browserColors!!
-                }],
-                data: [{
-                    !!$browserCounts!!
-                }]
-            }]
-        },
-        options: {
-            legend: {
-                display: false
-
-            }
-        }
-
-    });
-
-
-    // ==============================================================
-    // Location Map
-    // ==============================================================
-</script>
+        });
+        // ==============================================================
+        // Location Map
+        // ==============================================================
+        
+    </script>
 @endpush
