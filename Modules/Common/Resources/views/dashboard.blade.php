@@ -1,12 +1,7 @@
 <div class="container-fluid  dashboard-content">
 
     <div class="row">
-        <!-- ============================================================== -->
-        <!-- four widgets   -->
-        <!-- ============================================================== -->
-        <!-- ============================================================== -->
-        <!-- total views   -->
-        <!-- ============================================================== -->
+        
         <div class="col-xl-3 col-lg-6 col-md-6 col-sm-12 col-12">
             <div class="card">
                 <div class="card-body">
@@ -20,12 +15,7 @@
                 </div>
             </div>
         </div>
-        <!-- ============================================================== -->
-        <!-- end total views   -->
-        <!-- ============================================================== -->
-        <!-- ============================================================== -->
-        <!-- total followers   -->
-        <!-- ============================================================== -->
+        
         <div class="col-xl-3 col-lg-6 col-md-6 col-sm-12 col-12">
             <div class="card">
                 <div class="card-body">
@@ -39,12 +29,7 @@
                 </div>
             </div>
         </div>
-        <!-- ============================================================== -->
-        <!-- end total followers   -->
-        <!-- ============================================================== -->
-        <!-- ============================================================== -->
-        <!-- partnerships   -->
-        <!-- ============================================================== -->
+       
         <div class="col-xl-3 col-lg-6 col-md-6 col-sm-12 col-12">
             <div class="card">
                 <div class="card-body">
@@ -58,12 +43,7 @@
                 </div>
             </div>
         </div>
-        <!-- ============================================================== -->
-        <!-- end partnerships   -->
-        <!-- ============================================================== -->
-        <!-- ============================================================== -->
-        <!-- total earned   -->
-        <!-- ============================================================== -->
+       
         <div class="col-xl-3 col-lg-6 col-md-6 col-sm-12 col-12">
             <div class="card">
                 <div class="card-body">
@@ -77,87 +57,11 @@
                 </div>
             </div>
         </div>
-        <!-- ============================================================== -->
-        <!-- end total earned   -->
-        <!-- ============================================================== -->
+      
     </div>
 
-    <!-- Visit vs Visitor  -->
-    <!-- ============================================================== -->
     <div class="row">
-        <div class="col-xl-8 col-lg-12 col-md-8 col-sm-12 col-12">
-            <div class="card">
-                <h5 class="card-header">{{ __('visit_vs_visitor') }}</h5>
-                <div class="card-body">
-                    <canvas id="revenue" width="400" height="150"></canvas>
-                </div>
-                <div class="card-body border-top">
-                    <div class="row">
-                        <div class="offset-xl-1 col-xl-3 col-lg-3 col-md-12 col-sm-12 col-12 p-3">
-                            <h4> {{ __('total_unique_visitors') }}({{ date('Y') }}): {{ number_format($data['totalUniqueVisitors']) }}</h4>
-                            <p>{{ __('total_unique_visits') }}({{date('Y')}}): {{ number_format($data['totalUniqueVisits']) }}</p>
-                        </div>
-                        <div class="offset-xl-1 col-xl-3 col-lg-3 col-md-6 col-sm-12 col-12 p-3">
-                            <h2 class="font-weight-normal mb-3"><span>{{number_format($data['totalVisits']->count())}}</span> </h2>
-                            <div class="mb-0 mt-3 legend-item">
-                                <span class="fa-xs text-primary mr-1 legend-title "><i class="fas fa-fw fa-square-full"></i></span>
-                                <span class="legend-text">{{ __('total_visits') }}</span>
-                            </div>
-                        </div>
-                        <div class="offset-xl-1 col-xl-3 col-lg-3 col-md-6 col-sm-12 col-12 p-3">
-                            <h2 class="font-weight-normal mb-3">
-                                <span>{{number_format($data['totalVisitors'])}}</span>
-                            </h2>
-                            <div class="text-muted mb-0 mt-3 legend-item"> <span class="fa-xs text-secondary mr-1 legend-title"><i class="fas fa-fw fa-square-full"></i></span><span class="legend-text">{{ __('total_visitors') }}</span></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- ============================================================== -->
-        <!-- end reveune  -->
-        <!-- ============================================================== -->
-        <!-- ============================================================== -->
-        <!-- total sale  -->
-        <!-- ============================================================== -->
-        <div class="col-xl-4 col-lg-12 col-md-4 col-sm-12 col-12">
-            <div class="card">
-                <h5 class="card-header">{{__('browser_usages')}}</h5>
-                <div class="card-body">
-                    <canvas id="total-sale" width="220" height="155"></canvas>
-                    <div class="chart-widget-list">
-                        @php
-                        $browserNames = [];
-                        $browserCounts = [];
-                        $browserColors = [];
-                        $i = 0;
-                        @endphp
-                        @foreach($data['usageBrowsers'] as $key => $browser)
-
-                        @php
-                        $i++;
-                        $browserNames[] = '"'.$key.'"';
-                        $browserCounts[] = '"'.$browser->count().'"';
-                        $browserColors[] = '"'.$data['browserColor'][$i].'"';
-                        @endphp
-
-                        <p>
-                            <span class="fa-xs text-primary mr-1 legend-title"></span><span class="legend-text" style="color: {{$data['browserColor'][$i]}}"> {{$key}}</span>
-                            <span class="float-right" style="color: {{$data['browserColor'][$i]}}">{{ number_format($browser->count()) }}</span>
-                        </p>
-                        @endforeach
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- ============================================================== -->
-        <!-- end total sale  -->
-        <!-- ============================================================== -->
-    </div>
-    <div class="row">
-        <!-- ============================================================== -->
-        <!-- top selling products  -->
-        <!-- ============================================================== -->
+      
         <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
             <div class="navigation-list bg-white p-20">
                 <div class="add-new-header clearfix m-b-20">
@@ -206,17 +110,74 @@
                 </div>
             </div>
         </div>
-        <!-- ============================================================== -->
-        <!-- end top selling products  -->
-        <!-- ============================================================== -->
-        <!-- ============================================================== -->
-        <!-- revenue locations  -->
-        <!-- ============================================================== -->
-
-        <!-- ============================================================== -->
-        <!-- end revenue locations  -->
-        <!-- ============================================================== -->
+        
     </div>
+
+    
+    <div class="row">
+        <div class="col-xl-8 col-lg-12 col-md-8 col-sm-12 col-12">
+            <div class="card">
+                <h5 class="card-header">{{ __('visit_vs_visitor') }}</h5>
+                <div class="card-body">
+                    <canvas id="revenue" width="400" height="150"></canvas>
+                </div>
+                <div class="card-body border-top">
+                    <div class="row">
+                        <div class="offset-xl-1 col-xl-3 col-lg-3 col-md-12 col-sm-12 col-12 p-3">
+                            <h4> {{ __('total_unique_visitors') }}({{ date('Y') }}): {{ number_format($data['totalUniqueVisitors']) }}</h4>
+                            <p>{{ __('total_unique_visits') }}({{date('Y')}}): {{ number_format($data['totalUniqueVisits']) }}</p>
+                        </div>
+                        <div class="offset-xl-1 col-xl-3 col-lg-3 col-md-6 col-sm-12 col-12 p-3">
+                            <h2 class="font-weight-normal mb-3"><span>{{number_format($data['totalVisits']->count())}}</span> </h2>
+                            <div class="mb-0 mt-3 legend-item">
+                                <span class="fa-xs text-primary mr-1 legend-title "><i class="fas fa-fw fa-square-full"></i></span>
+                                <span class="legend-text">{{ __('total_visits') }}</span>
+                            </div>
+                        </div>
+                        <div class="offset-xl-1 col-xl-3 col-lg-3 col-md-6 col-sm-12 col-12 p-3">
+                            <h2 class="font-weight-normal mb-3">
+                                <span>{{number_format($data['totalVisitors'])}}</span>
+                            </h2>
+                            <div class="text-muted mb-0 mt-3 legend-item"> <span class="fa-xs text-secondary mr-1 legend-title"><i class="fas fa-fw fa-square-full"></i></span><span class="legend-text">{{ __('total_visitors') }}</span></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-xl-4 col-lg-12 col-md-4 col-sm-12 col-12">
+            <div class="card">
+                <h5 class="card-header">{{__('browser_usages')}}</h5>
+                <div class="card-body">
+                    <canvas id="total-sale" width="220" height="155"></canvas>
+                    <div class="chart-widget-list">
+                        @php
+                        $browserNames = [];
+                        $browserCounts = [];
+                        $browserColors = [];
+                        $i = 0;
+                        @endphp
+                        @foreach($data['usageBrowsers'] as $key => $browser)
+
+                        @php
+                        $i++;
+                        $browserNames[] = '"'.$key.'"';
+                        $browserCounts[] = '"'.$browser->count().'"';
+                        $browserColors[] = '"'.$data['browserColor'][$i].'"';
+                        @endphp
+
+                        <p>
+                            <span class="fa-xs text-primary mr-1 legend-title"></span><span class="legend-text" style="color: {{$data['browserColor'][$i]}}"> {{$key}}</span>
+                            <span class="float-right" style="color: {{$data['browserColor'][$i]}}">{{ number_format($browser->count()) }}</span>
+                        </p>
+                        @endforeach
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+    </div>
+   
 
 </div>
 
