@@ -43,7 +43,7 @@ class PostController extends Controller
         // $categories     = Category::where('language', LaravelLocalization::setLocale() ?? settingHelper('default_language'))->get();
 
         $categories       = Category::with('childrenRecursive')->where('parent_id', 0)->get();
-      
+
         $activeLang     = Language::where('status', 'active')->orderBy('name', 'ASC')->get();
         $countImage     = galleryImage::count();
         $countVideo     = Video::count();
@@ -59,7 +59,7 @@ class PostController extends Controller
         $countImage         = galleryImage::count();
         $countVideo         = Video::count();
 
-        return view('post::video_post_create', compact('categories', 'subCategories', 'activeLang', 'countImage', 'countVideo'));
+        return view('post::video_post_create', compact('categories', 'activeLang', 'countImage', 'countVideo'));
     }
 
     public function createAudioPost()
@@ -71,7 +71,7 @@ class PostController extends Controller
         $countAudio         = Audio::count();
         $countVideo         = Video::count();
 
-        return view('post::audio_post_create', compact('categories', 'subCategories', 'activeLang', 'countImage', 'countAudio', 'countVideo'));
+        return view('post::audio_post_create', compact('categories', 'activeLang', 'countImage', 'countAudio', 'countVideo'));
     }
 
     public function saveNewPost(Request $request)
@@ -85,7 +85,7 @@ class PostController extends Controller
             'post_type'         => 'required',
             'content'           => 'required',
             'language'          => 'required',
-           
+
             'slug'              => 'nullable|min:2|unique:posts|regex:/^\S*$/u',
             'categories_id' => ['required', 'array', 'min:1'],
             'categories_id.*' => ['required', 'integer', 'exists:categories,id'],
@@ -151,7 +151,7 @@ class PostController extends Controller
         $post->tags             = $request->tags;
         $post->meta_description = $request->meta_description;
         $post->language         = $request->language;
-        
+
         $post->image_id         = $request->image_id;
         if ($type == 'video') :
             if ($request->video_url_type != null) {
@@ -171,9 +171,9 @@ class PostController extends Controller
                 'audio' => 'required'
             ])->validate();
 
-           
+
             $post->audio()->attach($request->audio_id);
-       
+
         endif;
 
         if ($request->status == 2) :
@@ -299,14 +299,9 @@ class PostController extends Controller
     {
         $activeLang     = Language::where('status', 'active')->orderBy('name', 'ASC')->get();
         $post           = Post::where('id', $id)->with(['image', 'video', 'videoThumbnail', 'category', 'subCategory'])->first();
-        $categories     = Category::where('language', $post->language)->get();
-        $ads            = Ad::orderBy('id', 'desc')->get();
-
-        /*     dd($post->category['id']);*/
-        $subCategories  = [];
-        if ($post->category_id != "") {
-            $subCategories  = SubCategory::where('category_id', $post->category['id'])->get();
-        }
+        $type           = $post->post_type;
+        $categories       = Category::with('childrenRecursive')->where('parent_id', 0)->get();
+        $ads            = Ad::orderBy('id', 'desc')->get();       
 
         $post_contents = [];
         if (!blank($post->contents)) :
@@ -345,21 +340,21 @@ class PostController extends Controller
 
 
         if ($type == 'article') :
-            return view('post::article_edit', compact('post', 'categories', 'subCategories', 'activeLang', 'countImage', 'countVideo', 'post_contents', 'ads'));
+            return view('post::article_edit', compact('post', 'categories', 'activeLang', 'countImage', 'countVideo', 'post_contents', 'ads'));
         elseif ($type == 'video') :
-            return view('post::video_post_edit', compact('post', 'categories', 'subCategories', 'activeLang', 'countImage', 'countVideo', 'post_contents', 'ads'));
+            return view('post::video_post_edit', compact('post', 'categories', 'activeLang', 'countImage', 'countVideo', 'post_contents', 'ads'));
         elseif ($type == 'audio') :
-            return view('post::audio_post_edit', compact('post', 'categories', 'subCategories', 'activeLang', 'countImage', 'countAudio', 'countVideo', 'post_contents', 'ads'));
+            return view('post::audio_post_edit', compact('post', 'categories', 'activeLang', 'countImage', 'countAudio', 'countVideo', 'post_contents', 'ads'));
         elseif ($type == 'trivia-quiz') :
             $post           = Post::where('id', $id)->with(['image', 'video', 'videoThumbnail', 'category', 'subCategory', 'quizResults'])->first();
             $quiz_questions = QuizQuestion::with('quizAnswers')->where('post_id', $id)->get();
             //            dd($quiz_questions);
-            return view('post::trivia_quiz_edit', compact('post', 'categories', 'subCategories', 'activeLang', 'countImage', 'countAudio', 'countVideo', 'post_contents', 'quiz_questions'));
+            return view('post::trivia_quiz_edit', compact('post', 'categories', 'activeLang', 'countImage', 'countAudio', 'countVideo', 'post_contents', 'quiz_questions'));
         elseif ($type == 'personality-quiz') :
             $post           = Post::where('id', $id)->with(['image', 'video', 'videoThumbnail', 'category', 'subCategory', 'quizResults'])->first();
             $quiz_questions = QuizQuestion::with('quizAnswers')->where('post_id', $id)->get();
             //            dd($quiz_questions);
-            return view('post::personality_quiz_edit', compact('post', 'categories', 'subCategories', 'activeLang', 'countImage', 'countAudio', 'countVideo', 'post_contents', 'quiz_questions'));
+            return view('post::personality_quiz_edit', compact('post', 'categories', 'activeLang', 'countImage', 'countAudio', 'countVideo', 'post_contents', 'quiz_questions'));
 
         endif;
     }
@@ -372,8 +367,10 @@ class PostController extends Controller
             'title'             => 'required|min:2',
             'content'           => 'required',
             'language'          => 'required',
-            'category_id'       => 'required',
+            
             'slug'              => 'nullable|min:2|max:120|regex:/^\S*$/u|unique:posts,slug,' . $id,
+            'categories_id' => ['required', 'array', 'min:1'],
+            'categories_id.*' => ['required', 'integer', 'exists:categories,id'],
         ])->validate();
 
         $post           = Post::find($id);
@@ -431,8 +428,7 @@ class PostController extends Controller
         $post->tags             = $request->tags;
         $post->meta_description = $request->meta_description;
         $post->language         = $request->language;
-        $post->category_id      = $request->category_id;
-        $post->sub_category_id  = $request->sub_category_id;
+        
         $post->image_id         = $request->image_id;
 
         if (isset($request->video_id)) :
@@ -477,6 +473,9 @@ class PostController extends Controller
         $post->contents = $request->new_content;
 
         $post->save();
+
+        $post->categories()->detach();
+        $post->categories()->attach($request->categories_id);
 
         Cache::forget('primarySectionPosts');
         Cache::forget('primarySectionPostsAuth');
@@ -642,7 +641,7 @@ class PostController extends Controller
         $countImage     = galleryImage::count();
         $countVideo     = Video::count();
 
-        return view('post::trivia_quiz_create', compact('categories', 'subCategories', 'activeLang', 'countImage', 'countVideo'));
+        return view('post::trivia_quiz_create', compact('categories', 'activeLang', 'countImage', 'countVideo'));
     }
 
     public function createPersonalityQuiz()
@@ -653,7 +652,7 @@ class PostController extends Controller
         $countImage     = galleryImage::count();
         $countVideo     = Video::count();
 
-        return view('post::personality_quiz_create', compact('categories', 'subCategories', 'activeLang', 'countImage', 'countVideo'));
+        return view('post::personality_quiz_create', compact('categories', 'activeLang', 'countImage', 'countVideo'));
     }
 
     public function filterPost(Request $request)
@@ -678,7 +677,7 @@ class PostController extends Controller
             ->paginate('15');
         // return $search_query;
 
-        return view('post::post_search', compact('posts', 'categories', 'activeLang', 'search_query', 'subCategories'));
+        return view('post::post_search', compact('posts', 'categories', 'activeLang', 'search_query'));
     }
 
     private function make_slug($string, $delimiter = '-')

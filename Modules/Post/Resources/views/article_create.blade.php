@@ -274,11 +274,7 @@ active
                                 </div>
                                 <div class="col-12-">
                                     <div class="form-group">
-
-
-                                        @include('post::post_category_render_option', ['categories'=>$categories, 'depth'=>0])
-
-
+                                        @include('post::post_category_render_option', ['categories'=>$categories, 'depth'=>0, "selected_categories"=>[]])
                                     </div>
                                 </div>
 
@@ -292,7 +288,6 @@ active
                             </div>
                             <div class="card-body">
                                 <div class="form-group">
-
                                     <select class="form-control" id="post_type" name="post_type" required>
                                         <option value="article">Article </option>
                                         <option value="audio">Audio </option>
@@ -303,10 +298,10 @@ active
 
                                 <div class="form-group">
 
-                                    <label for="post_language col-12">{{ __('post_layout') }}*</label>
+                                    <label for="post_language">{{ __('post_layout') }}*</label>
                                     <div class="row">
-                                        <div class="col-md-4">
-                                            <div class="form-group">
+                                        <div class="col-4">
+                                            <div class="form-group  text-center">
 
                                                 <img src="{{static_asset('default-image/Detail/detail_1.png') }}" alt="" class="img-responsive cat-block-img">
                                                 <label class="custom-control custom-radio detail-control-inline">
@@ -315,8 +310,8 @@ active
                                                 </label>
                                             </div>
                                         </div>
-                                        <div class="col-md-4">
-                                            <div class="form-group">
+                                        <div class="col-4">
+                                            <div class="form-group text-center">
 
                                                 <img src="{{static_asset('default-image/Detail/detail_2.png') }}" alt="" class="img-responsive cat-block-img">
                                                 <label class="custom-control custom-radio detail-control-inline">
@@ -325,8 +320,8 @@ active
                                                 </label>
                                             </div>
                                         </div>
-                                        <div class="col-md-4">
-                                            <div class="form-group">
+                                        <div class="col-4">
+                                            <div class="form-group  text-center">
 
                                                 <img src="{{static_asset('default-image/Detail/detail_3.png') }}" alt="" class="img-responsive cat-block-img">
                                                 <label class="custom-control custom-radio detail-control-inline">
@@ -566,10 +561,9 @@ active
                 content_count: content_number
             },
             success: function(result) {
-                console.log('value: '+value);
-                console.log('located at: '+$.inArray(value, ["text", "image-text", "text-image", "text-image-text"]));
+
                 $('.content-area').append(result);
-                if($.inArray(value, ["text", "image-text", "text-image", "text-image-text"])>=0){
+                if ($.inArray(value, ["text", "image-text", "text-image", "text-image-text"]) >= 0) {
                     console.log("init tinyMce");
                     tinyMceEditor.init("textarea.post-content");
                 }

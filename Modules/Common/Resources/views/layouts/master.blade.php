@@ -94,7 +94,7 @@
                     tinymce.init({
                         selector: element_selector,
                         theme: "modern",
-                        height: 400,
+                        height: 200,
                         plugins: [
                             'advlist autolink lists link image charmap print preview hr anchor pagebreak',
                             'searchreplace wordcount visualblocks visualchars code fullscreen',

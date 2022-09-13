@@ -23,13 +23,13 @@
                         @endphp
                         @if(isFileExist(@$image, $result = @$image->thumbnail))
 
-                        <img src=" {{basePath($image)}}/{{ $result }} " id="image_preview_content" width="200" height="200" alt="image" class="img-responsive img-thumbnail image_preview">
+                        <img src=" {{basePath($image)}}/{{ $result }} " id="image_preview_content" width="200" height="200" alt="image" class="img-responsive image_preview">
                         @else
-                        <img src="{{static_asset('default-image/default-100x100.png') }} " id="image_preview_content" width="100%"  alt="image" class="img-responsive img-thumbnail image_preview">
+                        <img src="{{static_asset('default-image/default-100x100.png') }} " id="image_preview_content" width="100%"  alt="image" class="img-responsive image_preview">
                         @endif
 
                         @else
-                        <img src="{{static_asset('default-image/default-100x100.png') }} " id="image_preview_content" width="100%"  alt="image" class="img-responsive img-thumbnail image_preview">
+                        <img src="{{static_asset('default-image/default-100x100.png') }} " id="image_preview_content" width="100%"  alt="image" class="img-responsive image_preview">
                         @endif
                     </div>
                 </div>

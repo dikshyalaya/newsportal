@@ -8,7 +8,7 @@
     <div class="card-body">
         <input type="hidden" value="{{ $content_count }}" id="content_count">
         <div class="row">
-            <div class="col-md-6">
+            <div class="col-md-4">
                 <div class="form-group">
                     <div class="form-group text-center">
                         @if(isset($content) && $content['image'][0]['image_id'] != "")
@@ -16,12 +16,12 @@
                         $image = $content['image'][0]['image'];
                         @endphp
                         @if(isFileExist(@$image, $result = @$image->thumbnail))
-                        <img src=" {{basePath($image)}}/{{ $result }} " id="image_preview_content" width="200" height="200" alt="image" class="img-responsive img-thumbnail image_preview">
+                        <img src=" {{basePath($image)}}/{{ $result }} " id="image_preview_content" width="100%"  alt="image" class="img-responsive image_preview">
                         @else
-                        <img src="{{static_asset('default-image/default-100x100.png') }} " id="image_preview_content" width="200" height="200" alt="image" class="img-responsive img-thumbnail image_preview">
+                        <img src="{{static_asset('default-image/default-100x100.png') }} " id="image_preview_content" width="100%"  alt="image" class="img-responsive image_preview">
                         @endif
                         @else
-                        <img src="{{static_asset('default-image/default-100x100.png') }} " id="image_preview_content" width="200" height="200" alt="image" class="img-responsive img-thumbnail image_preview">
+                        <img src="{{static_asset('default-image/default-100x100.png') }} " id="image_preview_content" width="100%"  alt="image" class="img-responsive image_preview">
                         @endif
                     </div>
                 </div>
