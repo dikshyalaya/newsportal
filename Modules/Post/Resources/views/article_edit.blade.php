@@ -27,19 +27,7 @@ active
         <input type="hidden" id="videos" value="{{ $countVideo }}">
         <input type="hidden" id="imageCount" value="1">
         <div class="row">
-            <div class="col-12">
-
-                <div class="row">
-                    <div class="col-6">
-                        <div class="block-header">
-                            <h2>{{ __('update_post') }}</h2>
-                        </div>
-                    </div>
-                    <div class="col-6 text-right">
-                        <a href="{{ route('post') }}" class="btn btn-primary btn-add-new"><i class="fas fa-list"></i> {{ __('posts') }}
-                        </a>
-                    </div>
-                </div>
+            <div class="col-12">                
                 <div class="row">
                     <div class="col-12">
                         @if(session('error'))
@@ -65,185 +53,188 @@ active
                 </div>
 
                 <div class="row">
-
-
-                    <!-- Main Content section start -->
-                    <div class="col-12 col-lg-9">
-                        <div class="card">
-                            <div class="card-header">
-                                <h3 class="card-title">{{ __('posts_details') }}</h3>
+                    <div class="col-9">
+                        <div class="card ">
+                            <div class="card-header p-0">
+                                <ul class="nav nav-tabs" id="myTab" role="tablist">
+                                    <li class="nav-item">
+                                        <a class="nav-link active" id="post-tab" data-toggle="tab" href="#post-content" role="tab" aria-selected="true">Post Content</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" id="seo-tab" data-toggle="tab" href="#seo-content" role="tab" aria-selected="false">SEO</a>
+                                    </li>
+                                </ul>
                             </div>
-                            <div class="card-body">
-                                <div class="form-group">
-                                    <label for="post_title" class="col-form-label">{{ __('title') }}*</label>
-                                    <input id="post_title" name="title" value="{{ $post->title }}" type="text" class="form-control" required>
-                                </div>
+                            <div class="card-body px-0">
+                                <div class="tab-content" id="myTabContent">
+                                    <div class="tab-pane fade show active" id="post-content" role="tabpanel" aria-labelledby="home-tab">
+                                        <div class="col-12">
+                                            <div class="form-group">
+                                                <label for="post_title" class="col-form-label">{{ __('title') }}*</label>
+                                                <input id="post_title" name="title" value="{{ $post->title }}" type="text" class="form-control" required>
+                                            </div>
 
 
-                                <div class="form-group">
-                                    <label for="post-slug" class="col-form-label"><b>{{ __('slug') }}</b>
-                                        ({{ __('slug_message') }})</label>
-                                    <input id="post-slug" value="{{ $post->slug }}" name="slug" type="text" class="form-control">
-                                </div>
 
-                                <!-- tinemcey start -->
+                                            <div class="form-group">
+                                                <label for="post-slug" class="col-form-label"><b>{{ __('slug') }}</b>
+                                                    ({{ __('slug_message') }})</label>
+                                                <input id="post-slug" value="{{ $post->slug }}" name="slug" type="text" class="form-control">
+                                            </div>
 
-                                <div class="form-group">
-                                    <label for="post_content" class="col-form-label">{{ __('content') }}*</label>
-                                    <textarea name="content" class="form-control" value="{{ $post->content }}" id="post_content" rows="3">
+                                            <!-- tinemcey start -->
+
+                                            <div class="form-group">
+                                                <label for="post_content" class="col-form-label">{{ __('content') }}*</label>
+                                                <textarea name="content" class="form-control post-content" value="{{ $post->content }}" id="post_content" rows="3">
                                                         {!! $post->content !!}
                                                     </textarea>
-                                </div>
+                                            </div>
 
-                                <!-- tinemcey end -->
-                            </div>
-                        </div>
-                        <div class="card">
-                            <div class="card-header">
-                                <h3 class="card-title">{{ __('add_content') }}</h3>
-                            </div>
-                            <div class="card-body">
-                                <div class="row">
-                                    <div class="col-8">
-                                        <div class="col-md-2 text-center area">
-                                            <div class="item" onclick="addContent('text')">
-                                                <img class="pb-3" src="{{static_asset('default-image/content-icon/text.png') }}">
-                                                <label>{{ __('text') }}</label>
+                                            <!-- tinemcey end -->
+                                        </div>
+
+                                        <div class="col-12">
+                                            <div class="card">
+                                                <div class="card-header">
+                                                    <h3 class="card-title">{{ __('add_content') }}</h3>
+                                                </div>
+                                                <div class="card-body">
+                                                    <div class="row">
+                                                        <div class="col-md-1 pr-0 text-center area">
+                                                            <div class="item content-item" onclick="addContent('text')">
+                                                                <img src="{{static_asset('default-image/content-icon/text.png') }}">
+                                                                <!-- <label>{{ __('text') }}</label> -->
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-1 pr-0 text-center area">
+                                                            <div class="item content-item" onclick="addContent('image')">
+                                                                <img src="{{static_asset('default-image/content-icon/image.png') }}">
+                                                                <!-- <label>{{ __('image') }}</label> -->
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-1 pr-0 text-center area">
+                                                            <div class="item content-item" onclick="addContent('image-text')">
+                                                                <img src="{{static_asset('default-image/content-icon/image-text.png') }}">
+                                                                <!-- <label>{{ __('image_left') }}</label> -->
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-1 pr-0 text-center area">
+                                                            <div class="item content-item" onclick="addContent('text-image')">
+                                                                <img src="{{static_asset('default-image/content-icon/text-image.png') }}">
+                                                                <!-- <label>{{ __('image_right') }}</label> -->
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-1 pr-0 text-center area">
+                                                            <div class="item content-item" onclick="addContent('text-image-text')">
+                                                                <img src="{{static_asset('default-image/content-icon/text-image-text.png') }}">
+                                                                <!-- <label>{{ __('image_center') }}</label> -->
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-1 pr-0 text-center area">
+                                                            <div class="item content-item" onclick="addContent('video')">
+                                                                <img src="{{static_asset('default-image/content-icon/video.png') }}">
+                                                                <!-- <label>{{ __('video') }}</label> -->
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="col-md-1 pr-0 text-center area">
+                                                            <div class="item content-item" onclick="addContent('code')">
+                                                                <img src="{{static_asset('default-image/content-icon/code.png') }}">
+                                                                <!-- <label>{{ __('code') }}</label> -->
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-1 pr-0 text-center area">
+                                                            <div class="item content-item" onclick="addContent('twitter-embed')">
+                                                                <img src="{{static_asset('default-image/content-icon/twitter.png') }}">
+                                                                <!-- <label>{{ __('twitter') }}</label> -->
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-1 pr-0 text-center area">
+                                                            <div class="item content-item" onclick="addContent('vimeo-embed')">
+                                                                <img src="{{static_asset('default-image/content-icon/vimeo.png') }}">
+                                                                <!-- <label>{{ __('vimeo') }}</label> -->
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-1 pr-0 text-center area">
+                                                            <div class="item content-item" onclick="addContent('youtube-embed')">
+                                                                <img src="{{static_asset('default-image/content-icon/youtube.png') }}">
+                                                                <!-- <label>{{ __('youtube') }}</label> -->
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
-                                        <div class="col-md-2 text-center area">
-                                            <div class="item" onclick="addContent('image')">
-                                                <img class="pb-3" src="{{static_asset('default-image/content-icon/image.png') }}">
-                                                <label>{{ __('image') }}</label>
+                                        <div class="col-12">
+                                            <div class="content-area">
+                                                {{-- all content  --}}
+                                                @php
+                                                $content_count = 0;
+                                                @endphp
+                                                @foreach($post_contents as $page => $content)
+                                                @php
+                                                $page = array_keys($content);
+                                                $content_count++;
+
+                                                @endphp
+                                                @include('post::contents/'.$page[0], compact('content_count', 'content'))
+                                                @endforeach
+                                                {{-- all content  --}}
                                             </div>
                                         </div>
-                                        <div class="col-md-2 text-center area">
-                                            <div class="item" onclick="addContent('image-text')">
-                                                <img class="pb-3" src="{{static_asset('default-image/content-icon/image-text.png') }}">
-                                                <label>{{ __('image_left') }}</label>
+
+                                    </div>
+                                    <div class="tab-pane fade" id="seo-content" role="tabpanel">
+                                        <div class="col-sm-12">
+                                            <div class="form-group">
+                                                <label for="meta_title"><b>{{ __('title') }}</b> ({{ __('meta_title') }})</label>
+                                                <input class="form-control meta" value="{{ $post->meta_title ?? $post->title }}" id="meta_title" name="meta_title" data-type="title">
+                                                <p class="display-nothing alert alert-danger mt-2" role="alert">
+                                                    {{__('current_characters')}}: <span class="characters"></span>, {{ __('meta_title').' '. __('should_bd') .' '. __('in_between') .' '. '30-60 ' . __('characters') }}
+                                                </p>
+                                                <p class="display-nothing alert alert-success mt-2" role="alert">
+                                                    {{__('current_characters')}}: <span class="characters"></span>
+                                                </p>
                                             </div>
                                         </div>
-                                        <div class="col-md-2 text-center area">
-                                            <div class="item" onclick="addContent('text-image')">
-                                                <img class="pb-3" src="{{static_asset('default-image/content-icon/text-image.png') }}">
-                                                <label>{{ __('image_right') }}</label>
+                                        <div class="col-sm-12">
+                                            <div class="form-group">
+                                                <label for="post-keywords" class="col-form-label"><b>{{ __('keywords') }}</b>
+                                                </label>
+                                                <input id="post-keywords" name="meta_keywords" value="{{ $post->meta_keywords }}" type="text" class="form-control">
                                             </div>
                                         </div>
-                                        <div class="col-md-2 text-center area">
-                                            <div class="item" onclick="addContent('text-image-text')">
-                                                <img class="pb-3" src="{{static_asset('default-image/content-icon/text-image-text.png') }}">
-                                                <label>{{ __('image_center') }}</label>
+                                        <div class="col-sm-12">
+                                            <div class="form-group">
+                                                <label for="post_tags" class="col-form-label">{{ __('tags') }}({{ __('meta_tag') }})</label>
+                                                <input id="post_tags" name="tags" type="text" value="{{ $post->tags }}" data-role="tagsinput" class="form-control" />
                                             </div>
                                         </div>
-                                        <div class="col-md-2 text-center area">
-                                            <div class="item" onclick="addContent('video')">
-                                                <img class="pb-3" src="{{static_asset('default-image/content-icon/video.png') }}">
-                                                <label>{{ __('video') }}</label>
+                                        <div class="col-sm-12">
+                                            <div class="form-group">
+                                                <label for="post_desc"><b>{{ __('description') }}</b> ({{ __('meta_description') }}
+                                                    )</label>
+                                                <textarea class="form-control meta" id="meta_description" name="meta_description" data-type="description" rows="3">{{ $post->meta_description }}</textarea>
+                                                <p class="display-nothing alert alert-danger mt-2" role="alert">
+                                                    {{__('current_characters')}}: <span class="characters"></span>, {{ __('meta_title').' '. __('should_bd') .' '. __('in_between') .' '. '30-60 ' . __('characters') }}
+                                                </p>
+                                                <p class="display-nothing alert alert-success mt-2" role="alert">
+                                                    {{__('current_characters')}}: <span class="characters"></span>
+                                                </p>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-4"></div>
-                                </div>
 
-
-                            </div>
-
-                            <div class="block-header">
-                                <h2>{{ __('embedded') }}</h2>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-2 text-center area">
-                                    <div class="item" onclick="addContent('code')">
-                                        <img class="pb-3" src="{{static_asset('default-image/content-icon/code.png') }}">
-                                        <label>{{ __('code') }}</label>
-                                    </div>
-                                </div>
-                                <div class="col-md-2 text-center area">
-                                    <div class="item" onclick="addContent('twitter-embed')">
-                                        <img class="pb-3" src="{{static_asset('default-image/content-icon/twitter.png') }}">
-                                        <label>{{ __('twitter') }}</label>
-                                    </div>
-                                </div>
-                                <div class="col-md-2 text-center area">
-                                    <div class="item" onclick="addContent('vimeo-embed')">
-                                        <img class="pb-3" src="{{static_asset('default-image/content-icon/vimeo.png') }}">
-                                        <label>{{ __('vimeo') }}</label>
-                                    </div>
-                                </div>
-                                <div class="col-md-2 text-center area">
-                                    <div class="item" onclick="addContent('youtube-embed')">
-                                        <img class="pb-3" src="{{static_asset('default-image/content-icon/youtube.png') }}">
-                                        <label>{{ __('youtube') }}</label>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="content-area">
-                            {{-- all content  --}}
-                            @php
-                            $content_count = 0;
-                            @endphp
-                            @foreach($post_contents as $page => $content)
-                            @php
-                            $page = array_keys($content);
-                            $content_count++;
-
-                            @endphp
-                            @include('post::contents/'.$page[0], compact('content_count', 'content'))
-                            @endforeach
-                            {{-- all content  --}}
-                        </div>
-
-                        <!-- SEO section start -->
-                        <div class="add-new-page  bg-white p-20 m-b-20">
-                            <div class="block-header">
-                                <h2>{{ __('seo_details') }}</h2>
-                            </div>
-                            <div class="col-sm-12">
-                                <div class="form-group">
-                                    <label for="meta_title"><b>{{ __('title') }}</b> ({{ __('meta_title') }})</label>
-                                    <input class="form-control meta" value="{{ $post->meta_title ?? $post->title }}" id="meta_title" name="meta_title" data-type="title">
-                                    <p class="display-nothing alert alert-danger mt-2" role="alert">
-                                        {{__('current_characters')}}: <span class="characters"></span>, {{ __('meta_title').' '. __('should_bd') .' '. __('in_between') .' '. '30-60 ' . __('characters') }}
-                                    </p>
-                                    <p class="display-nothing alert alert-success mt-2" role="alert">
-                                        {{__('current_characters')}}: <span class="characters"></span>
-                                    </p>
-                                </div>
-                            </div>
-                            <div class="col-sm-12">
-                                <div class="form-group">
-                                    <label for="post-keywords" class="col-form-label"><b>{{ __('keywords') }}</b>
-                                    </label>
-                                    <input id="post-keywords" name="meta_keywords" value="{{ $post->meta_keywords }}" type="text" class="form-control">
-                                </div>
-                            </div>
-                            <div class="col-sm-12">
-                                <div class="form-group">
-                                    <label for="post_tags" class="col-form-label">{{ __('tags') }}({{ __('meta_tag') }})</label>
-                                    <input id="post_tags" name="tags" type="text" value="{{ $post->tags }}" data-role="tagsinput" class="form-control" />
-                                </div>
-                            </div>
-                            <div class="col-sm-12">
-                                <div class="form-group">
-                                    <label for="post_desc"><b>{{ __('description') }}</b> ({{ __('meta_description') }}
-                                        )</label>
-                                    <textarea class="form-control meta" id="meta_description" name="meta_description" data-type="description" rows="3">{{ $post->meta_description }}</textarea>
-                                    <p class="display-nothing alert alert-danger mt-2" role="alert">
-                                        {{__('current_characters')}}: <span class="characters"></span>, {{ __('meta_title').' '. __('should_bd') .' '. __('in_between') .' '. '30-60 ' . __('characters') }}
-                                    </p>
-                                    <p class="display-nothing alert alert-success mt-2" role="alert">
-                                        {{__('current_characters')}}: <span class="characters"></span>
-                                    </p>
                                 </div>
                             </div>
                         </div>
-                        <!-- SEO section end -->
                     </div>
-                    <!-- Main Content section end -->
+
+
 
                     <!-- right sidebar start -->
-                    <div class="col-12 col-lg-3">
+                    <div class="col-3 px-0">
 
                         <div class="add-new-page  bg-white p-20 m-b-20">
                             <div class="block-header">
@@ -497,9 +488,10 @@ active
                 </div>
             </div>
         </div>
-        {!! Form::close() !!}
-        <!-- page info end-->
     </div>
+    {!! Form::close() !!}
+    <!-- page info end-->
+</div>
 </div>
 
 <input type="hidden" value="{{ $content_count }}" id="content_number">

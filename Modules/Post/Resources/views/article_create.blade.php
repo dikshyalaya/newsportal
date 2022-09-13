@@ -57,7 +57,7 @@ active
                     </div>
 
                     <!-- Main Content section start -->
-                    <div class="col-12 col-lg-9">
+                    <div class="col-9">
 
                         <div class="card ">
                             <div class="card-header p-0">
@@ -79,19 +79,18 @@ active
                                                 <label for="post_title" class="col-form-label">{{ __('title') }}*</label>
                                                 <input id="post_title" onkeyup="metaTitleSet()" name="title" value="{{ old('title') }}" type="text" class="form-control" required>
                                             </div>
-                                        </div>
-                                        <div class="col-12">
+
                                             <div class="form-group">
                                                 <label for="post-slug" class="col-form-label"><b>{{ __('slug') }}</b>
                                                     ({{ __('slug_message') }})</label>
                                                 <input id="post-slug" name="slug" value="{{ old('slug') }}" type="text" class="form-control">
                                             </div>
-                                        </div>
-                                        <!-- tinemcey start -->
-                                        <div class="col-12">
+
+                                            <!-- tinemcey start -->
+
                                             <div class="form-group">
                                                 <label for="post_content" class="col-form-label">{{ __('content') }}*</label>
-                                                <textarea name="content" class="form-control" value="{{ old('content') }}" id="post_content" cols="25" rows="8"></textarea>
+                                                <textarea name="content" class="form-control post-content" value="{{ old('content') }}" id="post_content" cols="25" rows="8"></textarea>
                                             </div>
                                         </div>
 
@@ -165,7 +164,6 @@ active
                                                         </div>
                                                     </div>
                                                 </div>
-
                                             </div>
                                         </div>
                                         <div class="col-12">
@@ -221,28 +219,11 @@ active
                                 </div>
                             </div>
                         </div>
-
-
-
-
-
-
-
-
-
-                        <!-- SEO section start -->
-                        <!-- <div class="add-new-page  bg-white p-20 m-b-20" id="post_meta">
-                        <div class="block-header">
-                            <h2>{{ __('seo_details') }}</h2>
-                        </div>
-                       
-                    </div> -->
-                        <!-- SEO section end -->
                     </div>
                     <!-- Main Content section end -->
 
                     <!-- right sidebar start -->
-                    <div class="col-12 col-lg-3 px-0">
+                    <div class="col-3 px-0">
 
                         <div class="card">
                             <div class="card-header">
@@ -585,8 +566,14 @@ active
                 content_count: content_number
             },
             success: function(result) {
-
+                console.log('value: '+value);
+                console.log('located at: '+$.inArray(value, ["text", "image-text", "text-image", "text-image-text"]));
                 $('.content-area').append(result);
+                if($.inArray(value, ["text", "image-text", "text-image", "text-image-text"])>=0){
+                    console.log("init tinyMce");
+                    tinyMceEditor.init("textarea.post-content");
+                }
+
                 $("#content_number").val(content_number);
 
                 // auto scrolling to newly added element

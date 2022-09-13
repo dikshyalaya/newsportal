@@ -10,7 +10,7 @@
         <div class="row">
             <div class="col-md-8">
                 <label for="" class="col-form-label">{{ __('content') }}*</label>
-                <textarea class="form-control" name="new_content[{{$content_count}}][text-image][text]" id="" cols="60" rows="10">{{isset($content)? $content['text-image'][0]['text']:''}}</textarea>
+                <textarea class="form-control post-content" name="new_content[{{$content_count}}][text-image][text]" id="" cols="60" rows="10">{{isset($content)? $content['text-image'][0]['text']:''}}</textarea>
             </div>
             <div class="col-md-4">
                 <div class="form-group">

@@ -12,7 +12,7 @@
             <div class="row">
                 <div class="col-md-4">
                     <label for="" class="col-form-label">{{ __('content') }}</label>
-                    <textarea class="form-control" name="new_content[{{$content_count}}][text-image-text][text_1]" id=""
+                    <textarea class="form-control post-content" name="new_content[{{$content_count}}][text-image-text][text_1]" id=""
                       cols="40" rows="5">{{isset($content)? $content['text-image-text'][0]['text_1']:''}}</textarea>
                 </div>
                 <div class="col-md-4">
@@ -60,7 +60,7 @@
                 </div>
                 <div class="col-md-4">
                     <label for="" class="col-form-label">{{ __('content') }}</label>
-                    <textarea class="form-control" name="new_content[{{$content_count}}][text-image-text][text_2]" id=""
+                    <textarea class="form-control post-content" name="new_content[{{$content_count}}][text-image-text][text_2]" id=""
                       cols="40" rows="5">{{isset($content)? $content['text-image-text'][2]['text_2']:''}}</textarea>
                 </div>
 

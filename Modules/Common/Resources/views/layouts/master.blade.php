@@ -81,39 +81,39 @@
     <!-- Tinemce -->
     <script src="{{static_asset('vendor/tinymce/tinymce.min.js')}}"></script>
     <script>
-        //TinyMCE
-        tinymce.init({
-            selector: "textarea#post_content",
-            theme: "modern",
-            height: 400,
-            plugins: [
-                'advlist autolink lists link image charmap print preview hr anchor pagebreak',
-                'searchreplace wordcount visualblocks visualchars code fullscreen',
-                'insertdatetime media nonbreaking save table contextmenu directionality',
-                'emoticons template paste textcolor colorpicker textpattern imagetools'
-            ],
-            toolbar1: 'insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image',
-            toolbar2: 'print preview media | forecolor backcolor emoticons',
-            image_advtab: true
+        var tinyMceEditor = function() {
+
+            return {
+                init: function(element_selector) {
+
+                    //reset if already initialized
+                    tinymce.remove();
+                    tinymce.EditorManager.editors = [];
+               
+                    //TinyMCE
+                    tinymce.init({
+                        selector: element_selector,
+                        theme: "modern",
+                        height: 400,
+                        plugins: [
+                            'advlist autolink lists link image charmap print preview hr anchor pagebreak',
+                            'searchreplace wordcount visualblocks visualchars code fullscreen',
+                            'insertdatetime media nonbreaking save table contextmenu directionality',
+                            'emoticons template paste textcolor colorpicker textpattern imagetools'
+                        ],
+                        toolbar1: 'insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image',
+                        toolbar2: 'print preview media | forecolor backcolor emoticons',
+                        image_advtab: true
+                    });
+                },
+                
+            }
+        }();
+
+        $(document).ready(function() {
+
+            tinyMceEditor.init("textarea.post-content");
         });
-        // tinymce.suffix = ".min";
-        // tinyMCE.baseURL = 'vendor/tinymce';
-        tinymce.init({
-            selector: "textarea#content",
-            theme: "modern",
-            height: 400,
-            plugins: [
-                'advlist autolink lists link image charmap print preview hr anchor pagebreak',
-                'searchreplace wordcount visualblocks visualchars code fullscreen',
-                'insertdatetime media nonbreaking save table contextmenu directionality',
-                'emoticons template paste textcolor colorpicker textpattern imagetools'
-            ],
-            toolbar1: 'insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image',
-            toolbar2: 'print preview media | forecolor backcolor emoticons',
-            image_advtab: true
-        });
-        // tinymce.suffix = ".min";
-        // tinyMCE.baseURL = 'vendor/tinymce';
     </script>
     <!-- slimscroll js -->
     <script src="{{static_asset('vendor')}}/slimscroll/jquery.slimscroll.js"></script>
