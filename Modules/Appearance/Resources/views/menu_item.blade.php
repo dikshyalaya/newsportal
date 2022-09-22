@@ -204,10 +204,10 @@ show
                                                                                                 <span class="custom-control-label">{{ $page->title }}</span>
                                                                                             </label>
                                                                                             @endforeach
-                                                                                            <label class="custom-control custom-checkbox">
+                                                                                            <!-- <label class="custom-control custom-checkbox">
                                                                                                 <input type="checkbox" name="page_id[]" value="gallery" class="custom-control-input">
                                                                                                 <span class="custom-control-label">{{ __('gallery') }}</span>
-                                                                                            </label>
+                                                                                            </label> -->
                                                                                         </div>
                                                                                     </div>
 
