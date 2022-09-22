@@ -6,6 +6,31 @@ active
 @section('content')
 <div class="dashboard-ecommerce">
     <div class="container-fluid dashboard-content ">
+
+        <div class="row">
+            <div class="col-12">
+                @if(session('error'))
+                <div id="error_m" class="alert alert-danger">
+                    {{session('error')}}
+                </div>
+                @endif
+                @if(session('success'))
+                <div id="success_m" class="alert alert-success">
+                    {{session('success')}}
+                </div>
+                @endif
+                @if ($errors->any())
+                <div class="alert alert-danger">
+                    <ul>
+                        @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+                @endif
+            </div>
+        </div>
+
         <!-- page info start-->
         {!! Form::open(['route' => ['save-rss-feed'],'method' => 'post']) !!}
 
@@ -20,29 +45,7 @@ active
                         </div>
                     </div>
                     <div class="card-body">
-                        <div class="row">
-                            <div class="col-12">
-                                @if(session('error'))
-                                <div id="error_m" class="alert alert-danger">
-                                    {{session('error')}}
-                                </div>
-                                @endif
-                                @if(session('success'))
-                                <div id="success_m" class="alert alert-success">
-                                    {{session('success')}}
-                                </div>
-                                @endif
-                                @if ($errors->any())
-                                <div class="alert alert-danger">
-                                    <ul>
-                                        @foreach ($errors->all() as $error)
-                                        <li>{{ $error }}</li>
-                                        @endforeach
-                                    </ul>
-                                </div>
-                                @endif
-                            </div>
-                        </div>
+
                         <div class="row">
                             <div class="col-12">
                                 <div class="form-group">
@@ -160,46 +163,40 @@ active
                 <div class="card">
 
                     <div class="card-header">
-                        <h4 class="card-title">{{ __('article_detail') }}</h4>
+                        <h4 class="card-title">{{ __('article_layout') }}</h4>
                     </div>
 
                     <div class="card-body">
                         <div class="row">
 
-                            <div class="col-4">
-                                <div class="form-group  text-center">
 
-                                    <img src="{{static_asset('default-image/Detail/detail_1.png') }}" alt="" class="img-responsive cat-block-img">
+                            <div class="col-md-4 text-center">
+                                <img src="{{static_asset('default-image/Detail/detail_1.png') }}" alt="" class="img-responsive cat-block-img">
+                                <div class="form-group">
+
+
                                     <label class="custom-control custom-radio detail-control-inline">
                                         <input type="radio" name="layout" id="detail_style_1" value="default" checked class="custom-control-input">
                                         <span class="custom-control-label"></span>
                                     </label>
                                 </div>
                             </div>
-                            <div class="col-md-4 d-none">
-                                <div class="form-group text-center">
+                            <div class="col-md-4 text-center">
+                                <img src="{{static_asset('default-image/Detail/detail_2.png') }}" alt="" class="img-responsive cat-block-img">
+                                <div class="form-group">
 
-                                    <img src="{{static_asset('default-image/Detail/detail_1.png') }}" alt="" class="img-responsive cat-block-img">
-                                    <label class="custom-control custom-radio detail-control-inline">
-                                        <input type="radio" name="layout" id="detail_style_1" value="default" checked class="custom-control-input">
-                                        <span class="custom-control-label"></span>
-                                    </label>
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="form-group text-center">
 
-                                    <img src="{{static_asset('default-image/Detail/detail_2.png') }}" alt="" class="img-responsive cat-block-img">
                                     <label class="custom-control custom-radio detail-control-inline">
                                         <input type="radio" name="layout" id="detail_style_2" value="style_2" class="custom-control-input">
                                         <span class="custom-control-label"></span>
                                     </label>
                                 </div>
                             </div>
-                            <div class="col-md-4">
-                                <div class="form-group text-center">
+                            <div class="col-md-4 text-center">
+                                <img src="{{static_asset('default-image/Detail/detail_3.png') }}" alt="" class="img-responsive cat-block-img">
+                                <div class="form-group">
 
-                                    <img src="{{static_asset('default-image/Detail/detail_3.png') }}" alt="" class="img-responsive cat-block-img">
+
                                     <label class="custom-control custom-radio detail-control-inline">
                                         <input type="radio" name="layout" id="detail_style_3" value="style_3" class="custom-control-input">
                                         <span class="custom-control-label"></span>
