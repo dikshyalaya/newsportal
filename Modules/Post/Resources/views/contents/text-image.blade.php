@@ -10,7 +10,7 @@
         <div class="row">
             <div class="col-md-8">
                 <label for="" class="col-form-label">{{ __('content') }}*</label>
-                <textarea class="form-control" name="new_content[{{$content_count}}][text-image][text]" id="" cols="60" rows="10">{{isset($content)? $content['text-image'][0]['text']:''}}</textarea>
+                <textarea class="form-control post-content" name="new_content[{{$content_count}}][text-image][text]" id="" cols="60" rows="10">{{isset($content)? $content['text-image'][0]['text']:''}}</textarea>
             </div>
             <div class="col-md-4">
                 <div class="form-group">
@@ -24,13 +24,13 @@
                         @endphp
                         @if(isFileExist(@$image, $result = @$image->thumbnail))
 
-                        <img src=" {{basePath($image)}}/{{ $result }} " id="image_preview_content" width="200" height="200" alt="image" class="img-responsive img-thumbnail image_preview">
+                        <img src=" {{basePath($image)}}/{{ $result }} " id="image_preview_content" width="200" height="200" alt="image" class="img-responsive image_preview">
                         @else
-                        <img src="{{static_asset('default-image/default-100x100.png') }} " id="image_preview_content" width="200" height="200" alt="image" class="img-responsive img-thumbnail image_preview">
+                        <img src="{{static_asset('default-image/default-100x100.png') }} " id="image_preview_content" width="200" height="200" alt="image" class="img-responsive image_preview">
                         @endif
 
                         @else
-                        <img src="{{static_asset('default-image/default-100x100.png') }} " id="image_preview_content" width="200" height="200" alt="image" class="img-responsive img-thumbnail image_preview">
+                        <img src="{{static_asset('default-image/default-100x100.png') }} " id="image_preview_content" width="200" height="200" alt="image" class="img-responsive image_preview">
                         @endif
                     </div>
                 </div>

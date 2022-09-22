@@ -57,7 +57,7 @@ active
                     </div>
 
                     <!-- Main Content section start -->
-                    <div class="col-12 col-lg-9">
+                    <div class="col-9">
 
                         <div class="card ">
                             <div class="card-header p-0">
@@ -79,19 +79,18 @@ active
                                                 <label for="post_title" class="col-form-label">{{ __('title') }}*</label>
                                                 <input id="post_title" onkeyup="metaTitleSet()" name="title" value="{{ old('title') }}" type="text" class="form-control" required>
                                             </div>
-                                        </div>
-                                        <div class="col-12">
+
                                             <div class="form-group">
                                                 <label for="post-slug" class="col-form-label"><b>{{ __('slug') }}</b>
                                                     ({{ __('slug_message') }})</label>
                                                 <input id="post-slug" name="slug" value="{{ old('slug') }}" type="text" class="form-control">
                                             </div>
-                                        </div>
-                                        <!-- tinemcey start -->
-                                        <div class="col-12">
+
+                                            <!-- tinemcey start -->
+
                                             <div class="form-group">
                                                 <label for="post_content" class="col-form-label">{{ __('content') }}*</label>
-                                                <textarea name="content" class="form-control" value="{{ old('content') }}" id="post_content" cols="25" rows="8"></textarea>
+                                                <textarea name="content" class="form-control post-content" value="{{ old('content') }}" id="post_content" cols="25" rows="8"></textarea>
                                             </div>
                                         </div>
 
@@ -165,7 +164,6 @@ active
                                                         </div>
                                                     </div>
                                                 </div>
-
                                             </div>
                                         </div>
                                         <div class="col-12">
@@ -221,28 +219,11 @@ active
                                 </div>
                             </div>
                         </div>
-
-
-
-
-
-
-
-
-
-                        <!-- SEO section start -->
-                        <!-- <div class="add-new-page  bg-white p-20 m-b-20" id="post_meta">
-                        <div class="block-header">
-                            <h2>{{ __('seo_details') }}</h2>
-                        </div>
-                       
-                    </div> -->
-                        <!-- SEO section end -->
                     </div>
                     <!-- Main Content section end -->
 
                     <!-- right sidebar start -->
-                    <div class="col-12 col-lg-3 px-0">
+                    <div class="col-3 px-0">
 
                         <div class="card">
                             <div class="card-header">
@@ -293,11 +274,7 @@ active
                                 </div>
                                 <div class="col-12-">
                                     <div class="form-group">
-
-
-                                        @include('post::post_category_render_option', ['categories'=>$categories, 'depth'=>0])
-
-
+                                        @include('post::post_category_render_option', ['categories'=>$categories, 'depth'=>0, "selected_categories"=>[]])
                                     </div>
                                 </div>
 
@@ -307,11 +284,10 @@ active
 
                         <div class="card">
                             <div class="card-header">
-                                <h4 class="card-title"> {{ __('post_type') }}*</h4>
+                                <h4 class="card-title"> {{ __('post_layout') }}*</h4>
                             </div>
                             <div class="card-body">
                                 <div class="form-group">
-
                                     <select class="form-control" id="post_type" name="post_type" required>
                                         <option value="article">Article </option>
                                         <option value="audio">Audio </option>
@@ -322,10 +298,10 @@ active
 
                                 <div class="form-group">
 
-                                    <label for="post_language col-12">{{ __('post_layout') }}*</label>
+                                    
                                     <div class="row">
-                                        <div class="col-md-4">
-                                            <div class="form-group">
+                                        <div class="col-4">
+                                            <div class="form-group  text-center">
 
                                                 <img src="{{static_asset('default-image/Detail/detail_1.png') }}" alt="" class="img-responsive cat-block-img">
                                                 <label class="custom-control custom-radio detail-control-inline">
@@ -334,8 +310,8 @@ active
                                                 </label>
                                             </div>
                                         </div>
-                                        <div class="col-md-4">
-                                            <div class="form-group">
+                                        <div class="col-4">
+                                            <div class="form-group text-center">
 
                                                 <img src="{{static_asset('default-image/Detail/detail_2.png') }}" alt="" class="img-responsive cat-block-img">
                                                 <label class="custom-control custom-radio detail-control-inline">
@@ -344,8 +320,8 @@ active
                                                 </label>
                                             </div>
                                         </div>
-                                        <div class="col-md-4">
-                                            <div class="form-group">
+                                        <div class="col-4">
+                                            <div class="form-group  text-center">
 
                                                 <img src="{{static_asset('default-image/Detail/detail_3.png') }}" alt="" class="img-responsive cat-block-img">
                                                 <label class="custom-control custom-radio detail-control-inline">
@@ -587,6 +563,11 @@ active
             success: function(result) {
 
                 $('.content-area').append(result);
+                if ($.inArray(value, ["text", "image-text", "text-image", "text-image-text"]) >= 0) {
+                    console.log("init tinyMce");
+                    tinyMceEditor.init("textarea.post-content");
+                }
+
                 $("#content_number").val(content_number);
 
                 // auto scrolling to newly added element

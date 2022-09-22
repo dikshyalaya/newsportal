@@ -666,7 +666,7 @@
     "valid_feed_url": "Valid feed URL",
     "number_of_post_to_import": "Number of posts to import",
     "show_read_more": "Show read more",
-    "keep_post_original_publish_date": "Keep post original publish date",
+    "keep_post_original_publish_date": "Import publish date",
     "add_feed": "Add feed",
     "update_rss_source": "Update RSS source",
     "update_rss": "Update RSS",

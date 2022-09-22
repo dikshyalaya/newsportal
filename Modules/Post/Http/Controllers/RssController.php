@@ -16,7 +16,7 @@ use Modules\Language\Entities\Language;
 use Modules\Post\Entities\Category;
 use Modules\Post\Entities\Post;
 use Modules\Post\Entities\RssFeed;
-use Modules\Post\Entities\SubCategory;
+
 use LaravelLocalization;
 use Validator;
 use Image;
@@ -30,9 +30,9 @@ class RssController extends Controller
      */
     public function index()
     {
-        $categories     = Category::all();
+        $categories       = Category::with('childrenRecursive')->where('parent_id', 0)->get();
         $activeLang     = Language::where('status', 'active')->orderBy('name', 'ASC')->get();
-        $feeds          = RssFeed::orderBy('id','desc')->with('category','subCategory')->paginate('15');
+        $feeds          = RssFeed::orderBy('id','desc')->with('category')->paginate('15');
 
         return view('post::rss_feeds',compact('activeLang','categories','feeds'));
     }
@@ -43,10 +43,11 @@ class RssController extends Controller
      */
     public function importRss()
     {
-        $categories     = Category::where('language', LaravelLocalization::setLocale() ?? settingHelper('default_language'))->get();
-        $subCategories  = SubCategory::all();
+       
+       $categories       = Category::with('childrenRecursive')->where('parent_id', 0)->get();
+       
         $activeLang     = Language::where('status', 'active')->orderBy('name', 'ASC')->get();
-        return view('post::import_rss', compact('categories','subCategories','activeLang'));
+        return view('post::import_rss', compact('categories','activeLang'));
     }
 
     /**
@@ -74,7 +75,7 @@ class RssController extends Controller
             $rssFeed->feed_url      = $request->feed_url;
             $rssFeed->language      = $request->language;
             $rssFeed->category_id   = $request->category_id ;
-            $rssFeed->sub_category_id   = $request->sub_category_id  ;
+           
             $rssFeed->post_limit        = $request->post_limit;
             $rssFeed->auto_update       = $request->auto_update;
             $rssFeed->show_read_more    = $request->show_read_more;
@@ -105,13 +106,10 @@ class RssController extends Controller
     {
         $activeLang     = Language::where('status', 'active')->orderBy('name', 'ASC')->get();
         $feed           = RssFeed::findOrfail($id);
-        $categories     = Category::where('language',$feed->language)->get();
+        $categories       = Category::with('childrenRecursive')->where('parent_id', 0)->get();
 
-        $subCategories  = [];
-        if($feed->category_id != ""){
-            $subCategories  = SubCategory::where('category_id',$feed->category['id'])->get();
-        }
-        return view('post::edit_rss',compact('feed','activeLang','categories','subCategories'));
+       
+        return view('post::edit_rss',compact('feed','activeLang','categories'));
     }
 
     /**
@@ -138,7 +136,7 @@ class RssController extends Controller
             $rssFeed->feed_url      = $request->feed_url;
             $rssFeed->language      = $request->language;
             $rssFeed->category_id   = $request->category_id ;
-            $rssFeed->sub_category_id   = $request->sub_category_id;
+            
             $rssFeed->post_limit        = $request->post_limit;
             $rssFeed->auto_update       = $request->auto_update;
             $rssFeed->show_read_more    = $request->show_read_more;
@@ -166,9 +164,9 @@ class RssController extends Controller
      */
     public function filter(Request $request)
     {
-        $categories     = Category::all();
+        $categories       = Category::with('childrenRecursive')->where('parent_id', 0)->get();
         $activeLang     = Language::where('status', 'active')->orderBy('name', 'ASC')->get();
-        $feeds          = RssFeed::where('language', 'like', '%' . $request->language .'%')->where('name','like','%'.$request->search_key.'%')->orderBy('id','desc')->with('category','subCategory')->paginate('15');
+        $feeds          = RssFeed::where('language', 'like', '%' . $request->language .'%')->where('name','like','%'.$request->search_key.'%')->orderBy('id','desc')->with('category')->paginate('15');
 
         return view('post::search_rss_feeds',compact('activeLang','categories','feeds'));
     }
@@ -214,7 +212,7 @@ class RssController extends Controller
 
                     $post->language         = $feed->language;
                     $post->category_id      = $feed->category_id;
-                    $post->sub_category_id  = $feed->sub_category_id ;
+                  
                     $post->layout           = $feed->layout ;
 
                     if($feed->status == 2) :

@@ -2,7 +2,7 @@
     @foreach($comments as $comment)
         <li class="media">
             <div class="commenter-avatar">
-                <a href="#"><img class="img-fluid" src="{{static_asset('site/images/others/author.png') }}" alt="Image"></a>
+                <a href="#"><img class="img-fluid" src="{{static_asset(Sentinel::getUser()->profile_image)}}" alt="Image"></a>
             </div>
             <div class="comment-box media-body">
                 <div class="comment-meta">

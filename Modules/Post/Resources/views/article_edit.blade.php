@@ -28,18 +28,6 @@ active
         <input type="hidden" id="imageCount" value="1">
         <div class="row">
             <div class="col-12">
-
-                <div class="row">
-                    <div class="col-6">
-                        <div class="block-header">
-                            <h2>{{ __('update_post') }}</h2>
-                        </div>
-                    </div>
-                    <div class="col-6 text-right">
-                        <a href="{{ route('post') }}" class="btn btn-primary btn-add-new"><i class="fas fa-list"></i> {{ __('posts') }}
-                        </a>
-                    </div>
-                </div>
                 <div class="row">
                     <div class="col-12">
                         @if(session('error'))
@@ -65,191 +53,198 @@ active
                 </div>
 
                 <div class="row">
+                    <div class="col-9">
 
 
-                    <!-- Main Content section start -->
-                    <div class="col-12 col-lg-9">
-                        <div class="card">
-                            <div class="card-header">
-                                <h3 class="card-title">{{ __('posts_details') }}</h3>
+
+
+                        <div class="card ">
+                            <div class="card-header p-0">
+                                <ul class="nav nav-tabs" id="myTab" role="tablist">
+                                    <li class="nav-item">
+                                        <a class="nav-link active" id="post-tab" data-toggle="tab" href="#post-content" role="tab" aria-selected="true">Post Content</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" id="seo-tab" data-toggle="tab" href="#seo-content" role="tab" aria-selected="false">SEO</a>
+                                    </li>
+                                </ul>
                             </div>
-                            <div class="card-body">
-                                <div class="form-group">
-                                    <label for="post_title" class="col-form-label">{{ __('title') }}*</label>
-                                    <input id="post_title" name="title" value="{{ $post->title }}" type="text" class="form-control" required>
-                                </div>
+                            <div class="card-body px-0">
+                                <div class="tab-content" id="myTabContent">
+                                    <div class="tab-pane fade show active" id="post-content" role="tabpanel" aria-labelledby="home-tab">
+                                        <div class="col-12">
+                                            <div class="form-group">
+                                                <label for="post_title" class="col-form-label">{{ __('title') }}*</label>
+                                                <input id="post_title" name="title" value="{{ $post->title }}" type="text" class="form-control" required>
+                                            </div>
 
 
-                                <div class="form-group">
-                                    <label for="post-slug" class="col-form-label"><b>{{ __('slug') }}</b>
-                                        ({{ __('slug_message') }})</label>
-                                    <input id="post-slug" value="{{ $post->slug }}" name="slug" type="text" class="form-control">
-                                </div>
 
-                                <!-- tinemcey start -->
+                                            <div class="form-group">
+                                                <label for="post-slug" class="col-form-label"><b>{{ __('slug') }}</b>
+                                                    ({{ __('slug_message') }})</label>
+                                                <input id="post-slug" value="{{ $post->slug }}" name="slug" type="text" class="form-control">
+                                            </div>
 
-                                <div class="form-group">
-                                    <label for="post_content" class="col-form-label">{{ __('content') }}*</label>
-                                    <textarea name="content" class="form-control" value="{{ $post->content }}" id="post_content" rows="3">
+                                            <!-- tinemcey start -->
+
+                                            <div class="form-group">
+                                                <label for="post_content" class="col-form-label">{{ __('content') }}*</label>
+                                                <textarea name="content" class="form-control post-content" value="{{ $post->content }}" id="post_content" rows="3">
                                                         {!! $post->content !!}
                                                     </textarea>
-                                </div>
+                                            </div>
 
-                                <!-- tinemcey end -->
-                            </div>
-                        </div>
-                        <div class="card">
-                            <div class="card-header">
-                                <h3 class="card-title">{{ __('add_content') }}</h3>
-                            </div>
-                            <div class="card-body">
-                                <div class="row">
-                                    <div class="col-8">
-                                        <div class="col-md-2 text-center area">
-                                            <div class="item" onclick="addContent('text')">
-                                                <img class="pb-3" src="{{static_asset('default-image/content-icon/text.png') }}">
-                                                <label>{{ __('text') }}</label>
+                                            <!-- tinemcey end -->
+                                        </div>
+
+                                        <div class="col-12">
+                                            <div class="card">
+                                                <div class="card-header">
+                                                    <h3 class="card-title">{{ __('add_content') }}</h3>
+                                                </div>
+                                                <div class="card-body">
+                                                    <div class="row">
+                                                        <div class="col-md-1 pr-0 text-center area">
+                                                            <div class="item content-item" onclick="addContent('text')">
+                                                                <img src="{{static_asset('default-image/content-icon/text.png') }}">
+                                                                <!-- <label>{{ __('text') }}</label> -->
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-1 pr-0 text-center area">
+                                                            <div class="item content-item" onclick="addContent('image')">
+                                                                <img src="{{static_asset('default-image/content-icon/image.png') }}">
+                                                                <!-- <label>{{ __('image') }}</label> -->
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-1 pr-0 text-center area">
+                                                            <div class="item content-item" onclick="addContent('image-text')">
+                                                                <img src="{{static_asset('default-image/content-icon/image-text.png') }}">
+                                                                <!-- <label>{{ __('image_left') }}</label> -->
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-1 pr-0 text-center area">
+                                                            <div class="item content-item" onclick="addContent('text-image')">
+                                                                <img src="{{static_asset('default-image/content-icon/text-image.png') }}">
+                                                                <!-- <label>{{ __('image_right') }}</label> -->
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-1 pr-0 text-center area">
+                                                            <div class="item content-item" onclick="addContent('text-image-text')">
+                                                                <img src="{{static_asset('default-image/content-icon/text-image-text.png') }}">
+                                                                <!-- <label>{{ __('image_center') }}</label> -->
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-1 pr-0 text-center area">
+                                                            <div class="item content-item" onclick="addContent('video')">
+                                                                <img src="{{static_asset('default-image/content-icon/video.png') }}">
+                                                                <!-- <label>{{ __('video') }}</label> -->
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="col-md-1 pr-0 text-center area">
+                                                            <div class="item content-item" onclick="addContent('code')">
+                                                                <img src="{{static_asset('default-image/content-icon/code.png') }}">
+                                                                <!-- <label>{{ __('code') }}</label> -->
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-1 pr-0 text-center area">
+                                                            <div class="item content-item" onclick="addContent('twitter-embed')">
+                                                                <img src="{{static_asset('default-image/content-icon/twitter.png') }}">
+                                                                <!-- <label>{{ __('twitter') }}</label> -->
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-1 pr-0 text-center area">
+                                                            <div class="item content-item" onclick="addContent('vimeo-embed')">
+                                                                <img src="{{static_asset('default-image/content-icon/vimeo.png') }}">
+                                                                <!-- <label>{{ __('vimeo') }}</label> -->
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-1 pr-0 text-center area">
+                                                            <div class="item content-item" onclick="addContent('youtube-embed')">
+                                                                <img src="{{static_asset('default-image/content-icon/youtube.png') }}">
+                                                                <!-- <label>{{ __('youtube') }}</label> -->
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
-                                        <div class="col-md-2 text-center area">
-                                            <div class="item" onclick="addContent('image')">
-                                                <img class="pb-3" src="{{static_asset('default-image/content-icon/image.png') }}">
-                                                <label>{{ __('image') }}</label>
+                                        <div class="col-12">
+                                            <div class="content-area">
+                                                {{-- all content  --}}
+                                                @php
+                                                $content_count = 0;
+                                                @endphp
+                                                @foreach($post_contents as $page => $content)
+                                                @php
+                                                $page = array_keys($content);
+                                                $content_count++;
+
+                                                @endphp
+                                                @include('post::contents/'.$page[0], compact('content_count', 'content'))
+                                                @endforeach
+                                                {{-- all content  --}}
                                             </div>
                                         </div>
-                                        <div class="col-md-2 text-center area">
-                                            <div class="item" onclick="addContent('image-text')">
-                                                <img class="pb-3" src="{{static_asset('default-image/content-icon/image-text.png') }}">
-                                                <label>{{ __('image_left') }}</label>
+
+                                    </div>
+                                    <div class="tab-pane fade" id="seo-content" role="tabpanel">
+                                        <div class="col-sm-12">
+                                            <div class="form-group">
+                                                <label for="meta_title"><b>{{ __('title') }}</b> ({{ __('meta_title') }})</label>
+                                                <input class="form-control meta" value="{{ $post->meta_title ?? $post->title }}" id="meta_title" name="meta_title" data-type="title">
+                                                <p class="display-nothing alert alert-danger mt-2" role="alert">
+                                                    {{__('current_characters')}}: <span class="characters"></span>, {{ __('meta_title').' '. __('should_bd') .' '. __('in_between') .' '. '30-60 ' . __('characters') }}
+                                                </p>
+                                                <p class="display-nothing alert alert-success mt-2" role="alert">
+                                                    {{__('current_characters')}}: <span class="characters"></span>
+                                                </p>
                                             </div>
                                         </div>
-                                        <div class="col-md-2 text-center area">
-                                            <div class="item" onclick="addContent('text-image')">
-                                                <img class="pb-3" src="{{static_asset('default-image/content-icon/text-image.png') }}">
-                                                <label>{{ __('image_right') }}</label>
+                                        <div class="col-sm-12">
+                                            <div class="form-group">
+                                                <label for="post-keywords" class="col-form-label"><b>{{ __('keywords') }}</b>
+                                                </label>
+                                                <input id="post-keywords" name="meta_keywords" value="{{ $post->meta_keywords }}" type="text" class="form-control">
                                             </div>
                                         </div>
-                                        <div class="col-md-2 text-center area">
-                                            <div class="item" onclick="addContent('text-image-text')">
-                                                <img class="pb-3" src="{{static_asset('default-image/content-icon/text-image-text.png') }}">
-                                                <label>{{ __('image_center') }}</label>
+                                        <div class="col-sm-12">
+                                            <div class="form-group">
+                                                <label for="post_tags" class="col-form-label">{{ __('tags') }}({{ __('meta_tag') }})</label>
+                                                <input id="post_tags" name="tags" type="text" value="{{ $post->tags }}" data-role="tagsinput" class="form-control" />
                                             </div>
                                         </div>
-                                        <div class="col-md-2 text-center area">
-                                            <div class="item" onclick="addContent('video')">
-                                                <img class="pb-3" src="{{static_asset('default-image/content-icon/video.png') }}">
-                                                <label>{{ __('video') }}</label>
+                                        <div class="col-sm-12">
+                                            <div class="form-group">
+                                                <label for="post_desc"><b>{{ __('description') }}</b> ({{ __('meta_description') }}
+                                                    )</label>
+                                                <textarea class="form-control meta" id="meta_description" name="meta_description" data-type="description" rows="3">{{ $post->meta_description }}</textarea>
+                                                <p class="display-nothing alert alert-danger mt-2" role="alert">
+                                                    {{__('current_characters')}}: <span class="characters"></span>, {{ __('meta_title').' '. __('should_bd') .' '. __('in_between') .' '. '30-60 ' . __('characters') }}
+                                                </p>
+                                                <p class="display-nothing alert alert-success mt-2" role="alert">
+                                                    {{__('current_characters')}}: <span class="characters"></span>
+                                                </p>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-4"></div>
-                                </div>
 
-
-                            </div>
-
-                            <div class="block-header">
-                                <h2>{{ __('embedded') }}</h2>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-2 text-center area">
-                                    <div class="item" onclick="addContent('code')">
-                                        <img class="pb-3" src="{{static_asset('default-image/content-icon/code.png') }}">
-                                        <label>{{ __('code') }}</label>
-                                    </div>
-                                </div>
-                                <div class="col-md-2 text-center area">
-                                    <div class="item" onclick="addContent('twitter-embed')">
-                                        <img class="pb-3" src="{{static_asset('default-image/content-icon/twitter.png') }}">
-                                        <label>{{ __('twitter') }}</label>
-                                    </div>
-                                </div>
-                                <div class="col-md-2 text-center area">
-                                    <div class="item" onclick="addContent('vimeo-embed')">
-                                        <img class="pb-3" src="{{static_asset('default-image/content-icon/vimeo.png') }}">
-                                        <label>{{ __('vimeo') }}</label>
-                                    </div>
-                                </div>
-                                <div class="col-md-2 text-center area">
-                                    <div class="item" onclick="addContent('youtube-embed')">
-                                        <img class="pb-3" src="{{static_asset('default-image/content-icon/youtube.png') }}">
-                                        <label>{{ __('youtube') }}</label>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="content-area">
-                            {{-- all content  --}}
-                            @php
-                            $content_count = 0;
-                            @endphp
-                            @foreach($post_contents as $page => $content)
-                            @php
-                            $page = array_keys($content);
-                            $content_count++;
-
-                            @endphp
-                            @include('post::contents/'.$page[0], compact('content_count', 'content'))
-                            @endforeach
-                            {{-- all content  --}}
-                        </div>
-
-                        <!-- SEO section start -->
-                        <div class="add-new-page  bg-white p-20 m-b-20">
-                            <div class="block-header">
-                                <h2>{{ __('seo_details') }}</h2>
-                            </div>
-                            <div class="col-sm-12">
-                                <div class="form-group">
-                                    <label for="meta_title"><b>{{ __('title') }}</b> ({{ __('meta_title') }})</label>
-                                    <input class="form-control meta" value="{{ $post->meta_title ?? $post->title }}" id="meta_title" name="meta_title" data-type="title">
-                                    <p class="display-nothing alert alert-danger mt-2" role="alert">
-                                        {{__('current_characters')}}: <span class="characters"></span>, {{ __('meta_title').' '. __('should_bd') .' '. __('in_between') .' '. '30-60 ' . __('characters') }}
-                                    </p>
-                                    <p class="display-nothing alert alert-success mt-2" role="alert">
-                                        {{__('current_characters')}}: <span class="characters"></span>
-                                    </p>
-                                </div>
-                            </div>
-                            <div class="col-sm-12">
-                                <div class="form-group">
-                                    <label for="post-keywords" class="col-form-label"><b>{{ __('keywords') }}</b>
-                                    </label>
-                                    <input id="post-keywords" name="meta_keywords" value="{{ $post->meta_keywords }}" type="text" class="form-control">
-                                </div>
-                            </div>
-                            <div class="col-sm-12">
-                                <div class="form-group">
-                                    <label for="post_tags" class="col-form-label">{{ __('tags') }}({{ __('meta_tag') }})</label>
-                                    <input id="post_tags" name="tags" type="text" value="{{ $post->tags }}" data-role="tagsinput" class="form-control" />
-                                </div>
-                            </div>
-                            <div class="col-sm-12">
-                                <div class="form-group">
-                                    <label for="post_desc"><b>{{ __('description') }}</b> ({{ __('meta_description') }}
-                                        )</label>
-                                    <textarea class="form-control meta" id="meta_description" name="meta_description" data-type="description" rows="3">{{ $post->meta_description }}</textarea>
-                                    <p class="display-nothing alert alert-danger mt-2" role="alert">
-                                        {{__('current_characters')}}: <span class="characters"></span>, {{ __('meta_title').' '. __('should_bd') .' '. __('in_between') .' '. '30-60 ' . __('characters') }}
-                                    </p>
-                                    <p class="display-nothing alert alert-success mt-2" role="alert">
-                                        {{__('current_characters')}}: <span class="characters"></span>
-                                    </p>
                                 </div>
                             </div>
                         </div>
-                        <!-- SEO section end -->
                     </div>
-                    <!-- Main Content section end -->
+
+
 
                     <!-- right sidebar start -->
-                    <div class="col-12 col-lg-3">
+                    <div class="col-3 px-0">
 
-                        <div class="add-new-page  bg-white p-20 m-b-20">
-                            <div class="block-header">
-                                <h2>{{ __('publish') }}*</h2>
+                        <div class="card">
+                            <div class="card-header">
+                                <h4 class="card-title"> {{ __('status') }}</h4>
                             </div>
-                            <div class="col-sm-12">
+                            <div class="card-body">
                                 <div class="form-group">
                                     <select class="form-control" id="post_status" name="status" required>
                                         <option @if($post->status==1 && $post->scheduled==0) selected
@@ -260,48 +255,117 @@ active
                                             @endif value="2">{{ __('scheduled') }}</option>
                                     </select>
                                 </div>
-                            </div>
-                            <div class="col-sm-12 divScheduleDate" @if($post->post_status==0 && $post->scheduled==1) @else id="display-nothing" @endif>
-                                <label for="scheduled_date">{{ __('schedule_date') }}</label>
-                                <div class="input-group">
-                                    <label class="input-group-text" for="scheduled_date"><i class="fa fa-calendar-alt"></i></label>
-                                    <input type="text" class="form-control date" id="scheduled_date" value="{{ Carbon\Carbon::parse($post->scheduled_date)->format('m/d/Y g:i A') }}" name="scheduled_date" />
+                                <div class="form-group divScheduleDate" @if($post->post_status==0 && $post->scheduled==1) @else id="display-nothing" @endif>
+                                    <label for="scheduled_date">{{ __('schedule_date') }}</label>
+                                    <div class="input-group">
+                                        <label class="input-group-text" for="scheduled_date"><i class="fa fa-calendar-alt"></i></label>
+                                        <input type="text" class="form-control date" id="scheduled_date" value="{{ Carbon\Carbon::parse($post->scheduled_date)->format('m/d/Y g:i A') }}" name="scheduled_date" />
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="col-sm-12">
+
                                 <div class="form-group">
-                                    <label class="custom-control" for="btnSubmit"></label>
-                                    <button type="submit" name="btnSubmit" class="btn btn-primary pull-right"><i class="m-r-10 mdi mdi-content-save-all"></i>{{ __('update_post') }}
+                                    <a href="{{ route('post') }}" class="btn btn-light"><i class="fas fa-chevron-circle-left"></i> {{ __('cancel') }} </a>
+
+                                    <button type="submit" name="btnSubmit" class="btn btn-primary pull-right"><i class="fas fa-save"></i> {{ __('update_post') }}
                                     </button>
-                                    <label class="" for="btnSubmit"></label>
+
                                 </div>
                             </div>
                         </div>
-                        <div class="add-new-page  bg-white p-20 m-b-20">
-                            <div class="block-header">
-                                <h2>{{ __('image') }}</h2>
+
+                        <div class="card">
+                            <div class="card-header">
+                                <h4 class="card-title"><label for="category_id">{{ __('category') }}*</label></h4>
                             </div>
-                            <div class="col-sm-12">
+                            <div class="card-body">
+
                                 <div class="form-group">
+                                    @include('post::post_category_render_option', ['categories'=>$categories, 'depth'=>0, 'selected_categories'=>$post->categories->pluck("id")->toArray()])
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="card">
+                            <div class="card-header">
+                                <h4 class="card-title"> {{ __('post_type') }}*</h4>
+                            </div>
+                            <div class="card-body">
+                                <div class="form-group">
+                                    <select class="form-control" id="post_type" name="post_type" required>
+                                        <option value="article">Article </option>
+                                        <option value="audio">Audio </option>
+                                        <option value="video">Video </option>
+
+                                    </select>
+                                </div>
+
+
+                                <div class="form-group">
+
+                                    <label for="post_language ">{{ __('post_layout') }}*</label>
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <div class="form-group text-center">
+
+                                                <img src="{{static_asset('default-image/Detail/detail_1.png') }}" alt="" class="img-responsive cat-block-img">
+                                                <label class="custom-control custom-radio detail-control-inline">
+                                                    {{-- {{(data_get($activeTheme, 'options.detail_style') == "style_1"? 'checked':'')}}--}}
+                                                    <input type="radio" name="layout" id="detail_style_1" value="default" {{@$post->layout=="default" ? 'checked': ''}} class="custom-control-input">
+                                                    <span class="custom-control-label"></span>
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group text-center">
+
+                                                <img src="{{static_asset('default-image/Detail/detail_2.png') }}" alt="" class="img-responsive cat-block-img">
+                                                <label class="custom-control custom-radio detail-control-inline">
+                                                    <input type="radio" name="layout" id="detail_style_2" value="style_2" {{@$post->layout=="style_2" ? 'checked': ''}} class="custom-control-input">
+                                                    <span class="custom-control-label"></span>
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group text-center">
+
+                                                <img src="{{static_asset('default-image/Detail/detail_3.png') }}" alt="" class="img-responsive cat-block-img">
+                                                <label class="custom-control custom-radio detail-control-inline">
+                                                    <input type="radio" name="layout" id="detail_style_3" value="style_3" {{@$post->layout=="style_3" ? 'checked': ''}} class="custom-control-input">
+                                                    <span class="custom-control-label"></span>
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="card">
+                            <div class="card-header">
+                                <h4 class="card-title">{{ __('featured_image') }}</h4>
+                            </div>
+                            <div class="card-body">
+                                <div class="form-group text-center">
+                                    <div class="form-group text-center">
+                                        @if(isFileExist($post->image, $result = @$post->image->thumbnail))
+                                        <img src=" {{basePath($post->image)}}/{{ $result }} " id="image_preview" width="100%" class="img-responsive  image_preview" alt="{!! $post->title !!}">
+                                        @else
+                                        <img src="{{static_asset('default-image/default-100x100.png') }} " id="image_preview" width="100%" class="img-responsive  image_preview" alt="{!! $post->title !!}">
+                                        @endif
+                                    </div>
+                                </div>
+                                <div class="form-group text-center">
                                     <!-- Large modal -->
                                     <button type="button" id="btn_image_modal" class="btn btn-primary btn-image-modal" data-id="1" data-toggle="modal" data-target=".image-modal-lg">{{ __('add_image') }}</button>
                                     <input id="image_id" value="{{ $post->image_id }}" name="image_id" type="hidden" class="form-control image_id">
                                 </div>
                             </div>
-                            <div class="col-sm-12">
-                                <div class="form-group">
-                                    <div class="form-group text-center">
-                                        @if(isFileExist($post->image, $result = @$post->image->thumbnail))
-                                        <img src=" {{basePath($post->image)}}/{{ $result }} " id="image_preview" width="200" height="200" class="img-responsive img-thumbnail image_preview" alt="{!! $post->title !!}">
-                                        @else
-                                        <img src="{{static_asset('default-image/default-100x100.png') }} " id="image_preview" width="200" height="200" class="img-responsive img-thumbnail image_preview" alt="{!! $post->title !!}">
-                                        @endif
-                                    </div>
-                                </div>
-                            </div>
                         </div>
-                        <div class="add-new-page  bg-white p-20 m-b-20">
-                            <div class="col-sm-12 d-none">
+
+
+                        <div class="add-new-page  bg-white p-20 m-b-20 d-none">
+                            <div class="col-sm-12 ">
                                 <div class="form-group">
                                     <label for="post_language">{{ __('select_language') }}*</label>
                                     <select class="form-control dynamic-category" id="post_language" name="language" data-dependent="category_id">
@@ -313,104 +377,45 @@ active
                                     </select>
                                 </div>
                             </div>
-                            <div class="col-sm-12">
-                                <div class="form-group">
-                                    <label for="category_id">{{ __('category') }}*</label>
-                                    <select class="form-control dynamic" id="category_id" name="category_id" data-dependent="sub_category_id" required>
-                                        <option value="">{{ __('select_category') }}</option>
-                                        @foreach ($categories as $category)
-                                        <option @if($post->category_id == $category->id) Selected
-                                            @endif value="{{ $category->id }}">{{ $category->category_name }}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col-sm-12">
-                                <div class="form-group">
-                                    <label for="sub_category_id">{{ __('sub_category') }}</label>
-                                    <select class="form-control dynamic" id="sub_category_id" name="sub_category_id">
-                                        <option value="">{{ __('select_sub_category') }}</option>
-                                        @foreach ($subCategories as $subCategory)
-                                        <option @if($post->sub_category_id == $subCategory->id) Selected
-                                            @endif value="{{ $subCategory->id }}">{{ $subCategory->sub_category_name }}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="add-new-page  bg-white p-20 m-b-20">
-                            <div class="col-md-12">
-                                <div class="block-header">
-                                    <h2>{{ __('article_detail') }}</h2>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-4">
-                                    <div class="form-group">
-                                        <label class="custom-control custom-radio detail-control-inline">
-                                            {{-- {{(data_get($activeTheme, 'options.detail_style') == "style_1"? 'checked':'')}}--}}
-                                            <input type="radio" name="layout" id="detail_style_1" value="default" {{@$post->layout=="default" ? 'checked': ''}} class="custom-control-input">
-                                            <span class="custom-control-label"></span>
-                                        </label>
-                                        <img src="{{static_asset('default-image/Detail/detail_1.png') }}" alt="" class="img-responsive cat-block-img">
-                                    </div>
-                                </div>
-                                <div class="col-md-4">
-                                    <div class="form-group">
-                                        <label class="custom-control custom-radio detail-control-inline">
-                                            <input type="radio" name="layout" id="detail_style_2" value="style_2" {{@$post->layout=="style_2" ? 'checked': ''}} class="custom-control-input">
-                                            <span class="custom-control-label"></span>
-                                        </label>
-                                        <img src="{{static_asset('default-image/Detail/detail_2.png') }}" alt="" class="img-responsive cat-block-img">
-                                    </div>
-                                </div>
-                                <div class="col-md-4">
-                                    <div class="form-group">
-                                        <label class="custom-control custom-radio detail-control-inline">
-                                            <input type="radio" name="layout" id="detail_style_3" value="style_3" {{@$post->layout=="style_3" ? 'checked': ''}} class="custom-control-input">
-                                            <span class="custom-control-label"></span>
-                                        </label>
-                                        <img src="{{static_asset('default-image/Detail/detail_3.png') }}" alt="" class="img-responsive cat-block-img">
-                                    </div>
-                                </div>
-                            </div>
                         </div>
 
+
                         <!-- visibility section start -->
-                        <div class="add-new-page  bg-white p-20 m-b-20">
-                            <div class="block-header">
-                                <h2>{{ __('visibility') }}</h2>
+                        <div class="card">
+                            <div class="card-header">
+                                <h4 class="card-title">{{ __('visibility') }}</h4>
                             </div>
-                            <div class="row p-l-15">
-                                <div class="col-12 col-md-4">
-                                    <div class="form-title">
-                                        <label for="visibility">{{ __('visibility') }}</label>
+                            <div class='card-body'>
+                                <div class="row">
+                                    <div class="col-12 col-md-5">
+                                        <div class="form-title">
+                                            <label for="visibility">{{ __('visibility') }}</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-3">
+                                        <label class="custom-control custom-radio custom-control-inline">
+                                            <input type="radio" @if($post->visibility==1) checked
+                                            @endif name="visibility" id="visibility_show" value="1"
+                                            class="custom-control-input">
+                                            <span class="custom-control-label">{{ __('show') }}</span>
+                                        </label>
+                                    </div>
+                                    <div class="col-3 col-md-2">
+                                        <label class="custom-control custom-radio custom-control-inline">
+                                            <input type="radio" @if($post->visibility==0) checked
+                                            @endif name="visibility" id="visibility_hide" value="0"
+                                            class="custom-control-input">
+                                            <span class="custom-control-label">{{ __('hide') }}</span>
+                                        </label>
                                     </div>
                                 </div>
-                                <div class="col-3 col-md-2">
-                                    <label class="custom-control custom-radio custom-control-inline">
-                                        <input type="radio" @if($post->visibility==1) checked
-                                        @endif name="visibility" id="visibility_show" value="1"
-                                        class="custom-control-input">
-                                        <span class="custom-control-label">{{ __('show') }}</span>
-                                    </label>
-                                </div>
-                                <div class="col-3 col-md-2">
-                                    <label class="custom-control custom-radio custom-control-inline">
-                                        <input type="radio" @if($post->visibility==0) checked
-                                        @endif name="visibility" id="visibility_hide" value="0"
-                                        class="custom-control-input">
-                                        <span class="custom-control-label">{{ __('hide') }}</span>
-                                    </label>
-                                </div>
-                            </div>
-                            <div class="row p-l-15">
-                                <div class="col-8 col-md-4">
+                                <div class="row ">
+                                <div class="col-10">
                                     <div class="form-title">
                                         <label for="featured_post">{{ __('add_to_featured') }}</label>
                                     </div>
                                 </div>
-                                <div class="col-4 col-md-2">
+                                <div class="col-2">
                                     <label class="custom-control custom-checkbox">
                                         <input type="checkbox" @if($post->featured==1) checked
                                         @endif id="featured_post" name="featured"
@@ -419,13 +424,13 @@ active
                                     </label>
                                 </div>
                             </div>
-                            <div class="row p-l-15">
-                                <div class="col-8 col-md-4">
+                            <div class="row ">
+                                <div class="col-10">
                                     <div class="form-title">
                                         <label for="add_to_breaking">{{ __('add_to_breaking') }}</label>
                                     </div>
                                 </div>
-                                <div class="col-4 col-md-2">
+                                <div class="col-2">
                                     <label class="custom-control custom-checkbox">
                                         <input type="checkbox" id="add_to_breaking" @if($post->breaking==1) checked
                                         @endif name="breaking" class="custom-control-input">
@@ -433,13 +438,13 @@ active
                                     </label>
                                 </div>
                             </div>
-                            <div class="row p-l-15">
-                                <div class="col-8 col-md-4">
+                            <div class="row ">
+                                <div class="col-10">
                                     <div class="form-title">
                                         <label for="add_to_slide">{{ __('add_to_slider') }}</label>
                                     </div>
                                 </div>
-                                <div class="col-4 col-md-2">
+                                <div class="col-2">
                                     <label class="custom-control custom-checkbox">
                                         <input type="checkbox" id="add_to_slide" @if($post->slider==1) checked
                                         @endif name="slider" class="custom-control-input">
@@ -447,13 +452,13 @@ active
                                     </label>
                                 </div>
                             </div>
-                            <div class="row p-l-15">
-                                <div class="col-8 col-md-4">
+                            <div class="row ">
+                                <div class="col-10">
                                     <div class="form-title">
                                         <label for="recommended">{{ __('add_to_recommended') }}</label>
                                     </div>
                                 </div>
-                                <div class="col-4 col-md-2">
+                                <div class="col-2">
                                     <label class="custom-control custom-checkbox">
                                         <input type="checkbox" id="recommended" @if($post->recommended==1) checked
                                         @endif name="recommended" class="custom-control-input">
@@ -461,13 +466,13 @@ active
                                     </label>
                                 </div>
                             </div>
-                            <div class="row p-l-15">
-                                <div class="col-8 col-md-4">
+                            <div class="row ">
+                                <div class="col-10">
                                     <div class="form-title">
                                         <label for="editor_picks">{{ __('add_to_editor_picks') }}</label>
                                     </div>
                                 </div>
-                                <div class="col-4 col-md-2">
+                                <div class="col-2">
                                     <label class="custom-control custom-checkbox">
                                         <input type="checkbox" id="editor_picks" name="editor_picks" class="custom-control-input" @if($post->editor_picks==1) checked
                                         @endif>
@@ -475,13 +480,13 @@ active
                                     </label>
                                 </div>
                             </div>
-                            <div class="row p-l-15">
-                                <div class="col-8 col-md-4">
+                            <div class="row ">
+                                <div class="col-10">
                                     <div class="form-title">
                                         <label for="auth_required">{{ __('show_only_to_authenticate_users') }}</label>
                                     </div>
                                 </div>
-                                <div class="col-4 col-md-2">
+                                <div class="col-2">
                                     <label class="custom-control custom-checkbox">
                                         <input type="checkbox" id="auth_required" @if($post->auth_required==1) checked @endif name="auth_required"
                                         class="custom-control-input">
@@ -489,17 +494,19 @@ active
                                     </label>
                                 </div>
                             </div>
+                            </div>
+                           
                         </div>
-                        <!-- visibility section end -->
-
                     </div>
-                    <!-- right sidebar end -->
                 </div>
+                <!-- right sidebar end -->
             </div>
         </div>
-        {!! Form::close() !!}
-        <!-- page info end-->
     </div>
+</div>
+{!! Form::close() !!}
+<!-- page info end-->
+</div>
 </div>
 
 <input type="hidden" value="{{ $content_count }}" id="content_number">
@@ -582,6 +589,12 @@ active
             },
             success: function(result) {
                 $('.content-area').append(result);
+
+                if ($.inArray(value, ["text", "image-text", "text-image", "text-image-text"]) >= 0) {
+                    console.log("init tinyMce");
+                    tinyMceEditor.init("textarea.post-content");
+                }
+
                 $("#content_number").val(content_number);
 
                 // auto scrolling to newly added element

@@ -8,7 +8,7 @@
     <div class="card-body">
         <div class="form-group">
             <label for="post_content" class="col-form-label">{{ __('content') }}*</label>
-            <textarea class="form-control" class="form-control" name="new_content[{{$content_count}}][text][text]" id="post_content_1" cols="30" rows="5">{{isset($content)? $content['text'][0]['text']:''}}</textarea>
+            <textarea class="form-control post-content" class="form-control" name="new_content[{{$content_count}}][text][text]" id="post_content_1" cols="30" rows="3">{{isset($content)? $content['text'][0]['text']:''}}</textarea>
         </div>
     </div>
 </div>

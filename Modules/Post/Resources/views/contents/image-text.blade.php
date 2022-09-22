@@ -11,7 +11,7 @@
     <div class="card-body">
         <input type="hidden" value="{{ $content_count }}" id="content_count">
         <div class="row">
-            <div class="col-md-4">
+            <div class="col-4">
                 <div class="form-group">
                     <label for="" class="col-form-label">{{ __('Image') }}</label>
                     <div class="form-input text-center">
@@ -23,13 +23,13 @@
                         @endphp
                         @if(isFileExist(@$image, $result = @$image->thumbnail))
 
-                        <img src=" {{basePath($image)}}/{{ $result }} " id="image_preview_content" width="200" height="200" alt="image" class="img-responsive img-thumbnail image_preview">
+                        <img src=" {{basePath($image)}}/{{ $result }} " id="image_preview_content" width="200" height="200" alt="image" class="img-responsive image_preview">
                         @else
-                        <img src="{{static_asset('default-image/default-100x100.png') }} " id="image_preview_content" width="200" height="200" alt="image" class="img-responsive img-thumbnail image_preview">
+                        <img src="{{static_asset('default-image/default-100x100.png') }} " id="image_preview_content" width="100%"  alt="image" class="img-responsive image_preview">
                         @endif
 
                         @else
-                        <img src="{{static_asset('default-image/default-100x100.png') }} " id="image_preview_content" width="200" height="200" alt="image" class="img-responsive img-thumbnail image_preview">
+                        <img src="{{static_asset('default-image/default-100x100.png') }} " id="image_preview_content" width="100%"  alt="image" class="img-responsive image_preview">
                         @endif
                     </div>
                 </div>
@@ -42,9 +42,9 @@
                     </center>
                 </div>
             </div>
-            <div class="col-md-8">
+            <div class="col-8">
                 <label for="" class="col-form-label">{{ __('content') }}</label>
-                <textarea class="form-control" name="new_content[{{$content_count}}][image-text][text]" id="" cols="60" rows="10">{{isset($content)? $content['image-text'][1]['text']:''}}</textarea>
+                <textarea class="form-control post-content" name="new_content[{{$content_count}}][image-text][text]" id="" cols="60" rows="10">{{isset($content)? $content['image-text'][1]['text']:''}}</textarea>
             </div>
         </div>
     </div>
