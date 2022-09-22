@@ -18,8 +18,11 @@ class PageController extends Controller
     public function page( $id )
     {
         try{
-            $page               = Page::where('slug', $id)->first();
+            $page               = Page::with('image')->where('slug', $id)->first();
             $socialMedias       = SocialMedia::where('status', 1)->get();
+
+            // var_dump($page->image->big_image);
+            // exit;
 
             $tracker = new VisitorTracker();
             $tracker->page_type = \App\Enums\VisitorPageType::PageDetailPage;

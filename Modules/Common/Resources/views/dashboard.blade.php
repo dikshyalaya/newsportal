@@ -99,7 +99,7 @@
 					<div class="row">
 						<div class="col-12 col-sm-6">
 							<div class="pagination">
-									<label>{{ __('Showing') }} {{ $data['posthits']->firstItem()}} {{ __('to') }} {{ $data['posthits']->lastItem()}} {{ __('of') }} {{ $data['posthits']->total()}} {{ __('entries') }}</label>
+								<label>{{ __('Showing') }} {{ $data['posthits']->firstItem()}} {{ __('to') }} {{ $data['posthits']->lastItem()}} {{ __('of') }} {{ $data['posthits']->total()}} {{ __('entries') }}</label>
 							</div>
 						</div>
 						<div class="col-12 col-sm-6 text-right">

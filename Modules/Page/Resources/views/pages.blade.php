@@ -36,8 +36,7 @@ show
                             <tr role="row">
                                 <th>#</th>
                                 <th>{{ __('title') }}</th>
-                                <th>{{ __('slug') }}</th>
-                                <th>{{ __('language') }}</th>
+                                <th>{{ __('slug') }}</th>                                
                                 <th>{{ __('visibility') }}</th>
                                 <th>{{ __('date_added') }}</th>
                                 @if(Sentinel::getUser()->hasAccess(['pages_write']) || Sentinel::getUser()->hasAccess(['pages_delete']) )
@@ -50,8 +49,7 @@ show
                             <tr role="row" id="row_{{ $page->id }}" class="odd">
                                 <td class="sorting_1">{{ $page->id }}</td>
                                 <td>{{ $page->title }}</td>
-                                <td>{{ $page->slug }}</td>
-                                <td>{{ $page->language }}</td>
+                                <td>{{ $page->slug }}</td>                                
                                 <td>
                                     @if ( $page->visibility==1)
                                     <i class="fas fa-eye"></i>
