@@ -284,7 +284,7 @@ active
 
                         <div class="card">
                             <div class="card-header">
-                                <h4 class="card-title"> {{ __('post_type') }}*</h4>
+                                <h4 class="card-title"> {{ __('post_layout') }}*</h4>
                             </div>
                             <div class="card-body">
                                 <div class="form-group">
@@ -298,7 +298,7 @@ active
 
                                 <div class="form-group">
 
-                                    <label for="post_language">{{ __('post_layout') }}*</label>
+                                    
                                     <div class="row">
                                         <div class="col-4">
                                             <div class="form-group  text-center">

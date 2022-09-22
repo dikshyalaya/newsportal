@@ -9,6 +9,8 @@
             <!-- page info start-->
             {!!  Form::open(['route' => ['update-rss',$feed->id],'method' => 'post']) !!}
 
+
+        
             <div class="row clearfix">
                 <div class="col-12">
                     <div class="add-new-header clearfix m-b-20">
@@ -215,18 +217,7 @@
                                         </select>
                                     </div>
                                 </div>
-                                <div class="col-sm-12">
-                                    <div class="form-group">
-                                        <label for="sub_category_id">{{ __('sub_category') }}</label>
-                                        <select class="form-control dynamic" id="sub_category_id" name="sub_category_id">
-                                            <option value="">{{ __('select_sub_category') }}</option>
-                                            @foreach ($subCategories as $subCategory)
-                                                <option @if($feed->sub_category_id == $subCategory->id) Selected
-                                                        @endif value="{{ $subCategory->id }}">{{ $subCategory->sub_category_name }}</option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                </div>
+                                
                             </div>
                             <div class="add-new-page  bg-white p-20 m-b-20">
                                 <div class="col-md-12">

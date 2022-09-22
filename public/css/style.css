@@ -2555,7 +2555,7 @@ Pageheader
 input[type=radio] {
     box-sizing: border-box;
     padding: 0;
-    display: none;
+    /* display: none; */
 }
 
 .product-description {}
