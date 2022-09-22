@@ -57,18 +57,24 @@ active
                     </div>
 
                     <!-- Main Content section start -->
-                    <div class="col-9">
+                    <div class="col-9 p-l-0">
 
                         <div class="card ">
                             <div class="card-header p-0">
-                                <ul class="nav nav-tabs" id="myTab" role="tablist">
-                                    <li class="nav-item">
-                                        <a class="nav-link active" id="post-tab" data-toggle="tab" href="#post-content" role="tab" aria-selected="true">Post Content</a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link" id="seo-tab" data-toggle="tab" href="#seo-content" role="tab" aria-selected="false">SEO</a>
-                                    </li>
-                                </ul>
+                                <div class="card-title">
+                                    <ul class="nav nav-tabs" id="myTab" role="tablist">
+                                        <li class="nav-item">
+                                            <a class="nav-link active" id="post-tab" data-toggle="tab" href="#post-content" role="tab" aria-selected="true">Post Content</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" id="seo-tab" data-toggle="tab" href="#seo-content" role="tab" aria-selected="false">SEO</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="card-toolbox text-right">
+
+                                </div>
+
                             </div>
                             <div class="card-body px-0">
                                 <div class="tab-content" id="myTabContent">
@@ -298,7 +304,7 @@ active
 
                                 <div class="form-group">
 
-                                    
+
                                     <div class="row">
                                         <div class="col-4">
                                             <div class="form-group  text-center">
