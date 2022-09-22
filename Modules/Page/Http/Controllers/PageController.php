@@ -84,7 +84,8 @@ class PageController extends Controller
      */
     public function edit($id)
     {
-        $page=Page::find($id);
+        $page=Page::with('image')->find($id);
+
         $activeLang = Language::where('status', 'active')->orderBy('name', 'ASC')->get();
         $countImage         = galleryImage::count();
 

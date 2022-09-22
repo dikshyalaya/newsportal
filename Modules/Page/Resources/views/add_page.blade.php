@@ -161,7 +161,7 @@ show
                         </div>
 
                         <div class="form-group">
-
+                        <label for="template" class="col-form-label">{{ __('template') }}</label>
                             <select name="template" id="template" class="form-control">
                                 <option value="1">{{__('without_sidebar')}}</option>
                                 <option value="2">{{__('with_right_sidebar')}}</option>
@@ -186,7 +186,7 @@ show
                         <div class="form-group">
 
                             <div class="form-group text-center">
-                                <img src="{{static_asset('default-image/default-100x100.png') }} " id="image_preview" width="200" height="200" alt="image" class="img-responsive img-thumbnail">
+                                <img src="{{static_asset('default-image/default-100x100.png') }} " id="image_preview" width="150" alt="image" class="img-responsive">
                             </div>
                         </div>
 
