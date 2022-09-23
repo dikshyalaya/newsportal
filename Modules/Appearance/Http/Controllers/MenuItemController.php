@@ -27,6 +27,8 @@ class MenuItemController extends Controller
         //$categories         = Category::orderBy('id','ASC')->where('language',$selectedLanguage)->get();
         $categories       = Category::with('childrenRecursive')->where('parent_id', 0)->get();
 
+        // var_dump($categories);
+        // exit;
         $menuItems          = MenuItem::with(['children'])
                                     ->where('parent', null)
                                     ->where('menu_id', $selectedMenu->id)
@@ -70,8 +72,8 @@ class MenuItemController extends Controller
         $pages              = Page::all()->where('language',$selectedLanguage);
         $posts              = Post::select('id', 'title')->where('language',$selectedLanguage)->orderBy('id', 'desc')->get();
         $activeLang         = Language::where('status', 'active')->orderBy('name', 'ASC')->get();
-        $categories         = Category::orderBy('id','ASC')->where('language',$selectedLanguage)->get();
-
+        //$categories         = Category::orderBy('id','ASC')->where('language',$selectedLanguage)->get();
+        $categories       = Category::with('childrenRecursive')->orderBy('id','ASC')->where('language',$selectedLanguage)->where('parent_id', 0)->get();
         return view('appearance::menu_item', [
                                             'menuItems' => $menuItems,
                                             'menus' => $menus,
@@ -140,6 +142,9 @@ class MenuItemController extends Controller
             'menu_id'   => 'required'
         ])->validate();
 
+
+        $display_order=((int)MenuItem::max('order'))+1;
+        
         if ($request->source == 'page') :
 
             if(!isset($request->page_id)){
@@ -166,6 +171,7 @@ class MenuItemController extends Controller
                 $menuItem->source   = $request->source;
                 $menuItem->parent   = null;
                 $menuItem->status   = 1;
+                $menuItem->order  = $display_order;
                 $menuItem->save();
             }
 
@@ -186,7 +192,7 @@ class MenuItemController extends Controller
                 $menuItem->parent   = null;
                 $menuItem->post_id  = $request->post_id[$i];
                 $menuItem->status   = 1;
-
+                $menuItem->order  = $display_order;
                 $menuItem->save();
             endfor;
 
@@ -204,7 +210,7 @@ class MenuItemController extends Controller
                     $menuItem->parent       = null;
                     $menuItem->category_id  = $request->category_id[$i];
                     $menuItem->status       = 1;
-
+                    $menuItem->order  = $display_order;
                     $menuItem->save();
                 endfor;
             else:
@@ -230,7 +236,7 @@ class MenuItemController extends Controller
                         $menuItem->parent       = null;
                         $menuItem->sub_category_id  = $request->sub_category_id[$i];
                         $menuItem->status       = 1;
-
+                        $menuItem->order  = $display_order;
                         $menuItem->save();
                     endfor;
                 else:
@@ -250,7 +256,7 @@ class MenuItemController extends Controller
             $menuItem->post_id          = $request->post_id;
             $menuItem->page_id          = $request->page_id;
             $menuItem->status           = 1;
-
+            $menuItem->order  = $display_order;
             $menuItem->save();
         endif;
 

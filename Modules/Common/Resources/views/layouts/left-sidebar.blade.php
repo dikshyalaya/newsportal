@@ -229,6 +229,11 @@
                 <div id="submenu-114" class="collapse submenu @yield('newsletter-show')">
                     <ul class="nav flex-column">
                         <li class="nav-item ">
+                            <a class="nav-link @yield('email_temp')" href="{{ route('email-templates')}}">
+                                {{ __('email_template') }}
+                            </a>
+                        </li>
+                        <li class="nav-item ">
                             <a class="nav-link @yield('send_newsletter')" href="{{ route('send-email-to-subscriber') }}">
                                 {{__('send_email_to_subscribers')}}
                             </a>
@@ -238,9 +243,12 @@
                                 {{ __('subscribers') }}
                             </a>
                         </li>
+
                     </ul>
                 </div>
             </li>
+
+
             @endif
 
             @if(Sentinel::getUser()->hasAccess(['contact_message_read']) || Sentinel::getUser()->hasAccess(['contact_message_write']) || Sentinel::getUser()->hasAccess(['contact_message_delete']))
@@ -351,19 +359,6 @@
                             </a>
                         </li> -->
 
-
-
-                        <li class="nav-item ">
-                            <a class="nav-link @yield('email_temp')" href="{{ route('email-templates')}}">
-                                {{ __('email_template') }}
-                            </a>
-                        </li>
-
-                        <li class="nav-item ">
-                            <a class="nav-link @yield('setting-social-login')" href="{{ route('setting-social-login') }}">
-                                {{__('social_login_settings')}}
-                            </a>
-                        </li>
                         <li class="nav-item ">
                             <a class="nav-link @yield('cache-route-config')" href="{{ route('cache') }}">
                                 {{__('cache')}}
@@ -375,6 +370,8 @@
                 </div>
             </li>
             @endif
+
+
 
             @if(Sentinel::getUser()->hasAccess(['api_read']) || Sentinel::getUser()->hasAccess(['api_write'])|| Sentinel::getUser()->hasAccess(['api_delete']))
             <li class="nav-item">

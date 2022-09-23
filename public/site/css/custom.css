@@ -69,7 +69,7 @@ p {
 
 .sg-main-content,
 .sg-home-section {
-    margin-top: 100px;
+    margin-top: 75px;
 }
 
 
@@ -139,7 +139,7 @@ select#languges-changer option {
 .scrollToTop {
     background-color: var(--primary-color);
     position: fixed;
-    bottom: 10px;
+    bottom: 5px;
     right: 10px;
     z-index: 100;
 }
@@ -160,7 +160,7 @@ select#languges-changer option {
     color: #fff;
     position: relative;
     z-index: 1;
-    background-color: #201E1D;
+    background-color: var(--primary-color)
 }
 
 .video-icon a {

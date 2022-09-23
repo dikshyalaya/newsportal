@@ -18,19 +18,47 @@ show
 
 <div class="dashboard-ecommerce">
     <div class="container-fluid dashboard-content">
-        <div class="row clearfix">
-            <div class="col-md-12">
+
+        <div class="row">
+            <div class="col-12">
+
+                @if(session('error'))
+                <div id="error_m" class="alert alert-danger">
+                    {{session('error')}}
+                </div>
+                @endif
+                @if(session('success'))
+                <div id="success_m" class="alert alert-success">
+                    {{session('success')}}
+                </div>
+                @endif
+                @if ($errors->any())
+                <div class="alert alert-danger">
+                    <ul>
+                        @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+                @endif
+
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-header  p-0">
                 <nav>
                     <div class="nav nav-tabs nav-fill" id="nav-tab" role="tablist">
                         <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#edit-menu" role="tab" aria-controls="nav-home" aria-selected="true">{{__('edit_menu')}}</a>
                         <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#manage-menu" role="tab" aria-controls="nav-profile" aria-selected="false">{{__('menu_location')}}</a>
                     </div>
                 </nav>
+            </div>
+            <div class="card-body">
                 <div class="tab-content" id="nav-tabContent">
                     <div class="tab-pane fade show active" id="edit-menu" role="tabpanel" aria-labelledby="nav-home-tab">
                         <div class="row">
-                            <div class="col-md-12">
-                                <div class="bg-white p-20 m-b-20">
+                            <div class="col-12">
+                                <div class="bg-white col-12">
                                     {!! Form::open(['route' => 'search-menu-item','method' => 'get','class' => 'form-inline']) !!}
                                     <div class="form-group menu-select">
                                         <label for="menu_id" class="col-form-label">{{ __('menu') }}</label>
@@ -41,7 +69,7 @@ show
                                         </select>
                                     </div>
 
-                                    <div class="form-group menu-select">
+                                    <div class="form-group menu-select d-none">
                                         <label for="selecttedLanguage" class="col-form-label language">{{ __('language') }}</label>
                                         <select class="form-control" name="language" id="selecttedLanguage">
                                             @foreach ($activeLang as $lang)
@@ -54,13 +82,14 @@ show
 
                                     <div class="form-group ml-3">
                                         <button class="btn btn-primary" type="submit">{{__('select_menu')}}</button>
+                                        <a href="javascript:void(0)" class=" btn btn-info modal-menu" data-title="{{ __('add_menu') }}" data-url="{{ route('edit-info',['page_name'=>'add-menu']) }}" data-toggle="modal" data-target="#common-modal"> {{ __('create_new_menu') }}</a>
                                     </div>
-                                    <a href="javascript:void(0)" class="modal-menu" data-title="{{ __('add_menu') }}" data-url="{{ route('edit-info',['page_name'=>'add-menu']) }}" data-toggle="modal" data-target="#common-modal"> {{ __('create_new_menu') }}</a>
+                                   
                                     {{ Form::close() }}
                                 </div>
                             </div>
                             <div class="col-12">
-                                <div class="add-new-page  bg-white p-20 m-b-20" id=div_menu_create>
+                                <div class="add-new-page  bg-white col-12" id=div_menu_create>
                                     {!! Form::open(['route' => 'add-menu', 'method' => 'post']) !!}
                                     <div class="row">
                                         <div class="col-md-5">
@@ -91,30 +120,10 @@ show
                                     {{ Form::close() }}
                                 </div>
                             </div>
-
-                            <div class="col-md-12">
-                                @if(session('error'))
-                                <div id="error_m" class="alert alert-danger">
-                                    {{session('error')}}
-                                </div>
-                                @endif
-                                @if(session('success'))
-                                <div id="success_m" class="alert alert-success">
-                                    {{session('success')}}
-                                </div>
-                                @endif
-                                @if ($errors->any())
-                                <div class="alert alert-danger">
-                                    <ul>
-                                        @foreach ($errors->all() as $error)
-                                        <li>{{ $error }}</li>
-                                        @endforeach
-                                    </ul>
-                                </div>
-                                @endif
-                            </div>
-                            <div class="col-4">
-                                <div class="add-new-page  bg-white p-20 m-b-20">
+                        </div>
+                        <div class="row m-t-20">
+                            <div class="col-4 p-0 m-t-40">
+                                <div class="add-new-page  bg-white col-12">
                                     <div class="accrodion-regular">
                                         <div id="accordion3">
                                             <div class="card mb-2">
@@ -133,10 +142,10 @@ show
                                                             <div class="col-12">
                                                                 <div class="row">
                                                                     <!-- Main Content section start -->
-                                                                    <div class="col-12 col-lg-12">
-                                                                        <div class="add-new-page  bg-white p-20 m-b-20">
+                                                                    <div class="col-12 p-0">
+                                                                        <div class="add-new-page  bg-white col-12">
                                                                             <div class="row">
-                                                                                <div class="col-sm-12">
+                                                                                <div class="col-12">
                                                                                     <div class="form-group">
                                                                                         <label for="label" class="col-form-label">{{ __('label') }}*</label>
                                                                                         <input id="label" name="label" value="{{ old('label') }}" type="text" class="form-control" required>
@@ -145,7 +154,7 @@ show
                                                                                         <input id="language" name="language" type="hidden" value="{{ $selectedLanguage }}" class="form-control" required>
                                                                                     </div>
                                                                                 </div>
-                                                                                <div class="col-sm-12">
+                                                                                <div class="col-12">
                                                                                     <div class="form-group">
                                                                                         <label for="url" class="col-form-label">{{ __('url') }}</label>
                                                                                         <input id="url" name="url" value="{{ old('url') }}" type="text" class="form-control">
@@ -154,7 +163,7 @@ show
 
                                                                             </div>
                                                                             <div class="row">
-                                                                                <div class="col-12 m-t-20">
+                                                                                <div class="col-12">
                                                                                     <div class="form-group form-float form-group-sm text-right">
                                                                                         <button type="submit" name="btn" class="btn btn-primary pull-right">
                                                                                             <i class="m-r-10 fa fa-plus"></i>{{ __('add_menu_item') }}
@@ -189,10 +198,10 @@ show
                                                                 <div class="col-12">
                                                                     <div class="row">
                                                                         <!-- Main Content section start -->
-                                                                        <div class="col-12 col-lg-12">
-                                                                            <div class="add-new-page  bg-white p-20 m-b-20">
+                                                                        <div class="col-12 p-0">
+                                                                            <div class="add-new-page  bg-white col-12">
                                                                                 <div class="row page-area">
-                                                                                    <div class="col-sm-12">
+                                                                                    <div class="col-12">
                                                                                         <div class="form-group">
                                                                                             <input id="source" name="source" type="hidden" value="page" class="form-control" required>
                                                                                             <input type="hidden" name="menu_id" value="{{ $selectedMenus->id }}">
@@ -213,7 +222,7 @@ show
 
                                                                                 </div>
                                                                                 <div class="row">
-                                                                                    <div class="col-12 m-t-20">
+                                                                                    <div class="col-12">
                                                                                         <div class="form-group form-float form-group-sm text-right">
                                                                                             <button type="submit" name="btn" class="btn btn-primary pull-right">
                                                                                                 <i class="m-r-10 fa fa-plus"></i>{{ __('add_menu_item') }}
@@ -247,18 +256,18 @@ show
                                                             <div class="col-12">
                                                                 <div class="row">
                                                                     <!-- Main Content section start -->
-                                                                    <div class="col-12 col-lg-12">
-                                                                        <div class="add-new-page  bg-white p-20 m-b-20">
+                                                                    <div class="col-12 p-0">
+                                                                        <div class="add-new-page  bg-white col-12">
                                                                             @if($posts->count() > 0)
                                                                             <div class="row post-area">
-                                                                                <div class="col-sm-12">
+                                                                                <div class="col-12">
                                                                                     <div class="form-group">
                                                                                         <input id="source" name="source" value="post" type="hidden" class="form-control" required>
                                                                                         <input type="hidden" name="menu_id" value="{{ $selectedMenus->id }}">
                                                                                         <input type="hidden" name="languale" value="{{ $selectedLanguage }}">
                                                                                     </div>
                                                                                 </div>
-                                                                                <div class="col-sm-12">
+                                                                                <div class="col-12">
                                                                                     <div class="form-group">
                                                                                         <span>{{ __('must_select') }}*</span>
                                                                                         @foreach ($posts as $post)
@@ -271,7 +280,7 @@ show
                                                                                 </div>
                                                                             </div>
                                                                             <div class="row">
-                                                                                <div class="col-12 m-t-20">
+                                                                                <div class="col-12">
                                                                                     <div class="form-group form-float form-group-sm text-right">
                                                                                         <button type="submit" name="btn" class="btn btn-primary pull-right">
                                                                                             <i class="m-r-10 fa fa-plus"></i>{{ __('add_menu_item') }}
@@ -310,11 +319,11 @@ show
                                                                 <div class="col-12">
                                                                     <div class="row">
                                                                         <!-- Main Content section start -->
-                                                                        <div class="col-12 col-lg-12">
+                                                                        <div class="col-12 p-0">
                                                                             <div class="add-new-page  bg-white">
                                                                                 @if($categories->count() > 0)
                                                                                 <div class="row">
-                                                                                    <div class="col-sm-12">
+                                                                                    <div class="col-12">
                                                                                         <div class="form-group">
                                                                                             <span>{{ __('must_select') }}*</span>
                                                                                             <input id="source" name="source" type="hidden" value="category" class="form-control" required>
@@ -328,7 +337,7 @@ show
 
                                                                                 </div>
                                                                                 <div class="row">
-                                                                                    <div class="col-12 m-t-20">
+                                                                                    <div class="col-12">
                                                                                         <div class="form-group form-float form-group-sm text-right">
                                                                                             <button type="submit" name="btn" class="btn btn-primary pull-right">
                                                                                                 <i class="m-r-10 fa fa-plus"></i>{{ __('add_menu_item') }}
@@ -357,11 +366,11 @@ show
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-8">
+                            <div class="col-8 p-0">
                                 {!! Form::open(['route' => 'update-menu-item','method' => 'post', 'enctype'=>'multipart/form-data', 'id' => 'update-menu-item']) !!}
-                                <div class="add-new-page  bg-white p-20 m-b-20">
+                                <div class="add-new-page  bg-white col-12">
                                     <div class="row">
-                                        <div class="col-md-12">
+                                        <div class="col-12">
 
                                             <div class="cf nestable-lists">
                                                 <label for="menu_id" class="col-form-label">{{ __('menu_item') }}({{ __('drag_drop_menu_item_for_rearrange') }})</label>
@@ -639,7 +648,7 @@ show
                     <div class="tab-pane fade show" id="manage-menu" role="tabpanel" aria-labelledby="nav-home-tab">
                         <div class="row">
                             <div class="col-12">
-                                <div class="add-new-page  bg-white p-20 m-b-20">
+                                <div class="add-new-page  bg-white col-12">
                                     <div class="table-responsive all-pages">
                                         {!! Form::open(['route' => 'save-menu-locations','method' => 'post', 'enctype'=>'multipart/form-data']) !!}
                                         <table class="table table-borderless">
@@ -663,7 +672,8 @@ show
                                                             @endforeach
                                                         </select>
                                                     </td>
-                                                    <td><a href="javascript:void(0)" class="modal-menu" data-title="{{ __('add_menu') }}" data-url="{{ route('edit-info',['page_name'=>'add-menu']) }}" data-toggle="modal" data-target="#common-modal"> {{ __('create_new_menu') }}</a>
+                                                    <td>
+                                                        <a href="javascript:void(0)" class="modal-menu btn btn-info" data-title="{{ __('add_menu') }}" data-url="{{ route('edit-info',['page_name'=>'add-menu']) }}" data-toggle="modal" data-target="#common-modal"> {{ __('create_new_menu') }}</a>
                                                     </td>
                                                 </tr>
                                                 @endforeach
@@ -681,6 +691,7 @@ show
                 </div>
             </div>
         </div>
+
     </div>
 </div>
 

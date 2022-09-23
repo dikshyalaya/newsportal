@@ -31,15 +31,15 @@ class WidgetController extends Controller
         $activeLang     = Language::where('status', 'active')->orderBy('name', 'ASC')->get();
         $ads            = Ad::orderBy('id', 'desc')->get();
         $polls            = Poll::orderBy('id', 'desc')->get();
-
+        $order          = Widget::max("order") + 1;
         $tags           = Tag::orderby('id')->get();
 
-        return view('widget::create', compact('activeLang', 'ads','tags', 'polls'));
+        return view('widget::create', compact('activeLang', 'ads', 'tags', 'polls','order'));
     }
 
     public function store(Request $request)
     {
-        
+
         Validator::make($request->all(), [
             'title'     => 'required',
         ])->validate();
@@ -53,7 +53,7 @@ class WidgetController extends Controller
             $widget->content_type   = $request->content_type;
         elseif ($request->location  == WidgetLocation::HEADER) :
             $widget->content_type   = $request->content_type_header;
-        else:
+        else :
             $widget->content_type   = $request->content_type_footer;
         endif;
 
@@ -70,7 +70,7 @@ class WidgetController extends Controller
                 'tags'          => 'required',
             ])->validate();
             $widget->content    = $request->tags;
-        else:
+        else :
             $widget->content        = $request->content;
         endif;
 
@@ -93,12 +93,12 @@ class WidgetController extends Controller
 
         $tags           = Tag::orderBy('id')->get();
 
-        return view('widget::edit', compact('widget', 'activeLang', 'ads','tags', 'polls'));
+        return view('widget::edit', compact('widget', 'activeLang', 'ads', 'tags', 'polls'));
     }
 
     public function update(Request $request, $id)
     {
-        
+
         Validator::make($request->all(), [
             'title'     => 'required',
         ])->validate();
@@ -133,7 +133,7 @@ class WidgetController extends Controller
                 'tags'          => 'required',
             ])->validate();
             $widget->content    = $request->tags;
-        else:
+        else :
             $widget->content        = $request->content;
         endif;
 

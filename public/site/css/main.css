@@ -42,6 +42,7 @@ a:hover {
 
 :root {
     --primary-color: #5969FF;
+    --secondary-color:#35495a;
     --primary-font: 'Roboto', sans-serif
 }
 
@@ -80,7 +81,7 @@ textarea:focus {
     font-size: 14px;
     color: #fff;
     font-weight: 600;
-    padding: 15px 35px;
+    padding: 15px;
     letter-spacing: 4px;
     text-transform: uppercase;
     display: inline-block;
@@ -88,8 +89,8 @@ textarea:focus {
     position: relative;
     z-index: 1;
     overflow: hidden;
-    border-color: var(--primary-color);
-    background-color: var(--primary-color) !important
+    /* border-color: var(--secondary-color); */
+    background-color: var(--secondary-color) !important
 }
 
 .btn.btn-primary:hover {
@@ -853,13 +854,9 @@ textarea:focus {
 .sg-post {
     position: relative;
     overflow: hidden;
-    margin-bottom: 15px;
+    margin-bottom: 10px;
     background-color: #fff;
-    -webkit-box-shadow: 0 6px 12px rgba(0, 0, 0, .075);
-    -moz-box-shadow: 0 6px 12px rgba(0, 0, 0, .075);
-    -ms-box-shadow: 0 6px 12px rgba(0, 0, 0, .075);
-    -o-box-shadow: 0 6px 12px rgba(0, 0, 0, .075);
-    box-shadow: 0 6px 12px rgba(0, 0, 0, .075)
+    
 }
 
 .post-style-2 .entry-content,
@@ -1061,7 +1058,7 @@ a.read-more {
 }
 
 .sg-post.post-style-1 {
-    margin-bottom: 15px
+    margin-bottom: 5px
 }
 
 .medium-post-style-1 .entry-thumbnail {
@@ -2260,24 +2257,25 @@ textarea.form-control {
 }
 
 .footer a:hover {
-    color: var(--primary-color)
+    color: var(--secondary-color)
 }
 
 .footer-widget {
     margin-bottom: 30px
 }
 
-.footer-widget .sg-post,
-.footer-widget.categories-widget ul {
+.footer-widget .sg-post, .footer-widget.categories-widget ul {
     padding: 0;
-    background-color: transparent
+    background-color: #ffffff1a;
+    padding: 10px;
+    border: 1px solid #ffffff1a;
 }
 
 .footer-widget h3 {
     font-size: 18px;
     font-weight: 600;
     text-transform: uppercase;
-    margin-bottom: 30px
+    margin-bottom: 15px
 }
 
 .footer-widget .twitte .icon {
@@ -2285,7 +2283,7 @@ textarea.form-control {
 }
 
 .footer-widget ul li {
-    margin-bottom: 15px
+    margin-bottom: 5px
 }
 
 .footer-widget ul li:last-child {
@@ -2306,7 +2304,8 @@ textarea.form-control {
 }
 
 .footer-top {
-    padding: 60px 0 30px
+    padding: 30px 0 0;
+    margin-top:15px;
 }
 
 .footer-middle .middle-content {
@@ -2345,8 +2344,8 @@ textarea.form-control {
 
 .footer-bottom {
     color: #fff;
-    padding: 20px 0;
-    background-color: #0d0d0d
+    padding: 15px 0;
+    background-color: var(--secondary-color);
 }
 
 .footer-bottom ul li {
@@ -2393,14 +2392,11 @@ textarea.form-control {
 }
 
 .footer-content .form-control {
-    height: 55px;
+    height: 40px;
     color: #fff;
     background-color: transparent
 }
 
-.footer-content form {
-    margin-top: 30px
-}
 
 .btn.btn-primary {
     font-size: 12px;
