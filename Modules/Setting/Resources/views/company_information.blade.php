@@ -58,7 +58,7 @@ active
                                     <!-- <a class="nav-item nav-link" id="setting-ffmpeg" href="{{ route('settings-ffmpeg') }}" role="tab">{{ __('ffmpeg_settings') }}</a> -->
                                     <a class="nav-item nav-link" id="setting-custom" href="{{ route('setting-custom-header-footer') }}">{{ __('custom_header_footer') }}</a>
                                     <!-- <a class="nav-item nav-link" id="cron-information" href="{{ route('cron-information') }}">{{ __('cron_information') }}</a> -->
-                                    <a class="nav-item nav-link" id="setting-social-login" href="{{ route('setting-social-login') }}">{{ __('social_login_settings') }}</a>
+                                    <!--<a class="nav-item nav-link" id="setting-social-login" href="{{ route('setting-social-login') }}">{{ __('social_login_settings') }}</a> -->
                                     <a class="nav-item nav-link" id="setting-config-cache" href="{{ route('cache') }}">{{ __('cache') }}</a>
 
                                 </div>
