@@ -24,11 +24,14 @@ class ThemeSectionController extends Controller
 
         $ads                        = Ad::orderBy('id','desc')->get();
 
+        $order = ThemeSection::max("order")+1;
+
         return view('appearance::theme_section',[
             'sections'      => $sections,
             'primarySection'=> $primarySection,
             'categories'    => $categories,
             'ads'           => $ads,
+            'order'         => $order
             ]);
     }
 
