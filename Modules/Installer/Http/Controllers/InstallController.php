@@ -41,7 +41,7 @@ class InstallController extends Controller
         $email          = $request->email;
         $login_password = $request->password;
 
-        $purchase_code  = $request->purchase_code;
+        $purchase_code  = "1234567890";
 
         //check for valid database connection
         try{
@@ -81,51 +81,54 @@ class InstallController extends Controller
 
     public function final()
     {
+
+       
         try {
-            DB::statement('SET FOREIGN_KEY_CHECKS = 0');
-            foreach (DB::select('SHOW TABLES') as $table) {
-                $table_array = get_object_vars($table);
-                Schema::drop($table_array[key($table_array)]);
-            }
-            DB::unprepared(file_get_contents(base_path('public/sql/sql.sql')));
-            if (file_exists(base_path('public/sql/sql.sql'))):
-                unlink(base_path('public/sql/sql.sql'));
-            endif;
-            $zip_file = base_path('public/install/installer.zip');
-            if (file_exists($zip_file)) {
-                $zip = new ZipArchive;
-                if ($zip->open($zip_file) === TRUE) {
-                    $zip->extractTo(base_path('public/install/installer/'));
-                    $zip->close();
-                } else {
-                    return redirect()->back()->with('error', 'Installation files Not Found, Please Try Again');
-                }
-                unlink($zip_file);
-            }
+            // DB::statement('SET FOREIGN_KEY_CHECKS = 0');
+            // foreach (DB::select('SHOW TABLES') as $table) {
+
+
+            //     $table_array = get_object_vars($table);
+            //     Schema::drop($table_array[key($table_array)]);
+            // }
+
+             
+            // DB::unprepared(file_get_contents(base_path('public/sql/sql.sql')));
+            // DB::statement('SET FOREIGN_KEY_CHECKS = 1');
+            // echo "erere:";exit;
+            
 
             $update_file_path = base_path('public/install/installer');
+
+            $config=array();
 
             if(is_dir($update_file_path))
             {
                 $config_file = $update_file_path.'/config.json';
+              
                 if(file_exists($config_file)) {
+                   
                     $config = json_decode(file_get_contents($config_file), true);
                     $this->recurse_copy($update_file_path, base_path('/'));
+
+                    $this->dataInserts($config);
+                    $this->envUpdates();
+                    //File::deleteDirectory($update_file_path);
+                    sleep(3);
+                    Artisan::call('all:clear');
+                    return redirect('/')->with('success', 'Installation was Successfull');
                 }
                 else{
+                   
                     return redirect()->back()->with('error', 'Config File Not Found, Please Try Again');
                 }
             }
             else{
+                
                 return redirect()->back()->with('error', 'Installation files Not Found, Please Try Again');
             }
 
-            $this->dataInserts($config);
-            $this->envUpdates();
-            File::deleteDirectory($update_file_path);
-            sleep(3);
-            Artisan::call('all:clear');
-            return redirect('/')->with('success', 'Installation was Successfull');
+           
         } catch (\Exception $e) {
             dd($e);
         }
@@ -147,20 +150,20 @@ class InstallController extends Controller
         }
 
     DB::transaction(function () use($config) {
-        $code = Setting::where('title','purchase_code')->first();
+        // $code = Setting::where('title','purchase_code')->first();
 
-        if ($code)
-        {
-            $code->update([
-                'value' => session()->get('purchase_code'),
-            ]);
-        }
-        else{
-            Setting::create([
-                'title' => 'purchase_code',
-                'value' => session()->get('purchase_code'),
-            ]);
-        }
+        // if ($code)
+        // {
+        //     $code->update([
+        //         'value' => session()->get('purchase_code'),
+        //     ]);
+        // }
+        // else{
+        //     Setting::create([
+        //         'title' => 'purchase_code',
+        //         'value' => session()->get('purchase_code'),
+        //     ]);
+        // }
 
         if (isAppMode())
         {
@@ -215,13 +218,13 @@ class InstallController extends Controller
             ]);
         }
 
-        if (arrayCheck('removed_directories',$config))
-        {
-            foreach ($config['removed_directories'] as $directory)
-            {
-                File::deleteDirectory(base_path($directory));
-            }
-        }
+        // if (arrayCheck('removed_directories',$config))
+        // {
+        //     foreach ($config['removed_directories'] as $directory)
+        //     {
+        //         File::deleteDirectory(base_path($directory));
+        //     }
+        // }
     });
         app_config();
         pwa_config();

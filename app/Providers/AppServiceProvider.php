@@ -35,6 +35,7 @@ class AppServiceProvider extends ServiceProvider
     {
         Schema::defaultStringLength(191);
 
+
         try {
 
             DB::connection()->getPdo();
@@ -46,12 +47,18 @@ class AppServiceProvider extends ServiceProvider
             Config::set('app.locale', 'en');
             Config::set('laravellocalization.supportedLocales', $supportedLocales);
 
-            return redirect('install/initialize');
+            return redirect('install');
           }
 
           if(Schema::hasTable('roles') && settingHelper('version')){
             if(!optional(json_decode(DB::table('roles')->select('permissions')->where('slug','superadmin')->first()->permissions))->system_update_read){
-                Artisan::call('migrate', ['--force' => true]);
+                try{
+                    Artisan::call('migrate', ['--force' => true]);
+                }catch(\Exception $e){
+                    dd($e);
+                }
+                
+                
             }
           }
 

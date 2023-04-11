@@ -97,6 +97,8 @@ if (!empty($_SERVER['HTTPS'])) {
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=Edge" >
         <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="description" content="">
+        <meta name="author" content="SpaGreen">
         <link rel="icon" href="{{static_asset('images/favicon.png') }}" />
         <title>News CMS Installation</title>
         <link rel='stylesheet' type='text/css' href="{{static_asset('installer/assets/bootstrap/css/bootstrap.min.css') }}" />
@@ -557,19 +559,6 @@ if (!empty($_SERVER['HTTPS'])) {
                                     </div>
                                 </div>
 
-                                <div class="section clearfix">
-                                    <p>3. Please enter your item purchase code.</p>
-                                    <hr />
-                                    <div>
-                                        <div class="form-group clearfix">
-                                            <label for="purchase_code" class="col-md-3">Item purchase code</label>
-                                            <div class="col-md-9">
-                                                <input type="text" value="{{old('purchase_code') ?? ''}}"  id="purchase_code"  name="purchase_code" class="form-control"  placeholder="Find in codecanyon item download section" />
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
                                 <div class="panel-footer">
                                     <button type="submit" class="btn btn-info form-next">
                                         <span class="loader hide"> Installing...</span>
@@ -583,7 +572,7 @@ if (!empty($_SERVER['HTTPS'])) {
                         <div role="tabpanel" class="tab-pane" id="finished-tab">
                             <div class="section">
                                 <div class="clearfix">
-                                    <i class="status fa fa-check-circle-o pull-left"> </i><span class="pull-left">Congratulation! You have successfully installed <strong>  ONNO Laravel News and Magazine PHP Script</strong></span>
+                                    <i class="status fa fa-check-circle-o pull-left"> </i><span class="pull-left">Congratulation! You have successfully installed <strong>  News CMS </strong></span>
                                 </div>
 
                                 <a class="go-to-login-page" href="{{url('login')}}">
