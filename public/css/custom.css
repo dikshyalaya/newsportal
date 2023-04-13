@@ -2,69 +2,83 @@
     margin-right: 0px;
     margin-left: 2px;
 }
+
 #progress-bar-span {
     position: absolute;
     right: 15px;
     color: black;
     font-weight: 600;
 }
+
 .image {
     /* width: 100px; */
     /* height:100px; */
-    float:left;
-    margin:10px;
+    float: left;
+    margin: 10px;
 }
+
 .selected {
-    border:3px solid #5969ff;
+    border: 3px solid #5969ff;
 }
-.delete-image-btn{
+
+.delete-image-btn {
     float: left;
     position: absolute;
     left: 0;
     padding-left: 10px;
     display: none;
 }
-#selectImage{
+
+#selectImage {
     display: none;
 }
-#ajax-image-loading{
+
+#ajax-image-loading {
     text-align: center;
     display: none;
 }
+
 #media-library {
     /* margin-right: 0px; */
     overflow-y: auto;
     max-height: calc(100vh - 200px);
     /* box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19); */
-  }
+}
+
 #load-more-image {
-        text-align: center;
-        display: none;
-        margin-top: 10px;
-  }
+    text-align: center;
+    display: none;
+    margin-top: 10px;
+}
+
 .video {
     /* width: 100px; */
     /* height:100px; */
-    float:left;
+    float: left;
     /* margin:10px; */
 }
+
 .selected {
-    border:3px solid #5969ff;
+    border: 3px solid #5969ff;
 }
-.delete-video-btn{
+
+.delete-video-btn {
     float: left;
     position: absolute;
     left: 0;
     padding-left: 10px;
     display: none;
 }
-#selectVideo{
+
+#selectVideo {
     display: none;
 }
-#ajax-video-loading{
+
+#ajax-video-loading {
     text-align: center;
 }
-#video_name{
+
+#video_name {
     width: 190px;
     background-color: #5bc0de;
     color: #fff;
@@ -75,18 +89,21 @@
     padding: 0 5px;
     font-size: 12px;
 }
+
 #video-library {
     /* margin-right: 0px; */
     overflow-y: auto;
     max-height: calc(100vh - 200px);
     /* box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19); */
 }
-.video_lvl{
+
+.video_lvl {
     overflow: hidden;
     display: inline-block;
     text-overflow: ellipsis;
     white-space: nowrap;
 }
+
 #load-more-video {
     text-align: center;
     display: none;
@@ -94,130 +111,137 @@
 }
 
 
-.post-area, .page-area{
+.post-area,
+.page-area {
     max-height: 300px;
     overflow: scroll;
 }
 
-.setting-tab a{
+.setting-tab a {
     min-width: -webkit-fill-available;
     border-bottom: 1px solid #ddd !important;
     padding: .7rem 1rem !important;
 
 }
-.setting-tab a.active, .setting-tab a:hover{
+
+.setting-tab a.active,
+.setting-tab a:hover {
     color: #100d29 !important;
     font-weight: 600;
 }
 
 
-#poll-option-area i.fa-bars{
+#poll-option-area i.fa-bars {
     position: absolute;
     top: 46%;
     left: -0.5%;
 }
 
-#poll-option-area .form-control{
+#poll-option-area .form-control {
     position: relative;
 }
 
-#modal-loader{
+#modal-loader {
     display: none;
-    text-align: center;"
+    text-align: center;
 }
 
 
-.menu-select{
-    min-width: 200px;
-}
-.menu-select .language{
-    min-width: 82px;
-}
-
-.menu-select .col-form-label{
-    min-width: 82px;
-}
-
-.menu-select .form-control{
-    min-width: 128px;
-}
-
-#div_menu_create{
-    display: none;
-}
-
-#mega-menu-area{
+.menu-select {
     min-width: 200px;
 }
 
-.form-group .col-form-label{
+.menu-select .language {
     min-width: 82px;
 }
-#is_mega_menu{
+
+.menu-select .col-form-label {
+    min-width: 82px;
+}
+
+.menu-select .form-control {
     min-width: 128px;
 }
 
-.progress .progress-bar{
+#div_menu_create {
+    display: none;
+}
+
+#mega-menu-area {
+    min-width: 200px;
+}
+
+.form-group .col-form-label {
+    min-width: 82px;
+}
+
+#is_mega_menu {
+    min-width: 128px;
+}
+
+.progress .progress-bar {
     width: 0%;
 }
 
-#media-gallery .modal-dialog{
+#media-gallery .modal-dialog {
     width: 80%;
-    max-width:1200px;
+    max-width: 1200px;
 }
 
- #divUploadBtn{
+#divUploadBtn {
     display: none;
 }
 
-#video-gallery .modal-dialog{
+#video-gallery .modal-dialog {
     width: 80%;
-    max-width:1200px;
+    max-width: 1200px;
 }
-#divVideoUploadBtn{
+
+#divVideoUploadBtn {
     display: none;
 }
 
-.divScheduleDate{
-    display: none;
-}
-#display-nothing{
+.divScheduleDate {
     display: none;
 }
 
-.display-nothing{
+#display-nothing {
     display: none;
 }
 
-#breaking-post-bgc{
-    background-color: #30b333!important;
+.display-nothing {
+    display: none;
 }
 
-.item-table-filter .form-control{
+#breaking-post-bgc {
+    background-color: #30b333 !important;
+}
+
+.item-table-filter .form-control {
     height: calc(2.25rem + 2px);
 }
 
-.item-table-style{
-    width: 65px; min-width: 65px;
+.item-table-style {
+    width: 65px;
+    min-width: 65px;
 }
 
-.item-table-style p{
-   display: block;
+.item-table-style p {
+    display: block;
 }
 
-#video_thumb, #video_thumb_content{
+#video_thumb,
+#video_thumb_content {
     display: none;
 }
 
-.add-new-content .area{
-    padding: 10px;
-}
+.add-new-content .area {}
 
-.add-new-content label{
+.add-new-content label {
     cursor: pointer !important;
 }
 
-.add-new-content .area .item:hover{
+.add-new-content .area .item:hover {
     background-color: #eeeff3;
 
 }
@@ -225,18 +249,22 @@
 #ajax-audio-loading {
     text-align: center;
 }
+
 #load-more-audio {
     text-align: center;
     display: none;
     margin-top: 10px;
 }
+
 #divAudioUploadBtn {
     display: none;
 }
+
 #audio-library {
     overflow-y: auto;
     max-height: calc(100vh - 200px);
 }
+
 #audio_name {
     width: 190px;
     background-color: #5bc0de;
@@ -248,9 +276,11 @@
     padding: 0 5px;
     font-size: 12px;
 }
+
 #selectAudio {
     display: none;
 }
+
 .delete-audio-btn {
     float: left;
     position: absolute;
@@ -258,10 +288,12 @@
     padding-left: 10px;
     display: none;
 }
+
 .audio {
     float: left;
     margin: 10px;
 }
+
 .audio_lvl {
     overflow: hidden;
     display: inline-block;
@@ -269,52 +301,62 @@
     white-space: nowrap;
     font-size: 10px;
 }
+
 #audio-gallery .modal-dialog {
     width: 80%;
     max-width: 1200px;
 }
-.selected-audios{
+
+.selected-audios {
     display: block;
     width: 100%;
 }
-.audio-item{
+
+.audio-item {
     margin-top: 15px;
     display: table;
     width: 100%;
 }
-.selected-audios .audio-item .left{
+
+.selected-audios .audio-item .left {
     width: 20px;
     display: table-cell;
     vertical-align: top;
 }
-.selected-audios .audio-item .center{
-     display: table-cell;
-     vertical-align: top;
-     word-break: break-word;
+
+.selected-audios .audio-item .center {
+    display: table-cell;
+    vertical-align: top;
+    word-break: break-word;
 }
-.selected-audios .audio-item .right{
+
+.selected-audios .audio-item .right {
     width: 30px;
     display: table-cell;
     vertical-align: top;
     text-align: right;
 }
-.detail-control-inline{
+
+.detail-control-inline {
     display: inline-flex;
 }
 
 input[type="file"] {
     display: block;
 }
+
 .imageThumb {
     max-height: 75px;
     padding: 1px;
     cursor: pointer;
 }
+
 .each {
     display: inline-block;
     position: relative;
     margin: 10px 10px 0 0;
 }
+
 .remove {
     display: block;
     z-index: 9999;
@@ -324,18 +366,22 @@ input[type="file"] {
     text-align: center;
     cursor: pointer;
 }
-.remove .btn{
+
+.remove .btn {
     margin-right: 0px;
 }
+
 .remove:hover {
     background: white;
     color: black;
 }
-td>.post-image{
+
+td>.post-image {
     position: relative;
     text-align: center;
     color: white;
 }
+
 span.album-cover {
     position: absolute;
     font-size: 9px;
@@ -354,118 +400,131 @@ span.album-cover {
 
 /* my stiling feel free to change */
 
-.tim-pic{
+.tim-pic {
     background-image: url("https://s-media-cache-ak0.pinimg.com/236x/0d/e5/7a/0de57a676b2005b3667225d181103fd9.jpg")
 }
 
-.dave-pic{
+.dave-pic {
     background-image: url("https://s-media-cache-ak0.pinimg.com/564x/67/22/fd/6722fdb6c074f424bdc4285990a98546.jpg")
 }
-.bob-pic{
+
+.bob-pic {
     background-image: url("https://upload.wikimedia.org/wikipedia/en/c/c5/Bob_the_builder.jpg")
 }
 
 
 
-.image-grid{
-    text-align:center;
-    margin:auto;
-    display:block;
-    width:1880px;
+.image-grid {
+    text-align: center;
+    margin: auto;
+    display: block;
+    width: 1880px;
 }
 
-.image-grid div{
+.image-grid div {
     height: inherit;
-    width:100%;
+    width: 100%;
     display: inline-block;
     background-size: cover;
     background-position: top center;
 }
+
 /* grid specific only change if your confident in your code */
-.grid{
-    display:none;
+.grid {
+    display: none;
 }
 
-.grid-item{
-    display:inline-block;
-    width:200px;
-    height:200px;
+.grid-item {
+    display: inline-block;
+    width: 200px;
+    height: 200px;
     margin-bottom: 10px;
 }
 
-.grid-item-w2x{
-    width:410px;
+.grid-item-w2x {
+    width: 410px;
 }
 
-.grid-item-h2x{
-    height:410px;
+.grid-item-h2x {
+    height: 410px;
 }
+
 @media screen and (max-width: 1900px) {
+
     /* 5 columns for larger screens */
-    #portfolio-grid{
-        width:1670px;
+    #portfolio-grid {
+        width: 1670px;
     }
 }
 
 @media screen and (max-width: 1680px) {
+
     /* 5 columns for larger screens */
-    #portfolio-grid{
-        width:1250px;
+    #portfolio-grid {
+        width: 1250px;
     }
 }
+
 @media screen and (max-width: 1280px) {
+
     /* 5 columns for larger screens */
-    #portfolio-grid{
-        width:1040px;
+    #portfolio-grid {
+        width: 1040px;
     }
 }
+
 @media screen and (max-width: 1050px) {
+
     /* 5 columns for larger screens */
-    #portfolio-grid{
-        width:850px;
+    #portfolio-grid {
+        width: 850px;
     }
 }
+
 @media screen and (max-width: 860px) {
 
-    #portfolio-grid{
-        width:630px;
+    #portfolio-grid {
+        width: 630px;
     }
 }
 
 @media screen and (max-width: 650px) {
 
-    #portfolio-grid{
-        width:410px;
+    #portfolio-grid {
+        width: 410px;
     }
 
 }
 
 @media screen and (max-width: 420px) {
 
-    #portfolio-grid{
-        width:210px;
+    #portfolio-grid {
+        width: 210px;
     }
 
 }
 
 @media screen and (max-width: 430px) {
 
-    #portfolio-grid{
-        width:200px;
+    #portfolio-grid {
+        width: 200px;
     }
-    .grid{width:200px;
-        height:200px;}
+
+    .grid {
+        width: 200px;
+        height: 200px;
+    }
 }
 
-.add-new-page .area .item{
+.add-new-page .area .item {
     margin: 0 auto;
     border: 1px solid #ddd;
-    padding: 20px 10px 10px 10px;
+    padding: 10px;
     border-radius: 5px;
     cursor: pointer;
 }
 
-.setting .rounded{
+.setting .rounded {
     border: 1px solid #b3b3b3;
 }
 
@@ -544,9 +603,11 @@ span.album-cover {
 .accordion-option .toggle-accordion.active:before {
     content: "Collapse All";
 }
+
 .questions {
     border-bottom: 1px solid #d8d8d8;
 }
+
 .quiz-answers {
     display: block;
     float: left;
@@ -554,17 +615,21 @@ span.album-cover {
     max-width: 1170px;
     position: relative;
 }
+
 .btn-group-answer-formats-container {
     max-width: 1178px;
     text-align: center;
     margin-bottom: 15px;
 }
+
 .quiz-answers-format-large-image {
     max-width: 790px;
 }
+
 .quiz-answers-format-text {
     width: 100%;
 }
+
 .quiz-question .span-answer-format {
     display: block;
     width: 100%;
@@ -572,12 +637,14 @@ span.album-cover {
     font-size: 13px;
     margin-bottom: 5px;
 }
+
 .quiz-answers .row-answer {
     margin-left: 0px !important;
     margin-right: 0px;
 }
+
 .quiz-answers-format-large-image .quiz-answers .row-answer {
-    margin-left: 4px ;
+    margin-left: 4px;
 }
 
 .quiz-answers .answer {
@@ -591,6 +658,7 @@ span.album-cover {
     padding-right: 7.5px;
     margin-bottom: 15px;
 }
+
 .quiz-answers .answer-inner {
     width: 365px;
     height: auto;
@@ -602,16 +670,20 @@ span.album-cover {
     -webkit-box-shadow: 0 2px 4px rgba(0, 0, 0, .10);
     box-shadow: 0 2px 4px rgba(0, 0, 0, .10);
 }
+
 .quiz-answers-format-text .quiz-answer-image-item {
     display: none !important;
 }
+
 .quiz-answers-format-text .quiz-answer-image-item-text {
     display: none !important;
 }
+
 .quiz-answers-format-text .answer-inner {
     width: 100% !important;
     height: auto !important;
 }
+
 .quiz-answers-format-text .answer-text {
     height: 60px;
     border-top: 0 !important;
@@ -623,6 +695,7 @@ span.album-cover {
     min-width: 0 !important;
     height: auto !important;
 }
+
 .quiz-answers .btn-delete-answer {
     color: #d3d4d6;
     font-size: 14px;
@@ -630,18 +703,22 @@ span.album-cover {
     top: 3px;
     right: 6px;
 }
+
 .quiz-answers .quiz-answer-image-item {
     padding: 20px;
 }
+
 .quiz-answers .quiz-answer-image-container {
     position: relative;
     height: 205px;
     overflow: hidden;
     border-radius: 3px;
 }
-.btn-add-post-item  {
+
+.btn-add-post-item {
     padding: 10px 50px;
 }
+
 .btn-add-post-item i {
     margin-right: 15px;
 }
@@ -650,6 +727,7 @@ span.album-cover {
     width: 100%;
     height: 100%;
 }
+
 .btn-select-image {
     position: relative;
     display: block;
@@ -660,6 +738,7 @@ span.album-cover {
     border-radius: 3px;
     cursor: pointer;
 }
+
 .btn-select-image .btn-select-image-inner {
     display: inline-block;
     text-align: center;
@@ -672,6 +751,7 @@ span.album-cover {
     right: 0;
     margin: auto;
 }
+
 .quiz-answers .btn-add-answer {
     padding: 10px 50px;
     color: #55606e;
@@ -680,9 +760,11 @@ span.album-cover {
     margin: 10px 0;
 }
 
-.btn-group-answer-formats .btn:hover, .btn-group-answer-formats .active {
+.btn-group-answer-formats .btn:hover,
+.btn-group-answer-formats .active {
     background-color: #c3c3c3 !important;
 }
+
 .btn-select-image i {
     display: block;
     font-size: 48px;
@@ -690,9 +772,11 @@ span.album-cover {
     color: #dadbdd;
     margin-bottom: 15px;
 }
+
 .icon-images:before {
     content: '\e826';
 }
+
 .btn-select-image .btn {
     border-color: #cfd3d9 !important;
     background-color: transparent !important;
@@ -703,9 +787,11 @@ span.album-cover {
     overflow: hidden;
     text-overflow: ellipsis;
 }
+
 .quiz-answers .answer .form-group {
     margin-bottom: 10px;
 }
+
 .quiz-answers .answer-text {
     resize: none !important;
     border: 0 !important;
@@ -714,6 +800,7 @@ span.album-cover {
     margin-bottom: 5px;
     height: 60px;
 }
+
 .quiz-answers .answer-radio-container {
     display: table;
     width: 100%;
@@ -725,12 +812,14 @@ span.album-cover {
     padding: 8px 15px 10px 15px;
     width: 100%;
 }
+
 .quiz-answer-image-item .quiz-answer-image-container img {
     display: block;
     height: 100%;
     width: 100%;
     object-fit: cover;
 }
+
 .btn-delete-selected-image {
     position: absolute;
     top: 0;
@@ -744,9 +833,62 @@ span.album-cover {
     text-align: center;
 }
 
-.display-nothing.alert{
+.display-nothing.alert {
     padding: .3rem 1rem;
 }
-.panel-title{
-    font-weight: bold;
+
+
+/*   Bootstrap override */
+.container-fluid {
+    padding: 15px;
 }
+
+.card .card-header .card-title {
+    font-weight: bold;
+    align-items: center;
+    margin: 0;
+    float: left;
+}
+
+.card .card-header .card-toolbar {
+
+    align-items: center;
+    margin: 0;
+    flex-wrap: wrap;
+    float: right;
+}
+
+.card-footer {
+    padding: 0;
+}
+
+.nav-tabs {   
+    padding: 5px 5px 0;
+    border-bottom: none;
+}
+
+.img-thumbnail {
+    max-width: 50px !important;
+}
+
+ul.post_categories_select_list, ul.post_categories_select_list li{
+     list-style: none;
+     padding: 2px 5px;
+     margin: 0;
+}
+
+ul.post_categories_select_list ul.child-list li {
+    padding-left: 10px;
+}
+
+.content-item {
+    padding:2px;
+    border: 1px solid #ffffff;
+    border-radius: 5px;
+}
+.content-item:hover{
+    border:1px solid #999999;
+}
+
+
+
