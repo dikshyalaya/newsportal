@@ -82,8 +82,7 @@ class UserController extends Controller
                 'last_name'     => ['required', 'string', 'max:255'],
                 'email'         => ['required', 'string', 'email', 'max:255'],
                 'password'      => ['required', 'string', 'min:6'],
-                'phone'         => ['min:11','max:14'],
-                'dob'           => 'required',
+                'phone'         => ['min:8','max:14'],                
                 'gender'        => 'required',
                 'g-recaptcha-response'      => ['required', 'string'],
             ]);
@@ -94,8 +93,7 @@ class UserController extends Controller
                 'last_name'     => ['required', 'string', 'max:255'],
                 'email'         => ['required', 'string', 'email', 'max:255'],
                 'password'      => ['required', 'string', 'min:6'],
-                'phone'         => ['min:11','max:14'],
-                'dob'           => 'required',
+                'phone'         => ['min:8','max:14'],               
                 'gender'        => 'required',
             ]);
 
@@ -113,7 +111,7 @@ class UserController extends Controller
                     $user->password             = bcrypt($request->password);
                     $user->first_name           = $request->first_name;
                     $user->last_name            = $request->last_name;
-                    $user->dob                  = $request->dob;
+                    
                     $user->phone                = $request->phone;
                     $user->gender               = $request->gender;
                     $user->is_password_set      = 1;
