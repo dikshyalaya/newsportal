@@ -31,61 +31,22 @@
                             </a>
                             <div id="submenu-2" class="collapse submenu @yield('post-show')">
                                 <ul class="nav flex-column">
-                                    @if(Sentinel::getUser()->hasAccess(['post_write']))
-                                        <li class="nav-item">
-                                            <a class="nav-link @yield('create_article')" href="{{ route('create-article') }}">{{ __('create_article') }} </a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a class="nav-link @yield('create_video')" href="{{ route('create-video-post') }}">{{ __('create_video_post') }} </a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a class="nav-link @yield('create_audio')" href="{{ route('create-audio-post') }}">{{ __('create_audio_post') }} </a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a class="nav-link @yield('create_trivia_quiz')" href="{{ route('create-trivia-quiz') }}">{{ __('create_trivia_quiz') }} </a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a class="nav-link @yield('create_personality_quiz')" href="{{ route('create-personality-quiz') }}">{{ __('create_personality_quiz') }} </a>
-                                        </li>
-                                    @endif
-                                    <li class="nav-item">
+                                <li class="nav-item">
                                         <a class="nav-link @yield('post-active')" href="{{ route('post') }}">{{ __('all_post') }}</a>
                                     </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link @yield('slider-post-active')" href="{{ route('slider-posts') }}">{{ __('slider_posts') }}</a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link @yield('feature-post-active')" href="{{ route('featured-posts') }}">{{ __('featured_posts') }}</a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link @yield('breaking-post-active')" href="{{ route('breaking-posts') }}">{{ __('breaking_posts') }}</a>
-                                    </li>
-
-                                    <li class="nav-item">
-                                        <a class="nav-link @yield('recommended-post-active')" href="{{ route('recommended-posts') }}">{{ __('recommended_posts') }}</a>
-                                    </li>
-
-                                    <li class="nav-item">
-                                        <a class="nav-link @yield('editor-picks-active')" href="{{ route('editor-picks') }}">{{ __('editor_picks') }}</a>
-                                    </li>
-
-                                    <li class="nav-item">
-                                        <a class="nav-link @yield('pending-post-active')" href="{{ route('pending-posts') }}">{{ __('pending_posts') }}</a>
-                                    </li>
-
-                                    <li class="nav-item">
-                                        <a class="nav-link @yield('submitted-post-active')" href="{{ route('submitted-posts') }}">{{ __('submitted_posts') }}</a>
-                                    </li>
+                                    @if(Sentinel::getUser()->hasAccess(['post_write']))
+                                        <li class="nav-item">
+                                            <a class="nav-link @yield('create_article')" href="{{ route('create-article') }}">{{ __('new_post') }} </a>
+                                        </li>
+                                        
+                                    @endif
+                                   
                                     @if(Sentinel::getUser()->hasAccess(['category_read']) || Sentinel::getUser()->hasAccess(['category_write']) || Sentinel::getUser()->hasAccess(['category_delete']))
                                         <li class="nav-item">
-                                            <a class="nav-link @yield('category-active')" href="{{ route('categories') }}">{{__('categories')}}</a>
+                                            <a class="nav-link @yield('category-active')" href="{{ route('categories') }}">{{__('post_categories')}}</a>
                                         </li>
                                     @endif
-                                    @if(Sentinel::getUser()->hasAccess(['sub_category_read']) || Sentinel::getUser()->hasAccess(['sub_category_write']) || Sentinel::getUser()->hasAccess(['sub_category_delete']))
-                                        <li class="nav-item">
-                                            <a class="nav-link @yield('sub-category-active')" href="{{ route('sub-categories') }}">{{__('sub_categories')}}</a>
-                                        </li>
-                                    @endif
+                                   
                                 </ul>
                             </div>
                         </li>
