@@ -56,7 +56,7 @@
                 <div class="row">
                     {{--  @php dd($blockPosts); @endphp --}}
                     @foreach($blockPosts as $post)
-                        <div class="col-md-6">
+                        <div class="col-md-6 p-0 pr-1">
                             <div class="sg-post">
                                 <div class="entry-header">
                                     <div class="entry-thumbnail">

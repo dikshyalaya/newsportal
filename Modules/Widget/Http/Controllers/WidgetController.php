@@ -20,7 +20,7 @@ class WidgetController extends Controller
 
     public function widgets()
     {
-        $widgets    = Widget::orderBy('id', 'desc')->paginate(15);
+        $widgets    = Widget::orderBy('location', 'asc')->orderBy('order', 'asc')->paginate(15);
 
         return view('widget::widgets', compact('widgets'));
     }

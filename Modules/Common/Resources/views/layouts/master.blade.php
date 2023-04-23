@@ -86,39 +86,39 @@
     <!-- Tinemce -->
     <script src="{{static_asset('vendor/tinymce/tinymce.min.js')}}"></script>
     <script>
-         //TinyMCE
-            tinymce.init({
-                selector: "textarea#post_content",
-                theme: "modern",
-                height: 400,
-                plugins: [
-                    'advlist autolink lists link image charmap print preview hr anchor pagebreak',
-                    'searchreplace wordcount visualblocks visualchars code fullscreen',
-                    'insertdatetime media nonbreaking save table contextmenu directionality',
-                    'emoticons template paste textcolor colorpicker textpattern imagetools'
-                ],
-                toolbar1: 'insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image',
-                toolbar2: 'print preview media | forecolor backcolor emoticons',
-                image_advtab: true
-            });
-            // tinymce.suffix = ".min";
-            // tinyMCE.baseURL = 'vendor/tinymce';
-            tinymce.init({
-                selector: "textarea#content",
-                theme: "modern",
-                height: 400,
-                plugins: [
-                    'advlist autolink lists link image charmap print preview hr anchor pagebreak',
-                    'searchreplace wordcount visualblocks visualchars code fullscreen',
-                    'insertdatetime media nonbreaking save table contextmenu directionality',
-                    'emoticons template paste textcolor colorpicker textpattern imagetools'
-                ],
-                toolbar1: 'insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image',
-                toolbar2: 'print preview media | forecolor backcolor emoticons',
-                image_advtab: true
-            });
-            // tinymce.suffix = ".min";
-            // tinyMCE.baseURL = 'vendor/tinymce';
+         var tinyMceEditor = function() {
+
+return {
+    init: function(element_selector) {
+
+        //reset if already initialized
+        tinymce.remove();
+        tinymce.EditorManager.editors = [];
+   
+        //TinyMCE
+        tinymce.init({
+            selector: element_selector,
+            theme: "modern",
+            height: 200,
+            plugins: [
+                'advlist autolink lists link image charmap print preview hr anchor pagebreak',
+                'searchreplace wordcount visualblocks visualchars code fullscreen',
+                'insertdatetime media nonbreaking save table contextmenu directionality',
+                'emoticons template paste textcolor colorpicker textpattern imagetools'
+            ],
+            toolbar1: 'insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image',
+            toolbar2: 'print preview media | forecolor backcolor emoticons',
+            image_advtab: true
+        });
+    },
+    
+}
+}();
+
+$(document).ready(function() {
+
+tinyMceEditor.init("textarea.post-content");
+});
 
     </script>
     <!-- slimscroll js -->
@@ -193,7 +193,7 @@
                         swal.stopLoading();
                         if(response.status == "success"){
                             console.log(response);
-                            swal("{{ __('deleted') }}!", response.message, response.status);
+                            //swal("{{ __('deleted') }}!", response.message, response.status);
                             $(table_row).fadeOut(2000).remove();
                             if(table_name=='menu'){
                                  window.location = response.url
@@ -241,7 +241,7 @@
                         swal.stopLoading();
                         if(response.status == "success"){
                             console.log(response);
-                            swal("{{ __('removed') }}!", response.message, response.status);
+                            //swal("{{ __('removed') }}!", response.message, response.status);
                             if(page=='index'){
                                 window.location.reload();
                             }else{
@@ -287,7 +287,7 @@
                         swal.stopLoading();
                         if(response.status == "success"){
                             console.log(response);
-                            swal("{{ __('added') }}!", response.message, response.status);
+                            //swal("{{ __('added') }}!", response.message, response.status);
                             window.location.reload();
                         }else{
                             swal("Error!", response.message, response.status);

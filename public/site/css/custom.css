@@ -1223,3 +1223,85 @@ label.btn.btn-primary {
     color: white;
     padding: .50rem 1rem;
 }
+
+
+/* custome css */
+
+
+.header-bottom {
+    padding: 0;
+    background-color: #000;
+}
+
+.sg-menu {
+    margin-bottom: 15px;
+}
+
+.sg-breaking-news {
+    margin-bottom: 15px;
+}
+
+.sg-section{
+    margin-bottom:20px;
+}
+
+.section-title {
+    margin-bottom:2px;
+    border-bottom: 3px solid var(--primary-color);
+}
+
+.sg-post {
+   
+    margin-bottom: 2px;
+}
+
+.sg-post.post-style-1 {
+    margin-bottom: 2px!important;
+}
+
+.tagcloud {
+    margin-top: 0;
+}
+
+.sg-widget {
+    margin-bottom:15px;
+    background-color: rgb(255, 255, 255);
+    border-radius: 5px 5px 0 0;
+}
+
+.sg-widget .widget-title {   
+    margin-bottom: 1px;
+    border-radius: 5px 5px  0 0;
+}
+
+.sg-widget .widget-newsletter {
+    padding: 0 15px 15px;
+
+}
+
+.widget-newsletter input.form-control{
+    margin-bottom:0;
+    margin-top:15px;
+
+}
+
+.sg-widget .tagcloud {
+    padding: 15px;
+}
+
+.widget-social ul {
+    padding: 15px;
+}
+
+.widget-social ul li {    
+    margin-bottom: 0;   
+}
+
+.sg-ad {
+    margin-bottom: 0px;
+}
+
+
+.footer{
+    margin-top:15px;
+}

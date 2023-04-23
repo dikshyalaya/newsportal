@@ -25,6 +25,11 @@ class Post extends Model implements Feedable
     public function category(){
         return $this->belongsTo('Modules\Post\Entities\Category');
     }
+    
+    public function categories()
+    {
+        return $this->belongsToMany('Modules\Post\Entities\Category');
+    }
     public function subCategory(){
         return $this->belongsTo('Modules\Post\Entities\SubCategory');
     }

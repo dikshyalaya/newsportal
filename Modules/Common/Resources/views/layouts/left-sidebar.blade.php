@@ -52,6 +52,27 @@
                         </li>
                     @endif
 
+
+                    @if(Sentinel::getUser()->hasAccess(['pages_read']) || Sentinel::getUser()->hasAccess(['pages_write']) || Sentinel::getUser()->hasAccess(['pages_delete']))
+                        <li class="nav-item">
+                            <a class="nav-link @yield('pages')" href="#" data-toggle="collapse" @yield('page-aria-expanded', 'aria-expanded=false') data-target="#submenu-1" aria-controls="submenu-1">
+                                <i class="fa fa-fw fa-file"></i> {{__('pages')}}
+                            </a>
+                            <div id="submenu-1" class="collapse submenu @yield('page-show')">
+                                <ul class="nav flex-column">
+                                    @if(Sentinel::getUser()->hasAccess(['pages_write']))
+                                        <li class="nav-item">
+                                            <a class="nav-link @yield('add-page-active')" href="{{ route('add-page') }}">{{__('add_page')}}</a>
+                                        </li>
+                                    @endif
+                                    <li class="nav-item">
+                                        <a class="nav-link @yield('pages-list')" href="{{ route('pages') }}">{{__('pages')}}</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
+                    @endif
+
                     @if(Sentinel::getUser()->hasAccess(['rss_read']) || Sentinel::getUser()->hasAccess(['rss_write']) || Sentinel::getUser()->hasAccess(['rss_delete']))
                         <li class="nav-item">
                             <a class="nav-link @yield('rss')" href="{{route('rss-feeds')}}">
@@ -86,58 +107,9 @@
                             </div>
                         </li>
                     @endif
-                    @if(Sentinel::getUser()->hasAccess(['album_read']) || Sentinel::getUser()->hasAccess(['album_write']) || Sentinel::getUser()->hasAccess(['album_delete']))
-                        <li class="nav-item">
-                            <a class="nav-link @yield('gallery')" href="#" data-toggle="collapse" @yield('gallery-aria-expanded', 'aria-expanded=false') data-target="#submenu-130" aria-controls="submenu-115">
-                                <i class="fas fa-fw fa-image"></i>{{__('gallery')}}
-                            </a>
-                            <div id="submenu-130" class="collapse submenu @yield('gallery-show')">
-                                <ul class="nav flex-column">
-                                    @if(Sentinel::getUser()->hasAccess(['album_read']) || Sentinel::getUser()->hasAccess(['album_delete']))
-                                        <li class="nav-item">
-                                            <a class="nav-link @yield('all-images-active')" href="{{ route('images') }}">
-                                                {{__('images')}}
-                                            </a>
-                                        </li>
-                                    @endif
-                                    @if(Sentinel::getUser()->hasAccess(['album_read']) || Sentinel::getUser()->hasAccess(['album_write']) || Sentinel::getUser()->hasAccess(['album_delete']))
-                                        <li class="nav-item">
-                                            <a class="nav-link @yield('albums-active')" href="{{ route('albums') }}">
-                                                {{__('albums')}}
-                                            </a>
-                                        </li>
-                                    @endif
-{{--                                    @if(Sentinel::getUser()->hasAccess(['album_read']) || Sentinel::getUser()->hasAccess(['album_write']) || Sentinel::getUser()->hasAccess(['album_delete']))--}}
-{{--                                        <li class="nav-item">--}}
-{{--                                            <a class="nav-link @yield('albums-categories')" href="{{ route('album-categories') }}">--}}
-{{--                                                {{__('categories')}}--}}
-{{--                                            </a>--}}
-{{--                                        </li>--}}
-{{--                                    @endif--}}
-                                </ul>
-                            </div>
-                        </li>
-                    @endif
+                   
 
-                    @if(Sentinel::getUser()->hasAccess(['pages_read']) || Sentinel::getUser()->hasAccess(['pages_write']) || Sentinel::getUser()->hasAccess(['pages_delete']))
-                        <li class="nav-item">
-                            <a class="nav-link @yield('pages')" href="#" data-toggle="collapse" @yield('page-aria-expanded', 'aria-expanded=false') data-target="#submenu-1" aria-controls="submenu-1">
-                                <i class="fa fa-fw fa-file"></i> {{__('pages')}}
-                            </a>
-                            <div id="submenu-1" class="collapse submenu @yield('page-show')">
-                                <ul class="nav flex-column">
-                                    @if(Sentinel::getUser()->hasAccess(['pages_write']))
-                                        <li class="nav-item">
-                                            <a class="nav-link @yield('add-page-active')" href="{{ route('add-page') }}">{{__('add_page')}}</a>
-                                        </li>
-                                    @endif
-                                    <li class="nav-item">
-                                        <a class="nav-link @yield('pages-list')" href="{{ route('pages') }}">{{__('pages')}}</a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </li>
-                    @endif
+                  
                     @if(Sentinel::getUser()->hasAccess(['polls_read']) || Sentinel::getUser()->hasAccess(['polls_write']) || Sentinel::getUser()->hasAccess(['polls_delete']))
                         <li class="nav-item">
                             <a class="nav-link @yield('poll')" href="{{route('polls')}}">
@@ -438,30 +410,8 @@
                         </div>
                     </li>
                     @endif
-
-
-                    @if(Sentinel::getUser()->hasAccess(['language_settings_read']) || Sentinel::getUser()->hasAccess(['language_settings_write']) || Sentinel::getUser()->hasAccess(['language_settings_delete']))
-                        <li class="nav-item">
-                            <a class="nav-link @yield('language-setting')" href="{{route('language-settings')}}">
-                                <i class="fas fa-fw fa-globe"></i>{{__('language_settings')}}
-                            </a>
-                        </li>
-                    @endif
-
-                    @if(Sentinel::getUser()->hasAccess(['system_update_read']) || Sentinel::getUser()->hasAccess(['system_update_write']))
-                        <li class="nav-item">
-                            <a class="nav-link @yield('system-update')" href="{{route('system-update')}}">
-                                <i class="fa fa-solid fa-wrench"></i>{{__('system_update')}}
-                            </a>
-                        </li>
-                    @endif
-                    <li class="nav-item">
-                        <a class="nav-link" href="#"> </a>
-                    </li>
-
-                    <li class="nav-item">
-                        <a class="nav-link" href="#"> </a>
-                    </li>
+                   
+                    
 
                 </ul>
             </div>

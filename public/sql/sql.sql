@@ -171,6 +171,8 @@ CREATE TABLE `categories` (
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+
+
 --
 -- Dumping data for table `categories`
 --
@@ -182,6 +184,12 @@ INSERT INTO `categories` (`id`, `category_name`, `language`, `slug`, `is_feature
 (4, 'RSS News', 'en', 'rss-news', 0, NULL, NULL, 4, '2021-09-04 22:34:39', '2021-09-04 22:34:39');
 
 -- --------------------------------------------------------
+
+
+CREATE TABLE `category_post` (
+  `category_id` bigint NOT NULL,
+  `post_id` bigint NOT NULL
+)
 
 --
 -- Table structure for table `comments`

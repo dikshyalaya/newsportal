@@ -7,7 +7,7 @@
             <!-- ============================================================== -->
             <!-- total views   -->
             <!-- ============================================================== -->
-            <div class="col-xl-3 col-lg-6 col-md-6 col-sm-12 col-12">
+            <div class="col-xl-4 col-lg-6 col-md-6 col-sm-12 col-12">
                 <div class="card">
                     <div class="card-body">
                         <div class="d-inline-block">
@@ -26,7 +26,7 @@
             <!-- ============================================================== -->
             <!-- total followers   -->
             <!-- ============================================================== -->
-            <div class="col-xl-3 col-lg-6 col-md-6 col-sm-12 col-12">
+            <div class="col-xl-4 col-lg-6 col-md-6 col-sm-12 col-12">
                 <div class="card">
                     <div class="card-body">
                         <div class="d-inline-block">
@@ -45,7 +45,7 @@
             <!-- ============================================================== -->
             <!-- partnerships   -->
             <!-- ============================================================== -->
-            <div class="col-xl-3 col-lg-6 col-md-6 col-sm-12 col-12">
+            <div class="col-xl-4 col-lg-6 col-md-6 col-sm-12 col-12">
                 <div class="card">
                     <div class="card-body">
                         <div class="d-inline-block">
@@ -62,24 +62,7 @@
             <!-- end partnerships   -->
             <!-- ============================================================== -->
             <!-- ============================================================== -->
-            <!-- total earned   -->
-            <!-- ============================================================== -->
-            <div class="col-xl-3 col-lg-6 col-md-6 col-sm-12 col-12">
-                <div class="card">
-                    <div class="card-body">
-                        <div class="d-inline-block">
-                            <h5 class="text-muted">{{ __('submitted_post') }}</h5>
-                            <h2 class="mb-0"> {{ number_format($data['submittedPost']) }}</h2>
-                        </div>
-                        <div class="float-right icon-circle-medium  icon-box-lg  bg-brand-light mt-1">
-                            <i class="fa fa-check fa-fw fa-sm text-brand"></i>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- ============================================================== -->
-            <!-- end total earned   -->
-            <!-- ============================================================== -->
+            
         </div>
 
         <!-- Visit vs Visitor  -->

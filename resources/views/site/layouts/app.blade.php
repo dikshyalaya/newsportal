@@ -30,14 +30,14 @@
     <link rel="stylesheet"  href="https://fonts.googleapis.com/css2?family={{data_get(activeTheme(), 'options.fonts')}}:wght@400;500;600;700&display=swap" >
 
     {{-- icons --}}
-    <link rel="stylesheet" rel="icon" href="{{static_asset(settingHelper('favicon')) }}">
-    <link rel="stylesheet" rel="apple-touch-icon" sizes="144x144"
+    <link  rel="icon" href="{{static_asset(settingHelper('favicon')) }}">
+    <link  rel="apple-touch-icon" sizes="144x144"
           href="{{static_asset('site/images/ico/apple-touch-icon-precomposed.png') }}">
-    <link rel="stylesheet" rel="apple-touch-icon" sizes="114x114"
+    <link  rel="apple-touch-icon" sizes="114x114"
           href="{{static_asset('site/images/ico/apple-touch-icon-114-precomposed.png') }}">
-    <link rel="stylesheet" rel="apple-touch-icon" sizes="72x72"
+    <link  rel="apple-touch-icon" sizes="72x72"
           href="{{static_asset('site/images/ico/apple-touch-icon-72-precomposed.png') }}">
-    <link rel="stylesheet" rel="apple-touch-icon" sizes="57x57"
+    <link  rel="apple-touch-icon" sizes="57x57"
           href="{{static_asset('site/images/ico/apple-touch-icon-57-precomposed.png') }}">
 
     @if(settingHelper('predefined_header')!=null)

@@ -16,7 +16,7 @@ class CategoryController extends Controller
 {
     public function categories()
     {
-        $categories       = Category::with('childrenRecursive')->where('parent_id',0)->paginate(10);
+        $categories       = Category::with('childrenRecursive')->orderBy('category_name', 'ASC')->where('parent_id',0)->paginate(10);
         $activeLang     = Language::where('status', 'active')->orderBy('name', 'ASC')->get();
         $category=new Category();
 
@@ -63,7 +63,7 @@ class CategoryController extends Controller
     {
 
         $category       = Category::find($id);
-        $categories       = Category::with('childrenRecursive')->where('parent_id',0)->paginate(10);
+        $categories       = Category::with('childrenRecursive')->orderBy('category_name', 'ASC')->where('parent_id',0)->paginate(10);
         $activeLang     = Language::where('status', 'active')->orderBy('name', 'ASC')->get();
 
         return view('post::edit_category', compact('category','categories', 'activeLang'));
@@ -85,7 +85,7 @@ class CategoryController extends Controller
             $category = Category::find($request->category_id);
         else 
             $category = new Category();
-            
+
         $category->parent_id        = $request->parent_id;
         $category->category_name    = $request->category_name;
         $category->language         = $request->language;

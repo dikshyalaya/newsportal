@@ -218,8 +218,8 @@ class RssController extends Controller
                     endif;
 
                     $post->language         = $feed->language;
-                    $post->category_id      = $feed->category_id;
-                    $post->sub_category_id  = $feed->sub_category_id ;
+                    
+                    
                     $post->layout           = $feed->layout ;
 
                     if($feed->status == 2) :
@@ -263,6 +263,8 @@ class RssController extends Controller
                     endif;
 
                     $post->save();
+
+                    $post->categories()->attach($feed->category_id);
                     $i++;
                 endforeach;
                 return redirect()->back()->with('success',__('successfully_updated'));

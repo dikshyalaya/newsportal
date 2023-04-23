@@ -16,11 +16,13 @@
 
                         </div>
                         <div class="date">
-                            <span><i class="fa fa-calendar mr-2" aria-hidden="true"></i>{{{{ Carbon\Carbon::parse(date('l, d F Y'))->translatedFormat('l, d F Y')}}}}</span>
+                            <span><i class="fa fa-calendar mr-2" aria-hidden="true"></i>{{ Carbon\Carbon::parse(date('l, d F Y'))->translatedFormat('l, d F Y') }}</span>
                         </div>
                     </div>
 
-                    <div class="sg-user">
+
+
+                    <div class="sg-user d-flex d-flex-style-4">
                         <div class="style-3">
                             @if(Cartalyst\Sentinel\Laravel\Facades\Sentinel::check())
                             <div class="dropdown">
@@ -50,9 +52,21 @@
                         @endif
                         </div>
                     </div>
+
+
+                    <div class="sg-search d-flex d-flex-style-3">
+                        <div class="search-form">
+                            <form action="{{ route('article.search') }}" id="search" method="GET">
+                                <label class="d-none"> Search </label>
+                                <input class="form-control" name="search" type="text" placeholder="{{ __('search') }}">
+                                <button type="submit" name="search"><i class="fa fa-search"></i></button>
+                            </form>
+                        </div>
+                    </div><!-- /.sg-search -->
                 </div>
                 <!-- /.left-contennt -->
                 <div class="right-content d-flex align-self-center">
+
                     @if(settingHelper('submit_news_status')==1)
                         <div class="d-flex">
                             <div class="submit-news d-none d-md-block">
@@ -207,15 +221,7 @@
                         </ul>
                     </div>
 
-                    <div class="sg-search">
-                        <div class="search-form">
-                            <form action="{{ route('article.search') }}" id="search" method="GET">
-                                <label class="d-none"> Search </label>
-                                <input class="form-control" name="search" type="text" placeholder="{{ __('search') }}">
-                                <button type="submit" name="search"><i class="fa fa-search"></i></button>
-                            </form>
-                        </div>
-                    </div><!-- /.sg-search -->
+                    
                 </div><!-- /.menu-content -->
             </div><!-- /.container -->
         </nav><!-- /.navbar -->

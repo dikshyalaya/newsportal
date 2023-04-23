@@ -73,16 +73,11 @@ Route::group(
 
                 //category
                 Route::get('/categories', 'CategoryController@categories')->name('categories')->middleware('permissionCheck:category_read');
-                Route::post('/categories/add', 'CategoryController@saveNewCategory')->name('save-new-category')->middleware('permissionCheck:category_write');
+                //Route::post('/categories/add', 'CategoryController@saveNewCategory')->name('save-new-category')->middleware('permissionCheck:category_write');
                 Route::get('/categories/edit/{id}', 'CategoryController@editCategory')->name('edit-category')->middleware('permissionCheck:category_write');
                 Route::post('/categories/update', 'CategoryController@updateCategory')->name('update-category')->middleware('permissionCheck:category_write');
 
-                //subcategory
-                Route::get('/sub-categories', 'CategoryController@subCategories')->name('sub-categories')->middleware('permissionCheck:sub_category_read');
-                Route::post('/sub-categories', 'CategoryController@subCategoriesAdd')->name('save-new-sub-category')->middleware('permissionCheck:sub_category_write');
-                Route::get('/sub-categories/edit/{id}', 'CategoryController@editSubCategory')->name('edit-sub-category')->middleware('permissionCheck:sub_category_write');
-                Route::post('/sub-categories/update', 'CategoryController@updateSubCategory')->name('update-sub-category')->middleware('permissionCheck:sub_category_write');
-
+              
                 //poll
                 Route::get('/polls', 'PollController@polls')->name('polls')->middleware('permissionCheck:polls_read');
                 Route::get('/poll/create', 'PollController@create')->name('create-poll')->middleware('permissionCheck:polls_write');

@@ -34,14 +34,7 @@
                                             class="btn btn-primary btn-sm btn-add-new"><i class="mdi mdi-plus"></i>
                                                 {{ __('create_article') }}
                                             </a>
-                                            <a href="{{ route('create-video-post') }}"
-                                               class="btn btn-primary btn-sm btn-add-new"><i class="mdi mdi-plus"></i>
-                                                {{ __('create_video_post') }}
-                                            </a>
-                                            <a href="{{ route('create-audio-post') }}"
-                                               class="btn btn-primary btn-sm btn-add-new"><i class="mdi mdi-plus"></i>
-                                                {{ __('create_audio_post') }}
-                                            </a>
+                                            
                                         </div>
                                     @endif
                                 </div>
@@ -109,31 +102,30 @@
                                 <table class="table table-bordered table-striped" role="grid">
                                     <thead>
                                     <tr role="row">
-                                        {{-- <th width="20">
+                                         <th width="20">
                                             <input type="checkbox" class="checkbox-table" id="checkAll">
-                                        </th> --}}
+                                        </th> 
                                         <th width="20">#</th>
                                         <th>{{ __('post') }}</th>
-                                        <th>{{ __('language') }}</th>
-                                        <th>{{ __('post_type') }}</th>
+                                        
                                         <th>{{ __('category') }}</th>
                                         <th>{{ __('post_by') }}</th>
-                                        <th>{{ __('visibility') }}</th>
-                                        <th>{{ __('view') }}</th>
-                                        <th>{{ __('added_date') }}</th>
+                                        <th>{{ __('visibility') }}</th>                                        
+                                        <th>{{ __('posted_date') }}</th>
+                                        <th>{{ __('views') }}</th>
                                         @if(Sentinel::getUser()->hasAccess(['post_write']) || Sentinel::getUser()->hasAccess(['post_delete']))
                                             <th>{{ __('options') }}</th>
                                         @endif
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    @foreach ($posts as $post)
+                                    @foreach ($posts as $key=>$post)
                                         <tr id="row_{{ $post->id }}">
-                                            {{-- <td>
+                                            <td>
                                                 <input type="checkbox" id="table-checkbox" name="checkbox-table" class="filled-in chk-col-deep-purple" value="{{ $post->id }}">
                                                 <label for="table-checkbox"></label>
-                                            </td> --}}
-                                            <td>{{ $post->id }}</td>
+                                            </td> 
+                                            <td>{{ $key+1 }}</td>
                                             <td>
                                                 <div class="post-image">
 
@@ -149,12 +141,14 @@
                                                              class="img-responsive img-thumbnail">
                                                     @endif
                                                 </div> <a href="{{ route('article.detail', [$post->slug]) }}">{{ $post->title }} </a></td>
-                                            <td>{{ $post->language }} </td>
-                                            <td class="td-post-type">{{ $post->post_type }}</td>
+                                            
                                             <td>
-                                                <label class="category-label m-r-5 label-table"
-                                                      id="breaking-post-bgc">
-                                                    {{ @$post->category['category_name'] }} </label>
+                                                @foreach($post->categories as $category)
+                                                <label class="category-label bg-aqua label-table d-block">
+                                                    {{@$category->category_name}}
+                                                </label>
+
+                                                @endforeach
 
                                             </td>
                                             <td>
@@ -194,8 +188,9 @@
                                                     <label class="label bg-teal label-table">{{ __('slider') }}</label>
                                                 @endif
                                             </td>
-                                            <td>{{ $post->total_hit }}</td>
+                                           
                                             <td>{{ $post->created_at }}</td>
+                                            <td>{{ $post->total_hit }}</td>
                                             @if(Sentinel::getUser()->hasAccess(['post_write']) || Sentinel::getUser()->hasAccess(['post_delete']))
                                                 <td>
                                                     <div class="dropdown">

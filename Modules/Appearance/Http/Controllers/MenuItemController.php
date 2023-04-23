@@ -24,7 +24,7 @@ class MenuItemController extends Controller
         $menus              = Menu::all();
         $selectedMenu       = Menu::first();
         $selectedLanguage   = settingHelper('default_language');
-        $categories         = Category::orderBy('id','ASC')->where('language',$selectedLanguage)->get();
+        $categories       = Category::with('childrenRecursive')->where('parent_id', 0)->get();
 
         $menuItems          = MenuItem::with(['children'])
                                     ->where('parent', null)
@@ -69,7 +69,7 @@ class MenuItemController extends Controller
         $pages              = Page::all()->where('language',$selectedLanguage);
         $posts              = Post::select('id', 'title')->where('language',$selectedLanguage)->orderBy('id', 'desc')->get();
         $activeLang         = Language::where('status', 'active')->orderBy('name', 'ASC')->get();
-        $categories         = Category::orderBy('id','ASC')->where('language',$selectedLanguage)->get();
+        $categories       = Category::with('childrenRecursive')->orderBy('id','ASC')->where('language',$selectedLanguage)->where('parent_id', 0)->get();
 
         return view('appearance::menu_item', [
                                             'menuItems' => $menuItems,
