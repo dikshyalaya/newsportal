@@ -21,7 +21,6 @@ use Modules\Post\Entities\Post;
 use Modules\Setting\Entities\Setting;
 use File;
 use Image;
-use LaravelLocalization;
 use App\VisitorTracker;
 use App\Reaction;
 use Sentinel;
@@ -495,29 +494,16 @@ class ArticleController extends Controller
 	public function postByCategory($slug)
 	{
 		try {
-			$id = Category::where('slug', $slug)->first()->id;
-			$posts = Post::with(['image', 'user'])->where('category_id', $id)->where('visibility', 1)
-				->where('status', 1)
-				->when(Sentinel::check() == false, function ($query) {
-					$query->where('auth_required', 0);
-				})
-				->orderBy('id', 'desc')
-				->where('language', LaravelLocalization::setLocale() ?? settingHelper('default_language'))->limit(6)
-				->get();
-
-			$totalPostCount = Post::where('category_id', $id)->where('visibility', 1)
-				->where('status', 1)
-				->when(Sentinel::check() == false, function ($query) {
-					$query->where('auth_required', 0);
-				})
-				->orderBy('id', 'desc')
-				->where('language', LaravelLocalization::setLocale() ?? settingHelper('default_language'))
-				->count();
+			
+			
+			$category = Category::with('categoryPosts')->where('slug', $slug)->first();
+			$id = $category->id;
+			$posts = $category->categoryPosts->take(10);
+			$totalPostCount = sizeof($posts);
+			
 
 			$widgetService = new WidgetService();
 			$widgets = $widgetService->getWidgetDetails();
-
-			//dd($relatedPost);
 
 			$tracker = new VisitorTracker();
 			$tracker->page_type = \App\Enums\VisitorPageType::PostByCategoryPage;
@@ -539,13 +525,14 @@ class ArticleController extends Controller
 	{
 
 		$skip = $request->last_id * 6;
+		
 		$postCount = Post::where('category_id', $request->category_id)->where('visibility', 1)
 			->where('status', 1)
 			->when(Sentinel::check() == false, function ($query) {
 				$query->where('auth_required', 0);
 			})
 			->orderBy('id', 'desc')
-			->where('language', LaravelLocalization::setLocale() ?? settingHelper('default_language'))
+			->where('language', \App::getLocale() ?? settingHelper('default_language'))
 			->count();
 
 		$hideReadMore = 0;
@@ -558,7 +545,7 @@ class ArticleController extends Controller
 				$query->where('auth_required', 0);
 			})
 			->orderBy('id', 'desc')
-			->where('language', LaravelLocalization::setLocale() ?? settingHelper('default_language'))->limit(6)->skip($skip)->get();
+			->where('language', \App::getLocale() ?? settingHelper('default_language'))->limit(6)->skip($skip)->get();
 
 		$allPosts = [];
 		foreach ($posts as $post) {
@@ -601,7 +588,7 @@ class ArticleController extends Controller
 			$appendRow .= "<div class='entry-meta mb-2'>";
 			$appendRow .= "<ul class='global-list'>";
 			$appendRow .= "<li> " . __('post_by') . " <a href='" . route('site.author', ['id' => $post->user->id]) . "'> " . data_get($post, 'user.first_name') . " </a></li>";
-			$appendRow .= "<li><a href='" . route('article.date', date('Y-m-d', strtotime($post->updated_at))) . "'> " . $post->updated_at->format('F j, Y') . "</a></li>";
+			$appendRow .= "<li><a href='" . route('article.date', date('Y-m-d', strtotime($post->updated_at))) . "'> " . Carbon\Carbon::parse($post->updated_at)->translatedFormat('F j, Y') . "</a></li>";
 			$appendRow .= "</ul>";
 			$appendRow .= "</div> ";
 			$appendRow .= "<p>" . strip_tags(\Illuminate\Support\Str::limit($post->content, 150)) . "</p>";
@@ -625,7 +612,7 @@ class ArticleController extends Controller
 					$query->where('auth_required', 0);
 				})
 				->orderBy('id', 'desc')
-				->where('language', LaravelLocalization::setLocale() ?? settingHelper('default_language'))->limit(6)
+				->where('language', \App::getLocale() ?? settingHelper('default_language'))->limit(6)
 				->get();
 
 			$totalPostCount = Post::where('sub_category_id', $id)->where('visibility', 1)
@@ -634,7 +621,7 @@ class ArticleController extends Controller
 					$query->where('auth_required', 0);
 				})
 				->orderBy('id', 'desc')
-				->where('language', LaravelLocalization::setLocale() ?? settingHelper('default_language'))
+				->where('language', \App::getLocale() ?? settingHelper('default_language'))
 				->count();
 
 
@@ -669,7 +656,7 @@ class ArticleController extends Controller
 				$query->where('auth_required', 0);
 			})
 			->orderBy('id', 'desc')
-			->where('language', LaravelLocalization::setLocale() ?? settingHelper('default_language'))
+			->where('language', \App::getLocale() ?? settingHelper('default_language'))
 			->count();
 
 		$hideReadMore = 0;
@@ -682,7 +669,7 @@ class ArticleController extends Controller
 				$query->where('auth_required', 0);
 			})
 			->orderBy('id', 'desc')
-			->where('language', LaravelLocalization::setLocale() ?? settingHelper('default_language'))->limit(6)->skip($skip)
+			->where('language', \App::getLocale() ?? settingHelper('default_language'))->limit(6)->skip($skip)
 			->get();
 
 		$allPosts = [];
@@ -724,7 +711,7 @@ class ArticleController extends Controller
 			$appendRow .= "<div class='entry-meta mb-2'>";
 			$appendRow .= "<ul class='global-list'>";
 			$appendRow .= "<li> " . __('post_by') . " <a href='" . route('site.author', ['id' => $post->user->id]) . "'> " . data_get($post, 'user.first_name') . " </a></li>";
-			$appendRow .= "<li><a href='" . route('article.date', date('Y-m-d', strtotime($post->updated_at))) . "'> " . $post->updated_at->format('F j, Y') . "</a></li>";
+			$appendRow .= "<li><a href='" . route('article.date', date('Y-m-d', strtotime($post->updated_at))) . "'> " . Carbon\Carbon::parse($post->updated_at)->translatedFormat('F j, Y') . "</a></li>";
 			$appendRow .= "</ul>";
 			$appendRow .= "</div> ";
 			$appendRow .= "<p>" . strip_tags(\Illuminate\Support\Str::limit($post->content, 150)) . "</p>";
@@ -747,7 +734,7 @@ class ArticleController extends Controller
 					$query->where('auth_required', 0);
 				})
 				->orderBy('id', 'desc')
-				->where('language', LaravelLocalization::setLocale() ?? settingHelper('default_language'))->limit(6)->get();
+				->where('language', \App::getLocale() ?? settingHelper('default_language'))->limit(6)->get();
 
 			$totalPostCount = Post::whereRaw("FIND_IN_SET('$slug',tags)")->where('visibility', 1)
 				->where('status', 1)
@@ -755,7 +742,7 @@ class ArticleController extends Controller
 					$query->where('auth_required', 0);
 				})
 				->orderBy('id', 'desc')
-				->where('language', LaravelLocalization::setLocale() ?? settingHelper('default_language'))->count();
+				->where('language', \App::getLocale() ?? settingHelper('default_language'))->count();
 
 
 			$widgetService = new WidgetService();
@@ -790,7 +777,7 @@ class ArticleController extends Controller
 				$query->where('auth_required', 0);
 			})
 			->orderBy('id', 'desc')
-			->where('language', LaravelLocalization::setLocale() ?? settingHelper('default_language'))->count();
+			->where('language', \App::getLocale() ?? settingHelper('default_language'))->count();
 
 		$hideReadMore = 0;
 		if ($skip >= $postCount) {
@@ -802,7 +789,7 @@ class ArticleController extends Controller
 				$query->where('auth_required', 0);
 			})
 			->orderBy('id', 'desc')
-			->where('language', LaravelLocalization::setLocale() ?? settingHelper('default_language'))->limit(6)->skip($skip)->get();
+			->where('language', \App::getLocale() ?? settingHelper('default_language'))->limit(6)->skip($skip)->get();
 
 
 		$allPosts = [];
@@ -846,7 +833,7 @@ class ArticleController extends Controller
 			$appendRow .= "<div class='entry-meta mb-2'>";
 			$appendRow .= "<ul class='global-list'>";
 			$appendRow .= "<li> " . __('post_by') . " <a href='" . route('site.author', ['id' => $post->user->id]) . "'> " . data_get($post, 'user.first_name') . " </a></li>";
-			$appendRow .= "<li><a href='" . route('article.date', date('Y-m-d', strtotime($post->updated_at))) . "'> " . $post->updated_at->format('F j, Y') . "</a></li>";
+			$appendRow .= "<li><a href='" . route('article.date', date('Y-m-d', strtotime($post->updated_at))) . "'> " . Carbon\Carbon::parse($post->updated_at)->translatedFormat('F j, Y') . "</a></li>";
 			$appendRow .= "</ul>";
 			$appendRow .= "</div> ";
 			$appendRow .= "<p>" . strip_tags(\Illuminate\Support\Str::limit($post->content, 150)) . "</p>";
@@ -867,7 +854,7 @@ class ArticleController extends Controller
 								   ->when(Sentinel::check()== false, function ($query) {
 									  $query->where('auth_required',0); })
 								   ->orderBy('id', 'desc')
-								   ->where('language', LaravelLocalization::setLocale() ?? settingHelper('default_language'))->paginate(10);
+								   ->where('language', \App::getLocale() ?? settingHelper('default_language'))->paginate(10);
 
 			$widgetService      = new WidgetService();
 			$widgets            = $widgetService->getWidgetDetails();
@@ -899,7 +886,7 @@ class ArticleController extends Controller
 								->when(Sentinel::check()== false, function ($query) {
 									$query->where('auth_required',0); })
 								->orderBy('id', 'desc')
-								->where('language', LaravelLocalization::setLocale() ?? settingHelper('default_language'))->limit(6)->get();
+								->where('language', \App::getLocale() ?? settingHelper('default_language'))->limit(6)->get();
 
 
 			$totalPostCount = Post::whereDate('updated_at', $date)
@@ -909,7 +896,7 @@ class ArticleController extends Controller
 					$query->where('auth_required', 0);
 				})
 				->orderBy('id', 'desc')
-				->where('language', LaravelLocalization::setLocale() ?? settingHelper('default_language'))->count();
+				->where('language', \App::getLocale() ?? settingHelper('default_language'))->count();
 
 
 			$widgetService = new WidgetService();
@@ -942,7 +929,7 @@ class ArticleController extends Controller
 			->when(Sentinel::check() == false, function ($query) {
 				$query->where('auth_required', 0);
 			})
-			->where('language', LaravelLocalization::setLocale() ?? settingHelper('default_language'))->count();
+			->where('language', \App::getLocale() ?? settingHelper('default_language'))->count();
 
 		$hideReadMore = 0;
 		if ($skip >= $postCount) {
@@ -957,7 +944,7 @@ class ArticleController extends Controller
 			->orderBy('id', 'desc')
 			->limit(6)
 			->skip($skip)
-			->where('language', LaravelLocalization::setLocale() ?? settingHelper('default_language'))->get();
+			->where('language', \App::getLocale() ?? settingHelper('default_language'))->get();
 
 
 		$allPosts = [];
@@ -1001,7 +988,7 @@ class ArticleController extends Controller
 			$appendRow .= "<div class='entry-meta mb-2'>";
 			$appendRow .= "<ul class='global-list'>";
 			$appendRow .= "<li> " . __('post_by') . " <a href='" . route('site.author', ['id' => $post->user->id]) . "'> " . data_get($post, 'user.first_name') . " </a></li>";
-			$appendRow .= "<li><a href='" . route('article.date', date('Y-m-d', strtotime($post->updated_at))) . "'> " . $post->updated_at->format('F j, Y') . "</a></li>";
+			$appendRow .= "<li><a href='" . route('article.date', date('Y-m-d', strtotime($post->updated_at))) . "'> " . Carbon\Carbon::parse($post->updated_at)->translatedFormat('F j, Y') . "</a></li>";
 			$appendRow .= "</ul>";
 			$appendRow .= "</div> ";
 			$appendRow .= "<p>" . strip_tags(\Illuminate\Support\Str::limit($post->content, 150)) . "</p>";
@@ -1021,7 +1008,7 @@ class ArticleController extends Controller
 			->when(Sentinel::check() == false, function ($query) {
 				$query->where('auth_required', 0);
 			})
-			->where('language', LaravelLocalization::setLocale() ?? settingHelper('default_language'))->count();
+			->where('language', \App::getLocale() ?? settingHelper('default_language'))->count();
 		$hideReadMore = 0;
 		if ($skip >= $postCount) {
 			$hideReadMore = 1;
@@ -1034,7 +1021,7 @@ class ArticleController extends Controller
 			->orderBy('id', 'desc')
 			->limit(6)
 			->skip($skip)
-			->where('language', LaravelLocalization::setLocale() ?? settingHelper('default_language'))->get();
+			->where('language', \App::getLocale() ?? settingHelper('default_language'))->get();
 
 
 		$allPosts = [];
@@ -1043,7 +1030,7 @@ class ArticleController extends Controller
 			$appendRow .= "<div class='sg-post medium-post-style-1'>";
 			$appendRow .= "<div class='entry-header'>";
 			$appendRow .= "<div class='entry-thumbnail'>";
-			$appendRow .= "<a href=' " . route('article.detail', ['id' => $post->slug]) . "'>";
+			//$appendRow .= "<a href=' " . route('article.detail', ['id' => $post->slug]) . "'>";
 
 			if (isFileExist($post->image, $result = @$post->image->medium_image)) {
 				$appendRow .= "<img  src=' " . basePath($post->image) . '/' . $result . " ' class='img-fluid'   alt='" . $post->title . "  '>";
@@ -1078,7 +1065,7 @@ class ArticleController extends Controller
 			$appendRow .= "<div class='entry-meta mb-2'>";
 			$appendRow .= "<ul class='global-list'>";
 			$appendRow .= "<li> " . __('post_by') . " <a href='" . route('site.author', ['id' => $post->user->id]) . "'> " . data_get($post, 'user.first_name') . " </a></li>";
-			$appendRow .= "<li><a href='" . route('article.date', date('Y-m-d', strtotime($post->updated_at))) . "'> " . $post->updated_at->format('F j, Y') . "</a></li>";
+			$appendRow .= "<li><a href='" . route('article.date', date('Y-m-d', strtotime($post->updated_at))) . "'> " . Carbon\Carbon::parse($post->updated_at)->translatedFormat('F j, Y') . "</a></li>";
 			$appendRow .= "</ul>";
 			$appendRow .= "</div> ";
 			$appendRow .= "<p>" . strip_tags(\Illuminate\Support\Str::limit($post->content, 150)) . "</p>";
@@ -1099,7 +1086,7 @@ class ArticleController extends Controller
 			->when(Sentinel::check() == false, function ($query) {
 				$query->where('auth_required', 0);
 			})
-			->where('language', LaravelLocalization::setLocale() ?? settingHelper('default_language'))->count();
+			->where('language', \App::getLocale() ?? settingHelper('default_language'))->count();
 		$hideReadMore = 0;
 		if ($skip >= $postCount) {
 			$hideReadMore = 1;
@@ -1112,7 +1099,7 @@ class ArticleController extends Controller
 			->orderBy('id', 'desc')
 			->limit(12)
 			->skip($skip)
-			->where('language', LaravelLocalization::setLocale() ?? settingHelper('default_language'))->get();
+			->where('language', \App::getLocale() ?? settingHelper('default_language'))->get();
 
 
 		$allPosts = [];
@@ -1160,7 +1147,7 @@ class ArticleController extends Controller
 			$appendRow .= "<div class='entry-meta mb-2'>";
 			$appendRow .= "<ul class='global-list'>";
 			$appendRow .= "<li> " . __('post_by') . " <a href='" . route('site.author', ['id' => $post->user->id]) . "'> " . data_get($post, 'user.first_name') . " </a></li>";
-			$appendRow .= "<li><a href='" . route('article.date', date('Y-m-d', strtotime($post->updated_at))) . "'> " . $post->updated_at->format('F j, Y') . "</a></li>";
+			$appendRow .= "<li><a href='" . route('article.date', date('Y-m-d', strtotime($post->updated_at))) . "'> " . Carbon\Carbon::parse($post->updated_at)->translatedFormat('F j, Y') . "</a></li>";
 			$appendRow .= "</ul>";
 			$appendRow .= "</div> ";
 			$appendRow .= "<p>" . strip_tags(\Illuminate\Support\Str::limit($post->content, 130)) . "</p>";
@@ -1183,7 +1170,7 @@ class ArticleController extends Controller
                 $query->where('auth_required', 0);
             })
             ->orderBy('id', 'desc')
-            ->where('language', LaravelLocalization::setLocale() ?? settingHelper('default_language'))->count();
+            ->where('language', \App::getLocale() ?? settingHelper('default_language'))->count();
 
         $hideReadMore = 0;
         if ($skip >= $postCount) {
@@ -1195,7 +1182,7 @@ class ArticleController extends Controller
                 $query->where('auth_required', 0);
             })
             ->orderBy('id', 'desc')
-            ->where('language', LaravelLocalization::setLocale() ?? settingHelper('default_language'))->limit(6)->skip($skip)->get();
+            ->where('language', \App::getLocale() ?? settingHelper('default_language'))->limit(6)->skip($skip)->get();
 
 
         $allPosts = [];
@@ -1239,7 +1226,7 @@ class ArticleController extends Controller
             $appendRow .= "<div class='entry-meta mb-2'>";
             $appendRow .= "<ul class='global-list'>";
             $appendRow .= "<li> " . __('post_by') . " <a href='" . route('site.author', ['id' => $post->user->id]) . "'> " . data_get($post, 'user.first_name') . " </a></li>";
-            $appendRow .= "<li><a href='" . route('article.date', date('Y-m-d', strtotime($post->updated_at))) . "'> " . $post->updated_at->format('F j, Y') . "</a></li>";
+            $appendRow .= "<li><a href='" . route('article.date', date('Y-m-d', strtotime($post->updated_at))) . "'> " . Carbon\Carbon::parse($post->updated_at)->translatedFormat('F j, Y') . "</a></li>";
             $appendRow .= "</ul>";
             $appendRow .= "</div> ";
             $appendRow .= "<p>" . strip_tags(\Illuminate\Support\Str::limit($post->content, 150)) . "</p>";

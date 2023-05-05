@@ -53,7 +53,7 @@
                     @endif
                 @endif
             @else
-                @if(isFileExist(@$post->image, $result = @$post->image->big_image_two))
+                @if(isFileExist(@$post->image, $result = @$post->image->original_image))
                     <img class="img-fluid"
                          src="{{safari_check() ? basePath(@$post->image).'/'.$result : static_asset('default-image/default-730x400.png') }} "
                          data-original="{{ basePath(@$post->image) }}/{{ $result }}"

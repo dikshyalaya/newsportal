@@ -81,7 +81,7 @@ active
                                     <label for="parent_id">{{ __('parent_category') }}*</label>
                                     <select class="form-control dynamic" id="parent_id" name="parent_id">
                                         <option value="">{{ __('select_category') }}</option>
-                                        @include('post::category_render_option', ['categories'=>$categories, 'depth'=>0])
+                                        @include('post::category_render_option', ['selected_category'=>$category,'categories'=>$categories, 'depth'=>0])
                                     </select>
                                 </div>
                             </div>
@@ -154,6 +154,7 @@ active
                                 <table class="table table-bordered table-hover">
                                     <thead>
                                         <tr role="row">
+                                            
                                             <th>{{ __('category_name') }}</th>
                                             <th>{{ __('featured') }}</th>
                                             @if(Sentinel::getUser()->hasAccess(['category_write']) || Sentinel::getUser()->hasAccess(['category_delete']))

@@ -18,7 +18,6 @@ use Carbon\Carbon;
 use URL;
 use App\Traits\ApiReturnFormat;
 use Modules\Appearance\Entities\ThemeSection;
-use LaravelLocalization;
 use App\VisitorTracker;
 
 
@@ -37,8 +36,6 @@ class HomeController extends Controller
         $home_content['latest_posts']['articles']           = $this->imageUrlset($this->commentsCount($this->dateToHuman($this->latestPosts($language, 10, 5))));
         $home_content['latest_posts']['trending_posts']     = $this->trendingPosts($language);
         $tags = '';
-
-//        dd($home_content['latest_posts']['sliders']);
 
         foreach($home_content['latest_posts']['sliders'] as $post):
             $tags .= ($tags == '' ?'': ',').$post->tags;
@@ -81,7 +78,7 @@ class HomeController extends Controller
         $home_content['top_stories']['tags'] = $tags;
 
 
-
+        
 
         @$categories         = Category::where('is_featured',1)->where('language', $language)->get();
 

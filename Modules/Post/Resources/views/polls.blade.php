@@ -55,8 +55,8 @@
                                                 <td>{{ $poll->question }}</td>
                                                 <td>@if($poll->auth_required==1) {{ __('yes') }} @else {{ __('no') }} @endif</td>
                                                 <td>@if($poll->status==1) {{ __('active') }} @else {{ __('inactive') }} @endif</td>
-                                                <td>{{ Carbon\Carbon::parse($poll->start_date)->format('F d, Y g:i A') }}</td>
-                                                <td>{{ Carbon\Carbon::parse($poll->end_date)->format('F d, Y g:i A') }}</td>
+                                                <td>{{ Carbon\Carbon::parse($poll->start_date)->translatedFormat('F d, Y g:i A') }}</td>
+                                                <td>{{ Carbon\Carbon::parse($poll->end_date)->translatedFormat('F d, Y g:i A') }}</td>
                                                 <td>{{ $poll->created_at->toDayDateTimeString() }}</td>
                                                 @if(Sentinel::getUser()->hasAccess(['polls_write']) || Sentinel::getUser()->hasAccess(['polls_delete']))
                                                     <td>
@@ -98,7 +98,7 @@
                                     </div>
                                     <div class="col-12 col-sm-6 text-right">
                                         <div class="table-info-pagination float-right">
-                                            {!! $polls->render() !!}
+                                            {!! $polls->onEachSide(1)->links() !!}
 
                                         </div>
                                     </div>

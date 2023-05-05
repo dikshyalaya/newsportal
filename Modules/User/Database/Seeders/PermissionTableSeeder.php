@@ -97,6 +97,17 @@ class PermissionTableSeeder extends Seeder
         ]);
 
         Permission::create([
+            'name' => 'system_update',
+            'slug' => 'system_update_read',
+            'description' => '',
+        ]);
+        Permission::create([
+            'name' => 'system_update',
+            'slug' => 'system_update_write',
+            'description' => '',
+        ]);
+
+        Permission::create([
             'name' => 'pages',
             'slug' => 'pages_read',
             'description' => '',

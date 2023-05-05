@@ -1,9 +1,8 @@
 <?php
 
 use Illuminate\Database\Migrations\Migration;
-use Illuminate\Database\Schema\Blueprint;
-use Illuminate\Support\Facades\Schema;
-use DB as DBS;
+use Illuminate\Support\Facades\DB;
+
 
 class VersionControl extends Migration
 {
@@ -14,7 +13,7 @@ class VersionControl extends Migration
      */
     public function up()
     {
-        DBS::statement('SET FOREIGN_KEY_CHECKS=0;');
+        DB::statement('SET FOREIGN_KEY_CHECKS=0;');
 
         $default_language   = settingHelper('default_language') ?? 'en';
 

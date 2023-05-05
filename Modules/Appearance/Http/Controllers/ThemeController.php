@@ -24,7 +24,9 @@ class ThemeController extends Controller
 
     public function updateCurrentTheme(Request $request)
     {
-        
+        if (strtolower(\Config::get('app.demo_mode')) == 'yes'):
+            return redirect()->back()->with('error', __('You are not allowed to add/modify in demo mode.'));
+        endif;
 
         $themes=Theme::all();
         foreach ($themes as $theme) :
@@ -47,7 +49,9 @@ class ThemeController extends Controller
     public function updatePrimarySection(Request $request)
     {
 
-        
+        if (strtolower(\Config::get('app.demo_mode')) == 'yes'):
+            return redirect()->back()->with('error', __('You are not allowed to add/modify in demo mode.'));
+        endif;
 
         $theme = Theme::where('status', 1)->first();
 
@@ -81,7 +85,9 @@ class ThemeController extends Controller
 
     public function updateThemeOption(Request $request)
     {
-        
+        if (strtolower(\Config::get('app.demo_mode')) == 'yes'):
+            return redirect()->back()->with('error', __('You are not allowed to add/modify in demo mode.'));
+        endif;
         Validator::make($request->all(), [
             'header_style' => 'required',
             'footer_style' => 'required'

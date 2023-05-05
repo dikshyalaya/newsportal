@@ -64,8 +64,126 @@ active
                                 </div>
                             </div>
                         </div>
+
+
                     </div>
                 </div>
+
+
+
+                <div class="card">
+
+                    <div class="card-header">
+                        <h4 class="card-title">{{ __('article_layout') }}</h4>
+                    </div>
+
+                    <div class="card-body">
+                        <div class="row">
+
+
+                            <div class="col-md-4 text-center">
+                                <img src="{{static_asset('default-image/Detail/detail_1.png') }}" alt="" class="img-responsive cat-block-img">
+                                <div class="form-group">
+
+
+                                    <label class="custom-control custom-radio detail-control-inline">
+                                        <input type="radio" name="layout" id="detail_style_1" value="default" checked class="custom-control-input">
+                                        <span class="custom-control-label"></span>
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="col-md-4 text-center">
+                                <img src="{{static_asset('default-image/Detail/detail_2.png') }}" alt="" class="img-responsive cat-block-img">
+                                <div class="form-group">
+
+
+                                    <label class="custom-control custom-radio detail-control-inline">
+                                        <input type="radio" name="layout" id="detail_style_2" value="style_2" class="custom-control-input">
+                                        <span class="custom-control-label"></span>
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="col-md-4 text-center">
+                                <img src="{{static_asset('default-image/Detail/detail_3.png') }}" alt="" class="img-responsive cat-block-img">
+                                <div class="form-group">
+
+
+                                    <label class="custom-control custom-radio detail-control-inline">
+                                        <input type="radio" name="layout" id="detail_style_3" value="style_3" class="custom-control-input">
+                                        <span class="custom-control-label"></span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    </div>
+
+                    <!-- options section start -->
+                    <div class="card">
+                        <div class="card-header">
+                            <h4 class="card-title">{{ __('options') }}</h4>
+                        </div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-6">
+                                    <div class="form-title">
+                                        <label for="auto_update">{{ __('auto_update') }}</label>
+                                    </div>
+                                </div>
+                                <div class="col-3">
+                                    <label class="custom-control custom-radio custom-control-inline">
+                                        <input type="radio" name="auto_update" id="auto_update" checked value="1" class="custom-control-input">
+                                        <span class="custom-control-label">{{ __('yes') }}</span>
+                                    </label>
+                                </div>
+                                <div class="col-3">
+                                    <label class="custom-control custom-radio custom-control-inline">
+                                        <input type="radio" name="auto_update" id="auto_update" value="0" class="custom-control-input">
+                                        <span class="custom-control-label">{{ __('no') }}</span>
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="row ">
+                                <div class="col-6">
+                                    <div class="form-title">
+                                        <label for="show_read_more">{{ __('show_read_more') }}</label>
+                                    </div>
+                                </div>
+                                <div class="col-3 ">
+                                    <label class="custom-control custom-radio custom-control-inline">
+                                        <input type="radio" name="show_read_more" id="show_read_more" checked value="1" class="custom-control-input">
+                                        <span class="custom-control-label">{{ __('yes') }}</span>
+                                    </label>
+                                </div>
+                                <div class="col-3 ">
+                                    <label class="custom-control custom-radio custom-control-inline">
+                                        <input type="radio" name="show_read_more" id="show_read_more" value="0" class="custom-control-input">
+                                        <span class="custom-control-label">{{ __('no') }}</span>
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-6">
+                                    <div class="form-title">
+                                        <label for="show_author">{{ __('keep_post_original_publish_date') }}</label>
+                                    </div>
+                                </div>
+                                <div class="col-3">
+                                    <label class="custom-control custom-radio custom-control-inline">
+                                        <input type="radio" name="keep_date" id="keep_date" checked value="1" class="custom-control-input">
+                                        <span class="custom-control-label">{{ __('yes') }}</span>
+                                    </label>
+                                </div>
+                                <div class="col-3 ">
+                                    <label class="custom-control custom-radio custom-control-inline">
+                                        <input type="radio" name="keep_date" id="keep_date" value="0" class="custom-control-input">
+                                        <span class="custom-control-label">{{ __('no') }}</span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- options section end -->
 
 
                 <div class="card">
@@ -160,119 +278,7 @@ active
 
                     </div>
                 </div>
-                <div class="card">
-
-                    <div class="card-header">
-                        <h4 class="card-title">{{ __('article_layout') }}</h4>
-                    </div>
-
-                    <div class="card-body">
-                        <div class="row">
-
-
-                            <div class="col-md-4 text-center">
-                                <img src="{{static_asset('default-image/Detail/detail_1.png') }}" alt="" class="img-responsive cat-block-img">
-                                <div class="form-group">
-
-
-                                    <label class="custom-control custom-radio detail-control-inline">
-                                        <input type="radio" name="layout" id="detail_style_1" value="default" checked class="custom-control-input">
-                                        <span class="custom-control-label"></span>
-                                    </label>
-                                </div>
-                            </div>
-                            <div class="col-md-4 text-center">
-                                <img src="{{static_asset('default-image/Detail/detail_2.png') }}" alt="" class="img-responsive cat-block-img">
-                                <div class="form-group">
-
-
-                                    <label class="custom-control custom-radio detail-control-inline">
-                                        <input type="radio" name="layout" id="detail_style_2" value="style_2" class="custom-control-input">
-                                        <span class="custom-control-label"></span>
-                                    </label>
-                                </div>
-                            </div>
-                            <div class="col-md-4 text-center">
-                                <img src="{{static_asset('default-image/Detail/detail_3.png') }}" alt="" class="img-responsive cat-block-img">
-                                <div class="form-group">
-
-
-                                    <label class="custom-control custom-radio detail-control-inline">
-                                        <input type="radio" name="layout" id="detail_style_3" value="style_3" class="custom-control-input">
-                                        <span class="custom-control-label"></span>
-                                    </label>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- options section start -->
-                <div class="card">
-                    <div class="card-header">
-                        <h4 class="card-title">{{ __('options') }}</h4>
-                    </div>
-                    <div class="card-body">
-                        <div class="row">
-                            <div class="col-6">
-                                <div class="form-title">
-                                    <label for="auto_update">{{ __('auto_update') }}</label>
-                                </div>
-                            </div>
-                            <div class="col-3">
-                                <label class="custom-control custom-radio custom-control-inline">
-                                    <input type="radio" name="auto_update" id="auto_update" checked value="1" class="custom-control-input">
-                                    <span class="custom-control-label">{{ __('yes') }}</span>
-                                </label>
-                            </div>
-                            <div class="col-3">
-                                <label class="custom-control custom-radio custom-control-inline">
-                                    <input type="radio" name="auto_update" id="auto_update" value="0" class="custom-control-input">
-                                    <span class="custom-control-label">{{ __('no') }}</span>
-                                </label>
-                            </div>
-                        </div>
-                        <div class="row ">
-                            <div class="col-6">
-                                <div class="form-title">
-                                    <label for="show_read_more">{{ __('show_read_more') }}</label>
-                                </div>
-                            </div>
-                            <div class="col-3 ">
-                                <label class="custom-control custom-radio custom-control-inline">
-                                    <input type="radio" name="show_read_more" id="show_read_more" checked value="1" class="custom-control-input">
-                                    <span class="custom-control-label">{{ __('yes') }}</span>
-                                </label>
-                            </div>
-                            <div class="col-3 ">
-                                <label class="custom-control custom-radio custom-control-inline">
-                                    <input type="radio" name="show_read_more" id="show_read_more" value="0" class="custom-control-input">
-                                    <span class="custom-control-label">{{ __('no') }}</span>
-                                </label>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-6">
-                                <div class="form-title">
-                                    <label for="show_author">{{ __('keep_post_original_publish_date') }}</label>
-                                </div>
-                            </div>
-                            <div class="col-3">
-                                <label class="custom-control custom-radio custom-control-inline">
-                                    <input type="radio" name="keep_date" id="keep_date" checked value="1" class="custom-control-input">
-                                    <span class="custom-control-label">{{ __('yes') }}</span>
-                                </label>
-                            </div>
-                            <div class="col-3 ">
-                                <label class="custom-control custom-radio custom-control-inline">
-                                    <input type="radio" name="keep_date" id="keep_date" value="0" class="custom-control-input">
-                                    <span class="custom-control-label">{{ __('no') }}</span>
-                                </label>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- options section end -->
+                
 
             </div>
             <!-- right sidebar end -->

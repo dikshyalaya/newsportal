@@ -14,7 +14,6 @@ use Validator;
 use DB;
 use Modules\User\Entities\User;
 use Modules\User\Entities\Role;
-use LaravelLocalization;
 
 class NewsletterController extends Controller
 {
@@ -25,7 +24,9 @@ class NewsletterController extends Controller
 
     public function saveToCron(Request $request)
     {
-        
+        if (strtolower(\Config::get('app.demo_mode')) == 'yes'):
+            return redirect()->back()->with('error', __('You are not allowed to add/modify in demo mode.'));
+        endif;
 
         try {
 
@@ -42,14 +43,14 @@ class NewsletterController extends Controller
 
                     $posts  = Post::with(['image', 'user'])->orderBy('total_hit')
                                 ->take(11)
-                                ->where('language', LaravelLocalization::setLocale() ?? settingHelper('default_language'))
+                                ->where('language', \App::getLocale() ?? settingHelper('default_language'))
                                 ->get();
 
                 elseif ($request->bulk_email_type == BulkEmailType::LATEST_POST) :
 
                     $posts  = Post::with(['image', 'user'])->orderBy('id', 'desc')
                                 ->take(11)
-                                ->where('language', LaravelLocalization::setLocale() ?? settingHelper('default_language'))
+                                ->where('language', \App::getLocale() ?? settingHelper('default_language'))
                                 ->get();
 
                 else :
@@ -58,7 +59,7 @@ class NewsletterController extends Controller
                                 ->where('recommended', 1)
                                 ->orderBy('recommended_order')
                                 ->take(11)
-                                ->where('language', LaravelLocalization::setLocale() ?? settingHelper('default_language'))
+                                ->where('language', \App::getLocale() ?? settingHelper('default_language'))
                                 ->get();
                 endif;
 

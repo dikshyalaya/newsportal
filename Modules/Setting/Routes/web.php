@@ -12,8 +12,8 @@
 */
 Route::group(
     [
-        'prefix' => LaravelLocalization::setLocale(),
-        'middleware' => ['localeSessionRedirect', 'localizationRedirect', 'localeViewPath', 'isInstalledCheck']
+        'prefix' => getlocale(),
+        'middleware' => ['localeSessionRedirect', 'localeViewPath', 'isInstalledCheck', 'localizationRedirect']
     ],
     function () {
         Route::prefix('setting')->group(function () {
@@ -63,6 +63,9 @@ Route::group(
 
                     Route::get('/update-database', 'UpdateController@updateDatabase')->name('update-database')->middleware('permissionCheck:settings_write');
                     Route::post('/update-database', 'UpdateController@updateDatabaseStore')->name('update-database')->middleware('permissionCheck:settings_write');
+
+                    Route::get('/system-update', 'UpdateController@updateSystem')->name('system-update')->middleware('permissionCheck:system_update_read');
+                    Route::get('/update-system', 'UpdateController@updateSystemStore')->name('do-system-update')->middleware('permissionCheck:system_update_write');
 
                     Route::get('/cache', 'SettingController@cacheView')->name('cache')->middleware('permissionCheck:settings_write');
                     Route::post('/cache-update', 'SettingController@cacheUpdate')->name('cache-update')->middleware('permissionCheck:settings_write');

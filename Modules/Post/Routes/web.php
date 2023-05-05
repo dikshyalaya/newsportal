@@ -12,8 +12,8 @@
 */
 Route::group(
     [
-        'prefix' => LaravelLocalization::setLocale(),
-        'middleware' => ['localeSessionRedirect', 'localizationRedirect', 'localeViewPath', 'isInstalledCheck']
+        'prefix' => getlocale(),
+        'middleware' => ['localeSessionRedirect', 'localeViewPath', 'isInstalledCheck', 'localizationRedirect']
     ],
     function () {
     Route::prefix('post')->group(function() {
@@ -102,7 +102,7 @@ Route::group(
             });
 
             //post routes
-            Route::post('/save/new-post', 'PostController@saveNewPost')->name('save-new-post')->middleware('permissionCheck:post_write');
+            Route::post('/save/new-post/{type}', 'PostController@saveNewPost')->name('save-new-post')->middleware('permissionCheck:post_write');
             Route::post('/update/{type}/{id}', 'PostController@updatePost')->name('update-post')->middleware('permissionCheck:post_write');
 
             //quiz routes

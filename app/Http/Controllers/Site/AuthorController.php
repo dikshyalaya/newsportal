@@ -11,7 +11,6 @@ use Sentinel;
 use Carbon\Carbon;
 use Image;
 use File;
-use LaravelLocalization;
 use Illuminate\Http\Request;
 use Modules\Post\Entities\Post;
 
@@ -26,7 +25,7 @@ class AuthorController extends Controller
                             ->when(Sentinel::check()== false, function ($query) {
                                 $query->where('auth_required',0); })
                             ->orderBy('id', 'desc')
-                            ->where('language', LaravelLocalization::setLocale() ?? settingHelper('default_language'))
+                            ->where('language', \App::getLocale() ?? settingHelper('default_language'))
                             ->limit(12)
                             ->get();
 
@@ -35,7 +34,7 @@ class AuthorController extends Controller
                             ->when(Sentinel::check()== false, function ($query) {
                                 $query->where('auth_required',0); })
                             ->orderBy('id', 'desc')
-                            ->where('language', LaravelLocalization::setLocale() ?? settingHelper('default_language'))
+                            ->where('language', \App::getLocale() ?? settingHelper('default_language'))
                             ->count();
 
         if($author != null):
@@ -51,7 +50,7 @@ class AuthorController extends Controller
             ->when(Sentinel::check()== false, function ($query) {
                 $query->where('auth_required',0); })
             ->orderBy('id', 'desc')
-            ->where('language', LaravelLocalization::setLocale() ?? settingHelper('default_language'))
+            ->where('language', \App::getLocale() ?? settingHelper('default_language'))
             ->limit(12)->get();
 
         $totalPostCount = Post::where('user_id',Sentinel::getUser()->id)->where('visibility', 1)
@@ -59,7 +58,7 @@ class AuthorController extends Controller
             ->when(Sentinel::check()== false, function ($query) {
                 $query->where('auth_required',0); })
             ->orderBy('id', 'desc')
-            ->where('language', LaravelLocalization::setLocale() ?? settingHelper('default_language'))
+            ->where('language', \App::getLocale() ?? settingHelper('default_language'))
             ->count();
 
         return view('site.pages.author.my_profile', compact('articles', 'totalPostCount'));
@@ -69,7 +68,9 @@ class AuthorController extends Controller
         return view('site.pages.author.edit_profile');
     }
     public function  myProfileUpdate(Request $request){
-       
+        if (strtolower(\Config::get('app.demo_mode')) == 'yes'):
+            return redirect()->back()->with('error', 'You are not allowed to add/modify in demo mode.');
+        endif;
         $validation = Validator::make($request->all(), [
             'first_name' => 'required',
             'last_name' => 'required|min:2|max:30',

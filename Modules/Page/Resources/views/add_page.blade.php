@@ -51,7 +51,7 @@ show
         <input type="hidden" id="imageCount" value="1">
 
         <div class="row">
-            <div class="col-9 p-l-0">
+            <div class="col-9">
                 <div class="card">
                     <div class="card-header p-0">
 
@@ -95,7 +95,7 @@ show
                                     <div class="col-12" id="description">
                                         <div class="form-group">
                                             <label for="content" class="col-form-label">{{ __('description') }}</label>
-                                            <textarea name="description" id="content" class="form-control post-content"></textarea>
+                                            <textarea required name="description" id="content" class="form-control post-content"></textarea>
                                         </div>
                                     </div>
                                 </div>
@@ -291,4 +291,14 @@ show
     </div>
 </div>
 
+@endsection
+
+@section('script')
+<script type="text/javascript">
+    $(document).ready(function(){
+        tinyMceEditor.init("textarea.post-content");
+        
+
+    });
+</script>
 @endsection

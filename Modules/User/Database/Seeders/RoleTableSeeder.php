@@ -52,6 +52,9 @@ class RoleTableSeeder extends Seeder
             "language_settings_write" => true,
             "language_settings_delete" => true,
 
+            "system_update_read" => true,
+            "system_update_write" => true,
+
             "pages_read" => true,
             "pages_write" => true,
             "pages_delete" => true,

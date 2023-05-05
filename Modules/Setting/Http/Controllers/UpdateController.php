@@ -2,6 +2,7 @@
 
 namespace Modules\Setting\Http\Controllers;
 
+use App\Traits\UpdateTrait;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
@@ -10,6 +11,7 @@ use Modules\Setting\Entities\Setting;
 
 class UpdateController extends Controller
 {
+    use UpdateTrait;
     /**
      * Display a listing of the resource.
      * @return Response
@@ -79,6 +81,38 @@ class UpdateController extends Controller
         //
     }
 
+    public function updateSystem()
+    {
+        $fields = [
+            'item_id' => isAppMode() ? '33255812' : '29030619',
+            'current_version' => settingHelper('version'),
+        ];
+        $response = false;
+        $request = curlRequest("https://desk.spagreen.net/version-check", $fields);
+
+        if (property_exists($request,'status') && $request->status):
+            $response = $request->release_info;
+        endif;
+        
+        $latest_version =  $request->release_info->version;
+        return view('setting::update_system',compact('latest_version'));
+
+    }
+
+    public function updateSystemStore(){
+        
+        try {
+            $update = $this->downloadUpdateFile();
+            if (is_string($update))
+            {
+                return redirect()->back()->with('error', $update);
+            }
+            return redirect()->back()->with('success', 'Update Successfully');
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', $e->getMessage());
+        }
+    }
+
     public function updateDatabase()
     {
         return view('setting::update-database');
@@ -87,7 +121,9 @@ class UpdateController extends Controller
 
     public function updateDatabaseStore(Request $request)
     {
-        
+        if (strtolower(\Config::get('app.demo_mode')) == 'yes'):
+            return redirect()->back()->with('error', __('You are not allowed to add/modify in demo mode.'));
+        endif;
 
         $setting        = Setting::firstOrNew(array('title' => 'version'));
         $setting->title = 'version';

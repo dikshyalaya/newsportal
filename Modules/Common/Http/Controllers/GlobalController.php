@@ -2,41 +2,38 @@
 
 namespace Modules\Common\Http\Controllers;
 
+use DB;
+use File;
+use Session;
+use Sentinel;
+use Validator;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
-use Illuminate\Routing\Controller;
-use Illuminate\Support\Facades\Cache;
-use Illuminate\Support\Facades\Storage;
-use Modules\Api\Entities\AppIntro;
-use Modules\Gallery\Entities\GalleryImage;
+use Modules\Page\Entities\Page;
 use Modules\Post\Entities\Post;
 use Modules\User\Entities\Role;
 use Modules\User\Entities\User;
-use Validator;
-use Sentinel;
-use DB;
-use File;
-use Modules\User\Entities\Permission;
-use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
-use Session;
-use Illuminate\Support\Facades\App;
-use Illuminate\Support\Facades\Redirect;
-use Modules\Appearance\Entities\Menu;
-use Modules\Appearance\Entities\MenuItem;
-use Modules\Page\Entities\Page;
+use Illuminate\Routing\Controller;
+use Modules\Api\Entities\AppIntro;
 use Modules\Widget\Entities\Widget;
+use Illuminate\Support\Facades\Cache;
+use Modules\Appearance\Entities\Menu;
+use Modules\User\Entities\Permission;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Redirect;
 use Modules\Social\Entities\SocialMedia;
+use Modules\Appearance\Entities\MenuItem;
+use Modules\Gallery\Entities\GalleryImage;
 
 class GlobalController extends Controller
 {
     public function switchLanguage($code)
     {
         $lang   =  $code;
-        App::setLocale($lang);
+        \App::setLocale($lang);
         Session::put('locale', $lang);
-        LaravelLocalization::setLocale($lang);
-        $url    = \LaravelLocalization::getLocalizedURL(App::getLocale(), \URL::previous());
-
+        getLocale($lang);
+        $url = \URL::to('/').'/'.\App::getLocale().'/dashboard';
         Cache::forget('activeLang');
 
         return Redirect::to($url);
@@ -44,7 +41,13 @@ class GlobalController extends Controller
 
     public function postDelete(Request $request)
     {
-        
+        if (strtolower(\Config::get('app.demo_mode')) == 'yes'):
+            $data['status']     = "error";
+            $data['message']    = __('You are not allowed to add/modify in demo mode.');
+
+            echo json_encode($data);
+            exit();
+        endif;
         $tablename      = $request->table_name;
         $id             = $request->row_id;
         if ($tablename == 'users') :

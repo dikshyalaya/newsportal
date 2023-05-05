@@ -184,7 +184,6 @@
                 contentType: false,
                 processData: false,
                 success: function (data) {
-                    console.log(data);
                     if (data[0].status == 'success') {
                         $("#media-library").prepend(
                             @if(settingHelper('default_storage') =='local')

@@ -41,7 +41,9 @@ class SettingController extends Controller
     //update settings
     public function updateSettings(Request $request)
     {
-        
+        if (strtolower(\Config::get('app.demo_mode')) == 'yes'):
+            return redirect()->back()->with('error', __('You are not allowed to add/modify in demo mode.'));
+        endif;
         $default_language   = $request->default_language ?? settingHelper('default_language');
 
         $company_language   = $request->company_language;
@@ -263,7 +265,9 @@ class SettingController extends Controller
     //update email template
     public function updateEmailTemplate(Request $request)
     {
-        
+        if (strtolower(\Config::get('app.demo_mode')) == 'yes'):
+            return redirect()->back()->with('error', __('You are not allowed to add/modify in demo mode.'));
+        endif;
         Validator::make($request->all(), [
             'email_group'       => 'required',
             'subject'           => 'required|min:5',
@@ -462,7 +466,9 @@ class SettingController extends Controller
 
     public function cacheUpdate(Request $request){
 
-        
+        if (strtolower(\Config::get('app.demo_mode')) == 'yes'):
+            return redirect()->back()->with('error', __('You are not allowed to add/modify in demo mode.'));
+        endif;
 
        chmod(base_path().'/bootstrap/cache', 0777);
 

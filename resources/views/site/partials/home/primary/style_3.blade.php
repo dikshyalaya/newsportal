@@ -48,11 +48,11 @@
                                         </h2>
                                         <div class="entry-meta" data-animation="animated pulse">
                                             <ul class="global-list justify-content-center">
-                                                <li><a
+                                                <li> <a
                                                         href="{{ route('site.author',['id' => $post->user->id]) }}"> {{ data_get($post, 'user.first_name') }}</a>
                                                 </li>
                                                 <li>
-                                                    <a href="{{route('article.date', date('Y-m-d', strtotime($post->updated_at)))}}">{{ $post->updated_at->format('F j, Y') }}</a>
+                                                    <a href="{{route('article.date', date('Y-m-d', strtotime($post->updated_at)))}}">{{ Carbon\Carbon::parse($post->updated_at)->translatedFormat('F j, Y') }}</a>
                                                 </li>
                                             </ul>
                                         </div>

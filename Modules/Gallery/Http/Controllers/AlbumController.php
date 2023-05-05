@@ -14,7 +14,6 @@ use Image;
 use File;
 use Modules\Language\Entities\Language;
 use Validator;
-use LaravelLocalization;
 
 class AlbumController extends Controller
 {
@@ -26,7 +25,7 @@ class AlbumController extends Controller
     {
         $galleryImages  = GalleryImage::with('album')->orderBy('id', 'desc')->paginate(15);
         $activeLang     = Language::where('status', 'active')->orderBy('name', 'ASC')->get();
-        $albums         = Album::where('language', LaravelLocalization::setLocale() ?? settingHelper('default_language'))->get();
+        $albums         = Album::where('language', \App::getLocale() ?? settingHelper('default_language'))->get();
         return view('gallery::gallery', compact('activeLang', 'galleryImages', 'albums'));
     }
 
@@ -40,7 +39,7 @@ class AlbumController extends Controller
 //    public function categories()
 //    {
 //        $imageCategories = ImageCategory::with('album')->orderBy('id', 'ASC')->paginate(10);
-//        $albums = Album::where('language', LaravelLocalization::setLocale() ?? settingHelper('default_language'))->get();
+//        $albums = Album::where('language', \App::getLocale() ?? settingHelper('default_language'))->get();
 //        $activeLang = Language::where('status', 'active')->orderBy('name', 'ASC')->get();
 //        return view('gallery::categories', compact('activeLang', 'albums', 'imageCategories'));
 //    }
@@ -320,7 +319,7 @@ class AlbumController extends Controller
     public function addImage()
     {
         $activeLang = Language::where('status', 'active')->orderBy('name', 'ASC')->get();
-        $albums = Album::where('language', LaravelLocalization::setLocale() ?? settingHelper('default_language'))->get();
+        $albums = Album::where('language', \App::getLocale() ?? settingHelper('default_language'))->get();
         return view('gallery::add_gallery_image', compact('activeLang', 'albums'));
     }
 
@@ -518,7 +517,7 @@ class AlbumController extends Controller
         $activeLang         = Language::where('status', 'active')->orderBy('name', 'ASC')->get();
         $search_query       = $request;
 
-        $albums         = Album::where('language', LaravelLocalization::setLocale() ?? settingHelper('default_language'))->get();
+        $albums         = Album::where('language', \App::getLocale() ?? settingHelper('default_language'))->get();
 //        dd($albums);
 
         $galleryImages = GalleryImage::where('album_id', 'like', '%' . $request->album_id .'%')

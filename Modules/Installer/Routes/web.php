@@ -1,5 +1,5 @@
 <?php
-
+use Illuminate\Support\Facades\Route;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -11,17 +11,13 @@
 |
 */
 
-
-Route::group(['middleware' => ['IsNotInstalledCheck', 'XSS']], function () {
-
-    Route::get('install/', 'InstallerController@index')->name('install'); 
-
+Route::middleware(['IsNotInstalledCheck', 'XSS'])->group(function () {
+    Route::get('install/initialize', 'InstallController@index')->name('install.initialize');
+    Route::fallback('InstallController@index');
 });
+Route::get('install/finalize',  'InstallController@final')->name('install.finalize');
+Route::post('install/process', 'InstallController@getInstall')->name('install.process');
 
-Route::group(['middleware' => ['XSS']], function () {
 
-   Route::post('install', 'InstallerController@do_install')->name('install');
-   Route::get('final',  'InstallerController@finish')->name('final');
 
- }); 
 

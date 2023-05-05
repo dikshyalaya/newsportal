@@ -16,27 +16,26 @@ class ThemeSectionController extends Controller
 {
     public function sections(){
         $sections                   = ThemeSection::with('ad')->orderBy('order',"ASC")->where('is_primary','<>',1)->where(function($query) {
-                                                        $query->where('language', \LaravelLocalization::setLocale() ?? settingHelper('default_language'))->orWhere('language', null);
+                                                        $query->where('language', \App::getLocale() ?? settingHelper('default_language'))->orWhere('language', null);
                                                     })->paginate(10);
 
-        $categories                 = Category::orderBy('id','ASC')->where('language', \LaravelLocalization::setLocale() ?? settingHelper('default_language'))->get();
+        $categories                 = Category::orderBy('id','ASC')->where('language', \App::getLocale() ?? settingHelper('default_language'))->get();
         $primarySection             = ThemeSection::where('is_primary',1)->first();
 
         $ads                        = Ad::orderBy('id','desc')->get();
-
-        $order = ThemeSection::max("order")+1;
 
         return view('appearance::theme_section',[
             'sections'      => $sections,
             'primarySection'=> $primarySection,
             'categories'    => $categories,
             'ads'           => $ads,
-            'order'         => $order
             ]);
     }
 
     public function saveNewSection(Request $request){
-        
+        if (strtolower(\Config::get('app.demo_mode')) == 'yes'):
+            return redirect()->back()->with('error', __('You are not allowed to add/modify in demo mode.'));
+        endif;
 
         if($request->type == \Modules\Appearance\Enums\ThemeSectionType::CATEGORY):
 
@@ -68,6 +67,9 @@ class ThemeSectionController extends Controller
         $section->theme_id      = 1;
         $section->type          = $request->type;
 
+        $order = ThemeSection::orderBy('id', 'desc')->pluck('order')->first()+1;
+        $section->order = $order;
+
         if($request->type == \Modules\Appearance\Enums\ThemeSectionType::CATEGORY):
 
         $category               = Category::findOrFail($request->category_id);
@@ -75,7 +77,7 @@ class ThemeSectionController extends Controller
         $section->label         = $category->category_name;
         $section->category_id   = $request->category_id;
         $section->section_style = $request->section_style;
-        $section->language      = \LaravelLocalization::setLocale() ?? settingHelper('default_language');
+        $section->language      = \App::getLocale() ?? settingHelper('default_language');
 
         elseif($request->type == \Modules\Appearance\Enums\ThemeSectionType::VIDEO):
 
@@ -112,7 +114,7 @@ class ThemeSectionController extends Controller
 
     public function editThemeSection($id){
         $section            = ThemeSection::findOrFail($id);
-        $categories         = Category::orderBy('id','ASC')->where('language', \LaravelLocalization::setLocale() ?? settingHelper('default_language'))->get();
+        $categories         = Category::orderBy('id','ASC')->where('language', \App::getLocale() ?? settingHelper('default_language'))->get();
         $ads                = Ad::orderBy('id','desc')->get();
 
 
@@ -122,7 +124,9 @@ class ThemeSectionController extends Controller
     }
 
     public function updateThemeSection(Request $request){
-        
+        if (strtolower(\Config::get('app.demo_mode')) == 'yes'):
+            return redirect()->back()->with('error', __('You are not allowed to add/modify in demo mode.'));
+        endif;
 
         if($request->type == \Modules\Appearance\Enums\ThemeSectionType::CATEGORY):
 
@@ -199,7 +203,9 @@ class ThemeSectionController extends Controller
 
     public function updateSectionOrder(Request $request)
     {
-        
+        if (strtolower(\Config::get('app.demo_mode')) == 'yes'):
+            return redirect()->back()->with('error', __('You are not allowed to add/modify in demo mode.'));
+        endif;
 
         foreach($request->sections as $section){
 

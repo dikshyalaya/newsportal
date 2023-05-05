@@ -18,7 +18,9 @@ class LanguageTableSeeder extends Seeder
         Model::unguard();
 
         Language::create(['name'=> 'English','code' => 'en', 'icon_class' => 'flag-icon flag-icon-us',  'text_direction' => 'LTR','status' => 'active']);
-       
+        if (strtolower(\Config::get('app.demo_mode')) == 'yes'):
+            Language::create(['name'=> 'Arabic','code' => 'ar', 'icon_class' => 'flag-icon flag-icon-ae',  'text_direction' => 'RTL','status' => 'active']);
+        endif;
     }
 
 }

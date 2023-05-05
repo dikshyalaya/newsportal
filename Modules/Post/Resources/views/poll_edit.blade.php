@@ -61,7 +61,7 @@
                                 <label class="input-group-text" for="start_date"><i
                                         class="fa fa-calendar-alt"></i></label>
                                 <input type="text" class="form-control date" id="start_date" name="start_date"
-                                       value="{{ Carbon\Carbon::parse($poll->start_date)->format('F d, Y g:i A') }}"/>
+                                       value="{{ Carbon\Carbon::parse($poll->start_date)->translatedFormat('F d, Y g:i A') }}"/>
                             </div>
                         </div>
                         <div class="col-sm-12">
@@ -70,7 +70,7 @@
                                 <label class="input-group-text" for="end_date"><i
                                         class="fa fa-calendar-alt"></i></label>
                                 <input type="text" class="form-control date" id="end_date" name="end_date"
-                                       value="{{ Carbon\Carbon::parse($poll->end_date)->format('F d, Y g:i A') }}"/>
+                                       value="{{ Carbon\Carbon::parse($poll->end_date)->translatedFormat('F d, Y g:i A') }}"/>
                             </div>
                         </div>
                         <div class="row p-l-15">

@@ -6,7 +6,6 @@ use Illuminate\Support\Facades\Cache;
 use Modules\Appearance\Entities\MenuLocation;
 use Modules\Post\Entities\Category;
 use Modules\Post\Entities\Post;
-use LaravelLocalization;
 
 class MenuService extends Service
 {
@@ -126,6 +125,6 @@ class MenuService extends Service
                                ->where('title', 'Primary')->first();
                         });
 
-        return $primary_menu->menuItem->where('parent','==', '')->where('language', LaravelLocalization::setLocale() ?? settingHelper('default_language'));
+        return $primary_menu->menuItem->where('parent','==', '')->where('language', \App::getLocale() ?? settingHelper('default_language'));
     }
 }

@@ -2,15 +2,17 @@
 
 namespace App\Providers;
 
-use Illuminate\Support\Facades\Config;
-use Illuminate\Support\ServiceProvider;
-use Illuminate\Support\Facades\Schema;
-use Modules\Language\Entities\LanguageConfig;
-use Modules\Language\Entities\Language;
-use Modules\Setting\Entities\Setting;
 use Session;
-use DB;
-
+use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\DB;
+use Modules\Setting\Entities\Setting;
+use Illuminate\Support\Facades\Config;
+use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\ServiceProvider;
+use Modules\Language\Entities\Language;
+use Modules\Language\Entities\LanguageConfig;
+use Cartalyst\Sentinel\Native\Facades\Sentinel;
+use Illuminate\Support\Facades\Artisan;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -33,10 +35,11 @@ class AppServiceProvider extends ServiceProvider
     {
         Schema::defaultStringLength(191);
 
+
         try {
 
-            DB::connection()->getPdo(); 
-             
+            DB::connection()->getPdo();
+
           } catch (\Exception $e) {
 
             $supportedLocales               = ['en' => ['name' => 'English', 'script' => 'Latn', 'native' => 'English', 'regional' => 'en_GB']];
@@ -47,13 +50,25 @@ class AppServiceProvider extends ServiceProvider
             return redirect('install');
           }
 
+          if(Schema::hasTable('roles') && settingHelper('version')){
+            if(!optional(json_decode(DB::table('roles')->select('permissions')->where('slug','superadmin')->first()->permissions))->system_update_read){
+                try{
+                    Artisan::call('migrate', ['--force' => true]);
+                }catch(\Exception $e){
+                    dd($e);
+                }
+                
+                
+            }
+          }
+
 
          if (Schema::hasTable('settings') && Schema::hasTable('languages') ) :
 
             $default_lang           = Setting::where('title', 'default_language')->first();
 
             $setting                = Setting::select('title', 'value')->where('lang', @$default_lang->value)->get()->toArray();
-            
+
             $session_array          = array();
 
             foreach($setting as $row):
@@ -96,7 +111,7 @@ class AppServiceProvider extends ServiceProvider
 
             $default_storage = settingHelper('default_storage');
 
-            //facebook login 
+            //facebook login
 
             $facebook_client_id        = settingHelper('facebook_client_id');
             if (!empty($facebook_client_id)) :
@@ -154,7 +169,7 @@ class AppServiceProvider extends ServiceProvider
 
 
                 //checking if table is not empty
-                if ($mail_driver !=null && $mail_host !=null && $mail_port !=null && $mail_address !=null && $mail_name !=null && $mail_username !=null && $mail_password !=null && $mail_encryption !=null && $sendmail_path != null) 
+                if ($mail_driver !=null && $mail_host !=null && $mail_port !=null && $mail_address !=null && $mail_name !=null && $mail_username !=null && $mail_password !=null && $mail_encryption !=null && $sendmail_path != null)
                 {
                     $config = array(
                         'driver'     => $mail_driver->value,
@@ -172,37 +187,10 @@ class AppServiceProvider extends ServiceProvider
                     );
                     Config::set('mail', $config);
                 }
-            }  
-
-            $supportedLocales               = array();
-            $languageList                   = Language::where('status', 'active')->get();
-
-            if ($languageList->count() > 0) :
-                foreach ($languageList as $lang) :
-                    $langConfigs            = LanguageConfig::select('name', 'script', 'native', 'regional')
-                                                ->where('language_id', $lang->id)
-                                                ->get();
-
-                    foreach ($langConfigs as $langConfig) :
-                        // return $langConfig;
-                        $supportedLocales[$lang->code] = $langConfig;
-                    endforeach;
-                endforeach;
-
-                Config::set('laravellocalization.supportedLocales', $supportedLocales);
-            else :
-                $supportedLocales           = ['en' => ['name' => 'English', 'script' => 'Latn', 'native' => 'English', 'regional' => 'en_GB']];
-                Config::set('laravellocalization.supportedLocales', $supportedLocales);
-            endif;
-
-        else :
-            $supportedLocales               = ['en' => ['name' => 'English', 'script' => 'Latn', 'native' => 'English', 'regional' => 'en_GB']];
-
-            Config::set('app.locale', 'en');
-            Config::set('laravellocalization.supportedLocales', $supportedLocales);
+            }
         endif;
 
-        
+
 
     }
 }

@@ -15,7 +15,7 @@
         </div>
         <div class="row">
             @foreach($posts->take(3) as $post)
-                <div class="col-lg-4">
+                <div class="col-lg-4 pl-0">
                     <div class="sg-post">
                         <div class="entry-header">
                             <div class="entry-thumbnail">
@@ -45,7 +45,7 @@
                                 <p>{!! \Illuminate\Support\Str::limit($post->title, 50) !!}</p></a>
                             <div class="entry-meta">
                                 <ul class="global-list">
-                                    <li><a href="{{route('article.date', date('Y-m-d', strtotime($post->updated_at)))}}"> {{ $post->updated_at->format('F j, Y') }}</a></li>
+                                    <li><a href="{{route('article.date', date('Y-m-d', strtotime($post->updated_at)))}}"> {{ Carbon\Carbon::parse($post->updated_at)->translatedFormat('F j, Y') }}</a></li>
                                 </ul>
                             </div>
                         </div>

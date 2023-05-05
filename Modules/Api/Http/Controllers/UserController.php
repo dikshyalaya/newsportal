@@ -4,22 +4,18 @@ namespace Modules\Api\Http\Controllers;
 
 use Carbon\Carbon;
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Validator;
 use JWTAuth;
 use Tymon\JWTAuth\Exceptions\JWTException;
-use Tymon\JWTAuth\Contracts\JWTSubject;
-use Modules\User\Entities\Role;
 use Modules\User\Entities\User;
 use Cartalyst\Sentinel\Checkpoints\ThrottlingException;
 use Cartalyst\Sentinel\Checkpoints\NotActivatedException;
 use Activation;
 use Sentinel;
 use Illuminate\Support\Facades\Mail;
-use DB;
+use Illuminate\Support\Facades\DB;
 use File;
 use Image;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
@@ -50,8 +46,12 @@ class UserController extends Controller
 
             $user = User::where('email', $request->email)->first();
 
+            if ($user && $user->is_deleted == 1) {
+                return $this->responseWithError(__('user_not_found'), [], 404);
+            }
+
             if (blank($user)) {
-                return $this->responseWithError( __('your_email_is_invalid'), [], 422);
+                return $this->responseWithError( __('user_not_found'), [], 422);
             } elseif($user->is_user_banned == 0) {
                 return $this->responseWithError( __('your_account_is_banned'), [], 401);
             }
@@ -277,7 +277,7 @@ class UserController extends Controller
             $user->email        = $request->email;
             $user->gender       = $request->gender ?? 0;
             $user->dob          = date('Y-m-d', strtotime($request->dob));
-            $user->phone        = $request->phone ?? '00'.rand(100000000,999999999);
+            $user->phone        = $request->phone ?? '00'.rand('100000000,999999999');
 
             $user->save();
 
@@ -572,6 +572,37 @@ class UserController extends Controller
 
     }
 
+    public function deleteAccount(Request $request)
+    {
+        DB::beginTransaction();
+        try {
+            if (!$user = JWTAuth::parseToken()->authenticate()) {
+                return $this->responseWithError(__('user_not_found'), '' , 404);
+            }
+            if (strtolower(\Config::get('app.demo_mode')) == 'yes'):
+                return $this->responseWithError(__('You are not allowed to add/modify in demo mode.'), [], 404);
+            endif;
+            $user->is_deleted = 1;
+            $user->save();
+
+            $activation = \Modules\User\Entities\Activation::where('user_id',$user->id)->first();
+
+            $activation->completed = 0;
+
+            $activation->save();
+
+            Sentinel::logout();
+            JWTAuth::invalidate(JWTAuth::getToken());
+
+            DB::commit();
+            return $this->responseWithSuccess(__('account_deleted'), 200);
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return $this->responseWithError(__('something_went_wrong_please_try_again'), [], 500);
+        }
+
+    }
+
     public function firebaseAuth(Request $request){
         try{
             $validator = Validator::make($request->all(), [
@@ -606,7 +637,7 @@ class UserController extends Controller
                     return $this->responseWithError(__('something_went_wrong'), [], 500);
                 }
 
-//                $request['password'] = 'social-login';
+                $request['password'] = 'social-login';
 
                 Sentinel::authenticate($request->all());
 
@@ -668,6 +699,7 @@ class UserController extends Controller
                 Sentinel::authenticate($request->all());
 
                 $data['id'] = $user->id;
+                $data['token'] = $token;
 
                 $data['first_name'] = $user->first_name;
                 $data['last_name'] = $user->last_name;
@@ -724,6 +756,7 @@ class UserController extends Controller
                 Sentinel::authenticate($request->all());
 
                 $data['id'] = $user->id;
+                $data['token'] = $token;
 
                 $data['first_name'] = $user->first_name;
                 $data['last_name'] = $user->last_name;
@@ -773,6 +806,7 @@ class UserController extends Controller
 
                 $data['id'] = $user->id;
 
+
                 try {
                     if (!$token = JWTAuth::fromUser($user)) {
                         return $this->responseWithError(__('invalid_credentials'), [], 401);
@@ -796,6 +830,7 @@ class UserController extends Controller
 
                 $data['first_name'] = $user->first_name;
                 $data['last_name'] = $user->last_name;
+                $data['token'] = $token;
 
                 if (isset($user->profile_image)):
                     $data['image'] = static_asset($user->profile_image);
@@ -823,6 +858,7 @@ class UserController extends Controller
 
             return $this->responseWithError(__('something_went_wrong'), '', 500);
         } catch (\Exception $e) {
+            dd($e);
             return $this->responseWithError(__('something_went_wrong_please_try_again'), [], 500);
         }
 

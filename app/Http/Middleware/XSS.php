@@ -15,12 +15,11 @@ class XSS
      */
     public function handle(Request $request, Closure $next)
     {
-        $userInput = $request->all();
-        array_walk_recursive($userInput, function (&$userInput) {
-            $userInput = preg_replace('#<script(.*?)>(.*?)</script>#is', '', $userInput);
-            $userInput = preg_replace('#&lt;script(.*?)gt;(.*?)&lt;/script&gt;#is', '', $userInput);
+        $input = $request->all();
+        array_walk_recursive($input, function(&$input) {
+            $input = strip_tags($input);
         });
-        $request->merge($userInput);
+        $request->merge($input);
         return $next($request);
     }
 }

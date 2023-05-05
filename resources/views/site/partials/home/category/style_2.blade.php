@@ -23,8 +23,8 @@
                         <h3 class="entry-title"><a href="{{ route('article.detail', ['id' => $firstPost->slug]) }}">{!! \Illuminate\Support\Str::limit($firstPost->title, 50) !!}</a></h3>
                         <div class="entry-meta mb-2">
                             <ul class="global-list">
-                                <li><a href="{{ route('site.author',['id' => $firstPost->user->id]) }}">{{ data_get($firstPost, 'user.first_name') }}</a></li>
-                                <li><a href="{{route('article.date', date('Y-m-d', strtotime($firstPost->updated_at)))}}">{{ $firstPost->updated_at->format('F j, Y') }}</a></li>
+                                <li> <a href="{{ route('site.author',['id' => $firstPost->user->id]) }}">{{ data_get($firstPost, 'user.first_name') }}</a></li>
+                                <li><a href="{{route('article.date', date('Y-m-d', strtotime($firstPost->updated_at)))}}">{{ Carbon\Carbon::parse($firstPost->updated_at)->translatedFormat('F j, Y') }}</a></li>
                             </ul>
                         </div>
                         <p> {!! strip_tags(\Illuminate\Support\Str::limit($firstPost->content, 130)) !!}</p>
@@ -32,7 +32,7 @@
                 </div>
             </div>
 
-            <div class="col-lg-6">
+            <div class="col-lg-6 pl-0">
                 @foreach($blockPosts as $post)
                     <div class="sg-post small-post post-style-1">
                         @include('site.partials.home.category.post_block')
@@ -40,8 +40,8 @@
                            <a href="{{ route('article.detail', ['id' => $post->slug]) }}"><p>{!! \Illuminate\Support\Str::limit($post->title, 25) !!}</p></a>
                             <div class="entry-meta">
                                 <ul class="global-list">
-                                    <li><a href="{{ route('site.author',['id' => $firstPost->user->id]) }}"> {{ data_get($post, 'user.first_name') }}</a></li>
-                                    <li><a href="{{route('article.date', date('Y-m-d', strtotime($post->updated_at)))}}"> {{ $post->updated_at->format('F j, Y') }}</a></li>
+                                    <li> <a href="{{ route('site.author',['id' => $firstPost->user->id]) }}"> {{ data_get($post, 'user.first_name') }}</a></li>
+                                    <li><a href="{{route('article.date', date('Y-m-d', strtotime($post->updated_at)))}}"> {{ Carbon\Carbon::parse($post->updated_at)->translatedFormat('F j, Y') }}</a></li>
                                 </ul>
                             </div>
                         </div>

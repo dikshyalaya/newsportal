@@ -2,10 +2,10 @@
 
 namespace App\Http\View\Composers;
 
-use Illuminate\Support\Facades\Cache;
 use Illuminate\View\View;
+use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Schema;
 use Modules\Language\Entities\Language;
-use LaravelLocalization;
 
 class LanguageComposer
 {
@@ -16,9 +16,14 @@ class LanguageComposer
 
     public function compose(View $view)
     {
-        $language   = Cache::rememberForever('language', function (){
-                        return Language::where('code', LaravelLocalization::setLocale() ?? settingHelper('default_language'))->first();
-                    });
+        if (Schema::hasTable('settings') && Schema::hasTable('languages') ) {
+            $language   = Cache::rememberForever('language', function (){
+                return Language::where('code', \App::getLocale() ?? settingHelper('default_language'))->first();
+            });
+        }else{
+            $language = ['en' => ['name' => 'English', 'script' => 'Latn', 'native' => 'English', 'regional' => 'en_GB']];
+        }
+
 
         $view->with('language', $language);
     }

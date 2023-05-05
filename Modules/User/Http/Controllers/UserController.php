@@ -49,7 +49,9 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        
+        if (strtolower(\Config::get('app.demo_mode')) == 'yes'):
+            return redirect()->back()->with('error', __('You are not allowed to add/modify in demo mode.'));
+        endif;
         Validator::make($request->all(), [
             'first_name'            => 'required',
             'email'                 => 'required|unique:users|max:255',
@@ -127,13 +129,14 @@ class UserController extends Controller
     //update user info
     public function updateUserInfo(Request $request, $id)
     {
-        
+        if (strtolower(\Config::get('app.demo_mode')) == 'yes'):
+            return redirect()->back()->with('error', __('You are not allowed to add/modify in demo mode.'));
+        endif;
         Validator::make($request->all(), [
             'first_name'    => 'required',
             'last_name'     => 'required|min:2|max:30',
             'profile_image' => 'mimes:jpg,JPG,JPEG,jpeg,gif,png,ico|max:5120',
-            'phone'         => ['min:11','max:14'],
-            'dob'           => 'required',
+            'phone'         => ['min:11','max:14'],            
             'gender'        => 'required',
         ])->validate();
 

@@ -20,6 +20,7 @@ class Kernel extends HttpKernel
         \App\Http\Middleware\TrimStrings::class,
         \Illuminate\Foundation\Http\Middleware\ConvertEmptyStringsToNull::class,
         \Fruitcake\Cors\HandleCors::class,
+        \App\Http\Middleware\LaravelLocalizationRedirectFilter::class,
     ];
 
     /**
@@ -63,11 +64,11 @@ class Kernel extends HttpKernel
         'verified'      => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
 
         /**** OTHER MIDDLEWARE ****/
-		'localize'              => \Mcamara\LaravelLocalization\Middleware\LaravelLocalizationRoutes::class,
-		'localizationRedirect'  => \Mcamara\LaravelLocalization\Middleware\LaravelLocalizationRedirectFilter::class,
-		'localeSessionRedirect' => \Mcamara\LaravelLocalization\Middleware\LocaleSessionRedirect::class,
-        'localeCookieRedirect'    => \Mcamara\LaravelLocalization\Middleware\LocaleCookieRedirect::class,
-        'localeViewPath'        => \Mcamara\LaravelLocalization\Middleware\LaravelLocalizationViewPath::class,
+		'localize'              => \App\Http\Middleware\LaravelLocalizationRoutes::class,
+		'localizationRedirect'  => \App\Http\Middleware\LaravelLocalizationRedirectFilter::class,
+		'localeSessionRedirect' => \App\Http\Middleware\LocaleSessionRedirect::class,
+        'localeCookieRedirect'  => \App\Http\Middleware\LocaleCookieRedirect::class,
+        'localeViewPath'        => \App\Http\Middleware\LaravelLocalizationViewPath::class,
 
         'jwt.verify'            => \App\Http\Middleware\JwtMiddleware::class,
 

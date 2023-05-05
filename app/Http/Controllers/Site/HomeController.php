@@ -8,7 +8,6 @@ use Illuminate\Support\Facades\View;
 use Modules\Ads\Entities\AdLocation;
 use Modules\Appearance\Entities\ThemeSection;
 use Modules\Post\Entities\Post;
-use LaravelLocalization;
 use App\VisitorTracker;
 use Illuminate\Support\Facades\Input;
 use Sentinel;
@@ -16,80 +15,77 @@ use DB;
 use Modules\Post\Entities\Category;
 use File;
 
+use function PHPUnit\Framework\isNull;
+
 class HomeController extends Controller
 {
     public function home()
     {
-        $primarySection             = Cache::rememberForever('primarySection', function (){
-                                        return ThemeSection::where('is_primary', 1)->first();
-                                    });
-
-        $language = LaravelLocalization::setLocale() ?? settingHelper('default_language');
+        $primarySection  = Cache::rememberForever('primarySection', function (){
+                                return ThemeSection::where('is_primary', 1)->first();
+                            });                                   
+                                    
+        $language = \App::getLocale() ?? settingHelper('default_language');
 
         if (Sentinel::check()):
 
             if (!View::exists('site.website.'.$language.'.logged.widgets')):
                 $this->widgetsSection($language);
             endif;
-
+            
             if($primarySection->status == 1):
 
                 $primarySectionPosts    = Cache::remember('primarySectionPostsAuth', $seconds = 1200, function () {
-                    return Post::with(['category', 'image', 'user'])
+                    return Post::with(['categories', 'image', 'user'])
+                   // return Post::with([ 'image', 'user'])
                         ->where('visibility', 1)
                         ->where('status', 1)
-                        ->where('slider', '!=', 1)
-                        ->where('language', LaravelLocalization::setLocale() ?? settingHelper('default_language'))
+                        //->where('slider', '!=', 1)
+                        //->where('language', \App::getLocale() ?? settingHelper('default_language'))
                         ->orderBY('id', 'desc')
+                        ->offset(5)
                         ->limit(10)->get();
                 });
+               
             else:
 
                 $primarySectionPosts = [];
 
             endif;
-
-            $sliderPosts            = Cache::remember('sliderPostsAuth', $seconds = 1200, function () {
-                return  Post::with(['category', 'image', 'user'])
+           
+            $sliderPosts   = Cache::remember('sliderPostsAuth', $seconds = 1200, function () {
+                return  Post::with(['categories', 'image', 'user'])                
                     ->where('visibility', 1)
-                    ->where('slider', 1)
+                    //->where('slider', 1)
                     ->where('status', 1)
-                    ->where('language', LaravelLocalization::setLocale() ?? settingHelper('default_language'))
-                    ->orderBY('id', 'desc')
+                    ->where('language', \App::getLocale() ?? settingHelper('default_language'))
+                    ->orderBY('id', 'desc')                    
                     ->limit(5)->get();
             });
 
+            
+            
             $categorySections       = Cache::remember('categorySectionsAuth', $seconds = 1200, function () {
                 return ThemeSection::with('ad')
                     ->with(['category'])
                     ->where('is_primary', '<>', 1)->orderBy('order', 'ASC')
                     ->where(function ($query) {
-                        $query->where('language', LaravelLocalization::setLocale() ?? settingHelper('default_language'))->orWhere('language', null);
+                        $query->where('language', \App::getLocale() ?? settingHelper('default_language'))->orWhere('language', null);
                     })
                     ->get();
             });
-
-            $categorySections->each(function($section){
+            
+            $categorySections->each(function($section){    
                 $section->load('post');
             });
-
-            $video_posts     = Cache::remember('video_postsAuth', $seconds = 1200, function () {
-                return Post::with('category', 'image', 'user')
-                    ->where('post_type', 'video')
-                    ->where('visibility', 1)
-                    ->where('status', 1)
-                    ->orderBy('id', 'desc')
-                    ->where('language', LaravelLocalization::setLocale() ?? settingHelper('default_language'))
-                    ->limit(8)
-                    ->get();
-            });
-
+            
             $latest_posts       = Cache::remember('latest_postsAuth', $seconds = 1200, function () {
-                return Post::with('category', 'image', 'user')
-                    ->where('visibility', 1)
+                //return Post::with('categories', 'image', 'user')
+                return Post::with( 'image', 'user','categories')
+                   ->where('visibility', 1)
                     ->where('status', 1)
                     ->orderBy('id', 'desc')
-                    ->where('language', LaravelLocalization::setLocale() ?? settingHelper('default_language'))
+                    //->where('language', \App::getLocale() ?? settingHelper('default_language'))
                     ->limit(6)
                     ->get();
             });
@@ -98,25 +94,31 @@ class HomeController extends Controller
                 return Post::where('visibility', 1)
                     ->where('status', 1)
                     ->orderBy('id', 'desc')
-                    ->where('language', LaravelLocalization::setLocale() ?? settingHelper('default_language'))
+                    ->where('language', \App::getLocale() ?? settingHelper('default_language'))
                     ->count();
             });
-
+           
         else:
-            if($primarySection->status == 1):
+            if(!isNull($primarySection)):
+                if($primarySection->status == 1):
 
-                $primarySectionPosts    = Cache::remember('primarySectionPosts', $seconds = 1200, function () {
-                    return Post::with(['category', 'image', 'user'])
-                        ->where('visibility', 1)
-                        ->where('status', 1)
-                        ->where('slider', '!=', 1)
-                        ->where('language', LaravelLocalization::setLocale() ?? settingHelper('default_language'))
-                        ->orderBY('id', 'desc')
-                        ->when(Sentinel::check() == false, function ($query) {
-                            $query->where('auth_required', 0);
-                        })
-                        ->limit(5)->get();
-                });
+                    $primarySectionPosts    = Cache::remember('primarySectionPosts', $seconds = 1200, function () {
+                        return Post::with(['categories', 'image', 'user'])
+                        //return Post::with( 'image', 'user')
+                            ->where('visibility', 1)
+                            ->where('status', 1)
+                            //->where('slider', '!=', 1)
+                            //->where('language', \App::getLocale() ?? settingHelper('default_language'))
+                            ->orderBY('id', 'desc')
+                            ->when(Sentinel::check() == false, function ($query) {
+                                $query->where('auth_required', 0);
+                            })
+                            ->limit(10)->get();
+                    });
+                else:
+                    $primarySectionPosts = [];
+
+                endif;
             else:
 
                 $primarySectionPosts = [];
@@ -124,11 +126,12 @@ class HomeController extends Controller
             endif;
 
             $sliderPosts            = Cache::remember('sliderPosts', $seconds = 1200, function () {
-                return  Post::with(['category', 'image', 'user'])
+               // return  Post::with(['categories', 'image', 'user'])
+               return Post::with( 'image', 'user')
                     ->where('visibility', 1)
                     ->where('slider', 1)
                     ->where('status', 1)
-                    ->where('language', LaravelLocalization::setLocale() ?? settingHelper('default_language'))
+                    //->where('language', \App::getLocale() ?? settingHelper('default_language'))
                     ->when(Sentinel::check() == false, function ($query) {
                         $query->where('auth_required', 0);
                     })
@@ -138,10 +141,10 @@ class HomeController extends Controller
 
             $categorySections       = Cache::remember('categorySections', $seconds = 1200, function () {
                 return ThemeSection::with('ad')
-                    ->with(['category'])
+                   // ->with(['categories'])
                     ->where('is_primary', '<>', 1)->orderBy('order', 'ASC')
                     ->where(function ($query) {
-                        $query->where('language', LaravelLocalization::setLocale() ?? settingHelper('default_language'))->orWhere('language', null);
+                        $query->where('language', \App::getLocale() ?? settingHelper('default_language'))->orWhere('language', null);
                     })
                     ->get();
             });
@@ -150,30 +153,32 @@ class HomeController extends Controller
                 $section->load('post');
             });
 
-            $video_posts     = Cache::remember('video_posts', $seconds = 1200, function () {
-                return Post::with('category', 'image', 'user')
-                    ->where('post_type', 'video')
-                    ->where('visibility', 1)
-                    ->where('status', 1)
-                    ->when(Sentinel::check() == false, function ($query) {
-                        $query->where('auth_required', 0);
-                    })
-                    ->orderBy('id', 'desc')
-                    ->where('language', LaravelLocalization::setLocale() ?? settingHelper('default_language'))
-                    ->limit(8)
-                    ->get();
-            });
+            // $video_posts     = Cache::remember('video_posts', $seconds = 1200, function () {
+            //     //return Post::with('categories', 'image', 'user')
+            //     return Post::with( 'image', 'user')
+            //         ->where('post_type', 'video')
+            //         ->where('visibility', 1)
+            //         ->where('status', 1)
+            //         ->when(Sentinel::check() == false, function ($query) {
+            //             $query->where('auth_required', 0);
+            //         })
+            //         ->orderBy('id', 'desc')
+            //         ->where('language', \App::getLocale() ?? settingHelper('default_language'))
+            //         ->limit(8)
+            //         ->get();
+            // });
 
             $latest_posts       = Cache::remember('latest_posts', $seconds = 1200, function () {
-                return Post::with('category', 'image', 'user')
+               // return Post::with('categories', 'image', 'user')
+               return Post::with( 'image', 'user')
                     ->where('visibility', 1)
                     ->where('status', 1)
                     ->when(Sentinel::check() == false, function ($query) {
                         $query->where('auth_required', 0);
                     })
                     ->orderBy('id', 'desc')
-                    ->where('language', LaravelLocalization::setLocale() ?? settingHelper('default_language'))
-                    ->limit(6)
+                    //->where('language', \App::getLocale() ?? settingHelper('default_language'))
+                    ->limit(5)
                     ->get();
             });
 
@@ -184,13 +189,11 @@ class HomeController extends Controller
                         $query->where('auth_required', 0);
                     })
                     ->orderBy('id', 'desc')
-                    ->where('language', LaravelLocalization::setLocale() ?? settingHelper('default_language'))
+                    //->where('language', \App::getLocale() ?? settingHelper('default_language'))
                     ->count();
             });
 
         endif;
-
-
 
         $tracker                 = new VisitorTracker();
         $tracker->page_type      = \App\Enums\VisitorPageType::HomePage;
@@ -201,7 +204,6 @@ class HomeController extends Controller
 
         $tracker->save();
 
-
 //        if (!View::exists('site.website.'.$language.'.widgets')):
 //            $this->widgetsSection($language);
 //        endif;
@@ -209,7 +211,7 @@ class HomeController extends Controller
 //            $this->categorySections($language);
 //        endif;
 
-        return view('site.pages.home', compact('primarySection','primarySectionPosts', 'sliderPosts', 'categorySections','video_posts','totalPostCount','latest_posts'));
+        return view('site.pages.home', compact('primarySection','primarySectionPosts', 'sliderPosts', 'categorySections','totalPostCount','latest_posts'));
     }
 
     public function categorySections($language)
@@ -217,10 +219,10 @@ class HomeController extends Controller
         if (Sentinel::check()):
             $categorySections       = Cache::remember('categorySectionsAuth', $seconds = 1200, function () {
                 return ThemeSection::with('ad')
-                    ->with(['category'])
+                    ->with(['categories'])
                     ->where('is_primary', '<>', 1)->orderBy('order', 'ASC')
                     ->where(function ($query) {
-                        $query->where('language', LaravelLocalization::setLocale() ?? settingHelper('default_language'))->orWhere('language', null);
+                        $query->where('language', \App::getLocale() ?? settingHelper('default_language'))->orWhere('language', null);
                     })
                     ->get();
             });
@@ -230,22 +232,22 @@ class HomeController extends Controller
             });
 
             $video_posts     = Cache::remember('video_postsAuth', $seconds = 1200, function () {
-                return Post::with('category', 'image', 'user')
+                return Post::with('categories', 'image', 'user')
                     ->where('post_type', 'video')
                     ->where('visibility', 1)
                     ->where('status', 1)
                     ->orderBy('id', 'desc')
-                    ->where('language', LaravelLocalization::setLocale() ?? settingHelper('default_language'))
+                    ->where('language', \App::getLocale() ?? settingHelper('default_language'))
                     ->limit(8)
                     ->get();
             });
 
             $latest_posts       = Cache::remember('latest_postsAuth', $seconds = 1200, function () {
-                return Post::with('category', 'image', 'user')
+                return Post::with('categories', 'image', 'user')
                     ->where('visibility', 1)
                     ->where('status', 1)
                     ->orderBy('id', 'desc')
-                    ->where('language', LaravelLocalization::setLocale() ?? settingHelper('default_language'))
+                    ->where('language', \App::getLocale() ?? settingHelper('default_language'))
                     ->limit(6)
                     ->get();
             });
@@ -254,17 +256,17 @@ class HomeController extends Controller
                 return Post::where('visibility', 1)
                     ->where('status', 1)
                     ->orderBy('id', 'desc')
-                    ->where('language', LaravelLocalization::setLocale() ?? settingHelper('default_language'))
+                    ->where('language', \App::getLocale() ?? settingHelper('default_language'))
                     ->count();
             });
 
         else:
             $categorySections       = Cache::remember('categorySections', $seconds = 1200, function () {
                 return ThemeSection::with('ad')
-                    ->with(['category'])
+                    ->with(['categories'])
                     ->where('is_primary', '<>', 1)->orderBy('order', 'ASC')
                     ->where(function ($query) {
-                        $query->where('language', LaravelLocalization::setLocale() ?? settingHelper('default_language'))->orWhere('language', null);
+                        $query->where('language', \App::getLocale() ?? settingHelper('default_language'))->orWhere('language', null);
                     })
                     ->get();
             });
@@ -274,7 +276,7 @@ class HomeController extends Controller
             });
 
             $video_posts     = Cache::remember('video_posts', $seconds = 1200, function () {
-                return Post::with('category', 'image', 'user')
+                return Post::with('categories', 'image', 'user')
                     ->where('post_type', 'video')
                     ->where('visibility', 1)
                     ->where('status', 1)
@@ -282,20 +284,20 @@ class HomeController extends Controller
                         $query->where('auth_required', 0);
                     })
                     ->orderBy('id', 'desc')
-                    ->where('language', LaravelLocalization::setLocale() ?? settingHelper('default_language'))
+                    ->where('language', \App::getLocale() ?? settingHelper('default_language'))
                     ->limit(8)
                     ->get();
             });
 
             $latest_posts       = Cache::remember('latest_posts', $seconds = 1200, function () {
-                return Post::with('category', 'image', 'user')
+                return Post::with('categories', 'image', 'user')
                     ->where('visibility', 1)
                     ->where('status', 1)
                     ->when(Sentinel::check() == false, function ($query) {
                         $query->where('auth_required', 0);
                     })
                     ->orderBy('id', 'desc')
-                    ->where('language', LaravelLocalization::setLocale() ?? settingHelper('default_language'))
+                    ->where('language', \App::getLocale() ?? settingHelper('default_language'))
                     ->limit(6)
                     ->get();
             });
@@ -307,7 +309,7 @@ class HomeController extends Controller
                         $query->where('auth_required', 0);
                     })
                     ->orderBy('id', 'desc')
-                    ->where('language', LaravelLocalization::setLocale() ?? settingHelper('default_language'))
+                    ->where('language', \App::getLocale() ?? settingHelper('default_language'))
                     ->count();
             });
 

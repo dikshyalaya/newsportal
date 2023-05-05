@@ -78,7 +78,7 @@
     <script>
         //TinyMCE
         tinymce.init({
-            selector: "textarea.post-content",
+            selector: "textarea#post_content",
             theme: "modern",
             height: 400,
             plugins: [

@@ -55,7 +55,7 @@
                                             <th scope="col">{{ __('phone') }}</th>
                                             <td data-title="Phone">{{ Sentinel::getUser()->phone }}</td>
                                         </tr>
-                                        <tr class="">
+                                        <tr class="d-none">
                                             <th scope="col">{{ __('dob') }}</th>
                                             <td data-title="dob">{{ date('d F, Y', strtotime(Sentinel::getUser()->dob)) }}</td>
                                         </tr>

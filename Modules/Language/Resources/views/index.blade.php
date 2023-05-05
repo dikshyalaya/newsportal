@@ -272,7 +272,7 @@
                                     <div class="col-12 col-sm-6 text-right">
                                         <div class="table-info-pagination float-right">
                                             <nav aria-label="Page navigation example">
-                                                {!! $languages->render() !!}
+                                                {!! $languages->onEachSide(1)->links() !!}
                                             </nav>
                                         </div>
                                     </div>

@@ -10,7 +10,6 @@ use Modules\Setting\Entities\Setting;
 use Modules\Tag\Entities\Tag;
 use Modules\Widget\Entities\Widget;
 use Modules\Widget\Enums\WidgetContentType;
-use LaravelLocalization;
 use Sentinel;
 
 class WidgetService extends Service
@@ -37,7 +36,7 @@ class WidgetService extends Service
         return Post::with(['image', 'user'])
                 ->orderBy('total_hit', 'DESC')
                 ->take(4)
-                ->where('language', LaravelLocalization::setLocale() ?? settingHelper('default_language'))
+                ->where('language', \App::getLocale() ?? settingHelper('default_language'))
                 ->where('visibility', 1)
                 ->where('status', 1)
                 ->when(Sentinel::check()== false, function ($query) {
@@ -69,7 +68,7 @@ class WidgetService extends Service
     {
         return Post::with(['image', 'user'])->orderBy('id', 'desc')
             ->take(4)
-            ->where('language', LaravelLocalization::setLocale() ?? settingHelper('default_language'))
+            ->where('language', \App::getLocale() ?? settingHelper('default_language'))
             ->where('visibility', 1)
             ->where('status', 1)
             ->when(Sentinel::check()== false, function ($query) {
@@ -83,7 +82,7 @@ class WidgetService extends Service
             ->where('recommended', 1)
             ->orderBy('recommended_order')
             ->take(4)
-            ->where('language', LaravelLocalization::setLocale() ?? settingHelper('default_language'))
+            ->where('language', \App::getLocale() ?? settingHelper('default_language'))
             ->where('visibility', 1)
             ->where('status', 1)
             ->when(Sentinel::check()== false, function ($query) {
@@ -97,7 +96,7 @@ class WidgetService extends Service
             ->orWhere('post_type', 'personality-quiz')
             ->orderBy('id', 'desc')
             ->take(4)
-            ->where('language', LaravelLocalization::setLocale() ?? settingHelper('default_language'))
+            ->where('language', \App::getLocale() ?? settingHelper('default_language'))
             ->where('visibility', 1)
             ->where('status', 1)
             ->when(Sentinel::check()== false, function ($query) {
@@ -110,7 +109,7 @@ class WidgetService extends Service
             ->where('featured', 1)
             ->orderBy('featured_order')
             ->take(4)
-            ->where('language', LaravelLocalization::setLocale() ?? settingHelper('default_language'))
+            ->where('language', \App::getLocale() ?? settingHelper('default_language'))
             ->where('visibility', 1)
             ->where('status', 1)
             ->when(Sentinel::check()== false, function ($query) {
@@ -121,7 +120,7 @@ class WidgetService extends Service
     private function categories()
     {
         return Category::select('category_name','slug')
-            ->where('language', LaravelLocalization::setLocale() ?? settingHelper('default_language'))
+            ->where('language', \App::getLocale() ?? settingHelper('default_language'))
             ->orderBy('order', 'asc')
             ->withCount('post')
             ->get();
@@ -147,7 +146,7 @@ class WidgetService extends Service
             ->where('editor_picks', 1)
             ->orderBy('id','desc')
             ->take(4)
-            ->where('language', LaravelLocalization::setLocale() ?? settingHelper('default_language'))
+            ->where('language', \App::getLocale() ?? settingHelper('default_language'))
             ->where('visibility', 1)
             ->where('status', 1)
             ->when(Sentinel::check()== false, function ($query) {
@@ -163,7 +162,7 @@ class WidgetService extends Service
                         ->where('status', 1)
                         ->orderBy('order', 'asc')
                         ->where('location', \Modules\Widget\Enums\WidgetLocation::RIGHT_SIDEBAR)
-                        ->where('language', LaravelLocalization::setLocale() ?? settingHelper('default_language'))
+                        ->where('language', \App::getLocale() ?? settingHelper('default_language'))
                         ->get();
                         //dd($widgets);
 

@@ -1,4 +1,9 @@
 <?php
+
+use App\Helpers\LaravelLocalization;
+use Illuminate\Support\Facades\Cookie;
+use Illuminate\Contracts\Session\Session;
+
 $page = settingHelper('page_detail_prefix') ?? 'page';
 $article = settingHelper('article_detail_prefix') ?? 'article';
 
@@ -6,8 +11,8 @@ Route::feeds();
 
 Route::group(
     [
-        'prefix' => LaravelLocalization::setLocale(),
-        'middleware' => ['localeSessionRedirect', 'localizationRedirect', 'localeViewPath', 'isInstalledCheck']
+        'prefix' => getlocale(),
+        'middleware' => ['localeSessionRedirect', 'localeViewPath', 'isInstalledCheck', 'localizationRedirect']
     ],
     function () use($page, $article){
 

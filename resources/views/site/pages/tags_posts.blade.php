@@ -39,14 +39,14 @@
                                                         @endisset
                                                     </ul>
                                                 </div>
-                                                <div class="entry-content ">
+                                                <div class="entry-content align-self-center">
                                                     <h3 class="entry-title"><a
                                                             href="{{ route('article.detail', ['id' => $post->slug]) }}">{!! \Illuminate\Support\Str::limit($post->title, 65) !!}</a>
                                                     </h3>
                                                     <div class="entry-meta mb-2">
                                                         <ul class="global-list">
-                                                            <li><a href="{{ route('site.author',['id' => $post->user->id]) }}">{{$post->user->first_name}} </a></li>
-                                                            <li><a href="{{route('article.date', date('Y-m-d', strtotime($post->updated_at)))}}"> {{ $post->updated_at->format('F j, Y') }}</a></li>
+                                                            <li> <a href="{{ route('site.author',['id' => $post->user->id]) }}">{{$post->user->first_name}} </a></li>
+                                                            <li><a href="{{route('article.date', date('Y-m-d', strtotime($post->updated_at)))}}"> {{ Carbon\Carbon::parse($post->updated_at)->translatedFormat('F j, Y') }}</a></li>
                                                         </ul>
                                                     </div>
                                                     <p>{!! strip_tags(\Illuminate\Support\Str::limit($post->content, 120)) !!}</p>

@@ -177,7 +177,7 @@
                                 </div>
                                 <div class="col-12 col-sm-6 text-right">
                                     <div class="table-info-pagination float-right">
-                                        {!! $galleryImages->render() !!}
+                                        {!! $galleryImages->onEachSide(1)->links() !!}
                                     </div>
                                 </div>
                             </div>

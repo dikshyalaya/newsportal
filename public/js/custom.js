@@ -1,4 +1,4 @@
-// student section select sction for sibling
+// student section select sction for sibling - language-switch
 $(document).ready(function () {
     $(".select-options li").on("click", function () {
         var url = $('#url').val();

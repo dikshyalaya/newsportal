@@ -80,22 +80,7 @@
                                                 @endforeach
                                             </select>
                                         </div>
-
-                                        <div class="item-table-filter">
-                                            <div class="form-group">
-                                                <p class="text-muted"><small>{{ __('sub_category') }}</small></p>
-                                                <select class="form-control dynamic" id="sub_category_id"
-                                                        name="sub_category_id">
-                                                    <option value="">{{ __('all') }}</option>
-                                                    @foreach ($subCategories as $subCategory)
-                                                        <option
-                                                            @if($search_query->sub_category_id == $subCategory->id) selected
-                                                            @endif value="{{ $subCategory->id }}">{{ $subCategory->sub_category_name }}</option>
-                                                    @endforeach
-                                                </select>
-                                            </div>
-                                        </div>
-
+                                        
                                         <div class="item-table-filter">
                                             <p class="text-muted"><small>Search</small></p>
                                             <input name="search_key" value="{{ $search_query->search_key }}"
@@ -122,7 +107,7 @@
                                         <th>{{ __('language') }}</th>
                                         <th>{{ __('post_type') }}</th>
                                         <th>{{ __('category') }}</th>
-                                        <th>{{ __('post_by') }}</th>
+                                        <th></th>
                                         <th>{{ __('visibility') }}</th>
                                         <th>{{ __('view') }}</th>
                                         <th>{{ __('added_date') }}</th>
@@ -338,7 +323,7 @@
                                 </div>
                                 <div class="col-12 col-sm-6 text-right">
                                     <div class="table-info-pagination float-right">
-                                        {!! $posts->render() !!}
+                                        {!! $posts->onEachSide(1)->links() !!}
 
                                     </div>
                                 </div>

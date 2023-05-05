@@ -27,7 +27,9 @@ class CommentsController extends Controller
 
     public function updateCommentSettings(Request $request)
     {
-        
+        if (strtolower(\Config::get('app.demo_mode')) == 'yes'):
+            return redirect()->back()->with('error', __('You are not allowed to add/modify in demo mode.'));
+        endif;
         $default_language       = $request->default_language ?? settingHelper('default_language');
 
         foreach ($request->except('_token') as $key => $value) :
