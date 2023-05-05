@@ -44,7 +44,7 @@
                         <div class="entry-meta">
                             <ul class="global-list">
                                 <li>
-                                    <a href="#">{{ __('member_since') }}: {{ Sentinel::getUser()->created_at->format('F j, Y') }}</a>
+                                    <a href="#">{{ __('member_since') }}: {{ Sentinel::getUser()->created_at->translatedFormat('F j, Y') }}</a>
                                 </li>
                                 <li><i class="fa fa-envelope-o"></i><a href="#">{{ Sentinel::getUser()->email }}</a>
                                 </li>
@@ -129,11 +129,11 @@
                                             </h3>
                                             <div class="entry-meta mb-2">
                                                 <ul class="global-list">
-                                                    <li><a
+                                                    <li> <a
                                                             href="{{ route('site.author',['id' => $post->user->id]) }}">{{ data_get($post, 'user.first_name') }}</a>
                                                     </li>
                                                     <li>
-                                                        <a href="{{route('article.date', date('Y-m-d', strtotime($post->updated_at)))}}">{{ $post->updated_at->format('F j, Y') }}</a>
+                                                        <a href="{{route('article.date', date('Y-m-d', strtotime($post->updated_at)))}}">{{ Carbon\Carbon::parse($post->updated_at)->translatedFormat('F j, Y') }}</a>
                                                     </li>
                                                 </ul>
                                             </div><!-- /.entry-meta -->

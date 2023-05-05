@@ -18,6 +18,7 @@ class Kernel extends ConsoleKernel
          Commands\SchedulePostCron::class,
          Commands\QueueWorkCron::class,
          Commands\RssImportCron::class,
+         Commands\AllClear::class
     ];
 
     /**

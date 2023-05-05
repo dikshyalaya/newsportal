@@ -596,7 +596,7 @@
                                         <label class="input-group-text" for="scheduled_date"><i
                                                 class="fa fa-calendar-alt"></i></label>
                                         <input type="text" class="form-control date" id="scheduled_date"
-                                               value="{{ Carbon\Carbon::parse($post->scheduled_date)->format('m/d/Y g:i A') }}"
+                                               value="{{ Carbon\Carbon::parse($post->scheduled_date)->translatedFormat('m/d/Y g:i A') }}"
                                                name="scheduled_date"/>
                                     </div>
                                 </div>

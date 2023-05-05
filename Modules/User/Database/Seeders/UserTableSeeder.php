@@ -23,9 +23,9 @@ class UserTableSeeder extends Seeder
 
         // Start superadmin
         $superAdmin = User::create([
-            'first_name'        => 'Admin',
-            'last_name'         => 'User',
-            'email'             => 'admin@yourwebsite.com',
+            'first_name'        => 'Super',
+            'last_name'         => 'Admin',
+            'email'             => 'superadmin@admin.com',
             'permissions'       => $permissions,
             'password'          => bcrypt(123456),
             'newsletter_enable' => '0',
@@ -34,6 +34,22 @@ class UserTableSeeder extends Seeder
         $activation = Activation::create($superAdmin);
         Activation::complete($superAdmin, $activation->code);
         $superAdminRole->users()->attach($superAdmin);
+
+        if (strtolower(\Config::get('app.demo_mode')) == 'yes'):
+            // Start superadmin
+            $demoAdmin = User::create([
+                'first_name'        => 'Admin',
+                'last_name'         => 'Admin',
+                'email'             => 'admin@admin.com',
+                'permissions'       => $permissions,
+                'password'          => bcrypt(123456),
+                'newsletter_enable' => '0',
+            ]);
+
+            $activation = Activation::create($demoAdmin);
+            Activation::complete($demoAdmin, $activation->code);
+            $demoAdminRole->users()->attach($demoAdmin);
+        endif;
     }
 
 }

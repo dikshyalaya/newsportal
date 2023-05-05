@@ -66,7 +66,7 @@
                                         <th>{{ __('language') }}</th>
                                         <th>{{ __('post_type') }}</th>
                                         <th>{{ __('category') }}</th>
-                                        <th>{{ __('post_by') }}</th>
+                                        <th></th>
                                         <th>{{ __('visibility') }}</th>
                                         <th>{{ __('order') }}</th>
                                         <th>{{ __('view') }}</th>
@@ -170,7 +170,7 @@
                                 </div>
                                 <div class="col-12 col-sm-6 text-right">
                                     <div class="table-info-pagination float-right">
-                                        {!! $posts->render() !!}
+                                        {!! $posts->onEachSide(1)->links() !!}
 
                                     </div>
                                 </div>

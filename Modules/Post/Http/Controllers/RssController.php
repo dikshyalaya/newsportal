@@ -2,25 +2,24 @@
 
 namespace Modules\Post\Http\Controllers;
 
-use Aws\S3\Exception\S3Exception as S3;
+use Sentinel;
+use Validator;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
-use Illuminate\Routing\Controller;
-use Illuminate\Support\Facades\Cache;
-use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Storage;
-use Modules\Common\Entities\Cron;
-use Modules\Gallery\Entities\Image as galleryImage;
-use Modules\Language\Entities\Language;
-use Modules\Post\Entities\Category;
 use Modules\Post\Entities\Post;
+use Modules\Common\Entities\Cron;
+use Illuminate\Routing\Controller;
 use Modules\Post\Entities\RssFeed;
-
-use LaravelLocalization;
-use Validator;
-use Image;
-use Sentinel;
+use Illuminate\Support\Facades\Log;
+use Modules\Post\Entities\Category;
+use Illuminate\Support\Facades\Cache;
+use Intervention\Image\Facades\Image;
+use Modules\Post\Entities\SubCategory;
+use Aws\S3\Exception\S3Exception as S3;
+use Illuminate\Support\Facades\Storage;
+use Modules\Language\Entities\Language;
+use Modules\Gallery\Entities\Image as galleryImage;
 
 class RssController extends Controller
 {
@@ -30,9 +29,9 @@ class RssController extends Controller
      */
     public function index()
     {
-        $categories       = Category::with('childrenRecursive')->where('parent_id', 0)->get();
+        $categories     = Category::all();
         $activeLang     = Language::where('status', 'active')->orderBy('name', 'ASC')->get();
-        $feeds          = RssFeed::orderBy('id','desc')->with('category')->paginate('15');
+        $feeds          = RssFeed::orderBy('id','desc')->with('category','subCategory')->paginate('15');
 
         return view('post::rss_feeds',compact('activeLang','categories','feeds'));
     }
@@ -43,11 +42,10 @@ class RssController extends Controller
      */
     public function importRss()
     {
-       
-       $categories       = Category::with('childrenRecursive')->where('parent_id', 0)->get();
-       
+        $categories     = Category::where('language', \App::getLocale() ?? settingHelper('default_language'))->get();
+        $subCategories  = SubCategory::all();
         $activeLang     = Language::where('status', 'active')->orderBy('name', 'ASC')->get();
-        return view('post::import_rss', compact('categories','activeLang'));
+        return view('post::import_rss', compact('categories','subCategories','activeLang'));
     }
 
     /**
@@ -57,7 +55,9 @@ class RssController extends Controller
      */
     public function saveNewRss(Request $request)
     {
-        
+        if (strtolower(\Config::get('app.demo_mode')) == 'yes'):
+            return redirect()->back()->with('error', __('You are not allowed to add/modify in demo mode.'));
+        endif;
 //        dd($request->all());
 
         Validator::make($request->all(), [
@@ -74,8 +74,7 @@ class RssController extends Controller
             $rssFeed->name          = $request->name;
             $rssFeed->feed_url      = $request->feed_url;
             $rssFeed->language      = $request->language;
-            $rssFeed->category_id   = $request->category_id ;
-           
+            $rssFeed->category_id   = $request->category_id ;            
             $rssFeed->post_limit        = $request->post_limit;
             $rssFeed->auto_update       = $request->auto_update;
             $rssFeed->show_read_more    = $request->show_read_more;
@@ -88,6 +87,7 @@ class RssController extends Controller
             $rssFeed->layout            = $request->layout;
 
             $rssFeed->save();
+           
 
             return redirect()->back()->with('success',__('successfully_added'));
         }
@@ -106,9 +106,8 @@ class RssController extends Controller
     {
         $activeLang     = Language::where('status', 'active')->orderBy('name', 'ASC')->get();
         $feed           = RssFeed::findOrfail($id);
-        $categories       = Category::with('childrenRecursive')->where('parent_id', 0)->get();
-
-       
+        $categories     = Category::where('language',$feed->language)->get();
+        
         return view('post::edit_rss',compact('feed','activeLang','categories'));
     }
 
@@ -120,7 +119,9 @@ class RssController extends Controller
      */
     public function updateRss(Request $request, $id)
     {
-        
+        if (strtolower(\Config::get('app.demo_mode')) == 'yes'):
+            return redirect()->back()->with('error', __('You are not allowed to add/modify in demo mode.'));
+        endif;
         Validator::make($request->all(), [
             'name'              => 'required|min:2',
             'feed_url'          => 'required',
@@ -135,8 +136,7 @@ class RssController extends Controller
             $rssFeed->name          = $request->name;
             $rssFeed->feed_url      = $request->feed_url;
             $rssFeed->language      = $request->language;
-            $rssFeed->category_id   = $request->category_id ;
-            
+            $rssFeed->category_id   = $request->category_id ;           
             $rssFeed->post_limit        = $request->post_limit;
             $rssFeed->auto_update       = $request->auto_update;
             $rssFeed->show_read_more    = $request->show_read_more;
@@ -164,22 +164,24 @@ class RssController extends Controller
      */
     public function filter(Request $request)
     {
-        $categories       = Category::with('childrenRecursive')->where('parent_id', 0)->get();
+        $categories     = Category::all();
         $activeLang     = Language::where('status', 'active')->orderBy('name', 'ASC')->get();
-        $feeds          = RssFeed::where('language', 'like', '%' . $request->language .'%')->where('name','like','%'.$request->search_key.'%')->orderBy('id','desc')->with('category')->paginate('15');
+        $feeds          = RssFeed::where('language', 'like', '%' . $request->language .'%')->where('name','like','%'.$request->search_key.'%')->orderBy('id','desc')->with('category','subCategory')->paginate('15');
 
         return view('post::search_rss_feeds',compact('activeLang','categories','feeds'));
     }
 
     public function manualImport($id){
-        
+        if (strtolower(\Config::get('app.demo_mode')) == 'yes'):
+            return redirect()->back()->with('error', __('You are not allowed to add/modify in demo mode.'));
+        endif;
         $feed = RssFeed::findOrfail($id);
 
         $invalidUrl = false;
         if(@simplexml_load_file($feed->feed_url)):
             $feeds = simplexml_load_file($feed->feed_url, null, LIBXML_NOCDATA);
             $namespaces = $feeds->getNamespaces(true);
-
+      
             if(!empty($feeds)):
 
                 $i=0;
@@ -187,7 +189,7 @@ class RssController extends Controller
                     $post = new Post();
 
                     $hasAlready = Post::where('title',$item->title)->orwhere('slug', $this->make_slug($item->title))->first();
-
+                    
                     if (!empty($hasAlready)){
                         continue;
                     }
@@ -211,8 +213,7 @@ class RssController extends Controller
                     endif;
 
                     $post->language         = $feed->language;
-                    $post->category_id      = $feed->category_id;
-                  
+                   
                     $post->layout           = $feed->layout ;
 
                     if($feed->status == 2) :
@@ -233,10 +234,14 @@ class RssController extends Controller
                     $post->meta_description = $feed->meta_description ;
 
                     if(!empty($this->getImg($item , $namespaces))):
+                        
                         if(preg_match('/\.(jpg|png|jpeg|PNG|JPEG|JPG)$/', $this->getImg($item , $namespaces))):
                             $post->post_type        = 'article' ;
                             $post->image_id = $this->imageUpload($this->character_convert($this->getImg($item , $namespaces)));
                         elseif(preg_match('/(jpg|png|jpeg|PNG|JPEG|JPG)$/', $this->getType($item))):
+                            $post->post_type        = 'article' ;
+                            $post->image_id = $this->imageUpload($this->character_convert($this->getImg($item , $namespaces)) ,$this->getType($item));
+                        elseif(preg_match('/(width|height)/', $this->getImg($item , $namespaces))):
                             $post->post_type        = 'article' ;
                             $post->image_id = $this->imageUpload($this->character_convert($this->getImg($item , $namespaces)) ,$this->getType($item));
                         elseif(preg_match('/\.(mp4|3gp|webm)$/', $this->getImg($item , $namespaces))):
@@ -245,12 +250,14 @@ class RssController extends Controller
                             $post->video_url = $this->character_convert($this->getImg($item , $namespaces));
                         else:
                             $post->post_type        = 'article' ;
+                            $post->image_id = $this->imageUpload($this->character_convert($this->getImg($item , $namespaces)) ,$this->getType($item));
                         endif;
                     else:
                         $post->post_type        = 'article' ;
                     endif;
 
                     $post->save();
+                    $post->categories()->attach($feed->category_id);
                     $i++;
                 endforeach;
                 return redirect()->back()->with('success',__('successfully_updated'));
@@ -400,7 +407,7 @@ class RssController extends Controller
                     return Response()->json($data);
                 }
             elseif (settingHelper('default_storage') == 'local'):
-                Image::make($requestImage)->fit(730, 400)->save($ogImageUrl);
+                Image::make($requestImage)->fit(730, 400)->save($originalImageUrl);
 
 
                 if ($fileType == 'jpeg' or $fileType == 'jpg' or $fileType == 'JPEG' or $fileType == 'JPG'):
@@ -424,6 +431,16 @@ class RssController extends Controller
                     Image::make(imagecreatefrompng($requestImage))->fit(350, 190)->save($mediumImageUrlTwo, 80);
                     Image::make(imagecreatefrompng($requestImage))->fit(255, 175)->save($mediumImageUrlThree, 80);
                     Image::make(imagecreatefrompng($requestImage))->fit(123, 83)->save($smallImageUrl, 80);
+                else:
+                    Image::make(imagecreatefromjpeg($requestImage))->save($originalImageUrl, 80);
+
+                    Image::make(imagecreatefromjpeg($requestImage))->fit(100, 100)->save($thumbnailImageUrl, 80);
+                    Image::make(imagecreatefromjpeg($requestImage))->fit(1080, 1000)->save($bigImageUrl, 80);
+                    Image::make(imagecreatefromjpeg($requestImage))->fit(730, 400)->save($bigImageUrlTwo, 80);
+                    Image::make(imagecreatefromjpeg($requestImage))->fit(358, 215)->save($mediumImageUrl, 80);
+                    Image::make(imagecreatefromjpeg($requestImage))->fit(350, 190)->save($mediumImageUrlTwo, 80);
+                    Image::make(imagecreatefromjpeg($requestImage))->fit(255, 175)->save($mediumImageUrlThree, 80);
+                    Image::make(imagecreatefromjpeg($requestImage))->fit(123, 83)->save($smallImageUrl, 80);
                 endif;
             endif;
 
@@ -443,6 +460,7 @@ class RssController extends Controller
 
             return $image->id;
         } catch (\Exception $e) {
+            dd($e->getMessage());
             Log::error($e->getMessage());
             return null;
         }

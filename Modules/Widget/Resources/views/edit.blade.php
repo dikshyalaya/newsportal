@@ -56,7 +56,7 @@
                             </div>
                         </div>
 
-                        <div class="col-sm-12">
+                        <div class="col-sm-12 d-none">
                             <div class="form-group">
                                 <label for="language">{{ __('language') }}</label>
                                 <select class="form-control" name="language" id="language">

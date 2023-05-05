@@ -95,7 +95,7 @@ show
                                     <div class="col-12 {{ $page->page_type==1? '':'d-none' }}" id="description">
                                         <div class="form-group">
                                             <label for="content" class="col-form-label">{{ __('description') }}</label>
-                                            <textarea name="description" id="content" class="form-control post-content">{!! html_entity_decode($page->description) !!}</textarea>
+                                            <textarea required name="description" id="content" class="form-control post-content">{!! html_entity_decode($page->description) !!}</textarea>
                                         </div>
                                     </div>
                                 </div>
@@ -381,4 +381,15 @@ show
         <!-- page info end-->
     </div>
 </div>
+@endsection
+
+
+@section('script')
+<script type="text/javascript">
+    $(document).ready(function(){
+        tinyMceEditor.init("textarea.post-content");
+        
+
+    });
+</script>
 @endsection

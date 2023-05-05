@@ -58,6 +58,17 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Mobile Mode
+    |--------------------------------------------------------------------------
+    |
+    | Is the admin panel is only use for mobile. true for only moible mode and false
+    | for web and mobile application.
+    |
+    */
+    'mobile_mode' => 'off',
+
+    /*
+    |--------------------------------------------------------------------------
     | Application Timezone
     |--------------------------------------------------------------------------
     |
@@ -170,7 +181,6 @@ return [
          * Package Service Providers...
          */
         Intervention\Image\ImageServiceProvider::class,
-        Mcamara\LaravelLocalization\LaravelLocalizationServiceProvider::class,
         browner12\helpers\HelperServiceProvider::class,
         Camroncade\Timezone\TimezoneServiceProvider::class,
         'Barryvdh\TranslationManager\ManagerServiceProvider',
@@ -240,7 +250,6 @@ return [
         'URL'       => Illuminate\Support\Facades\URL::class,
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View'      => Illuminate\Support\Facades\View::class,
-        'LaravelLocalization' => Mcamara\LaravelLocalization\Facades\LaravelLocalization::class,
         'Image'     => Intervention\Image\Facades\Image::class,
         'JWTAuth'   => Tymon\JWTAuth\Facades\JWTAuth::class,
         'JWTFactory'=> Tymon\JWTAuth\Facades\JWTFactory::class,

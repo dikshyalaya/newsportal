@@ -1,6 +1,6 @@
 @extends('common::layouts.master')
 
-@section('newsletter-aria-expanded')
+@section('settings')
     aria-expanded="true"
 @endsection
 @section('s-show')
@@ -9,8 +9,7 @@
 @section('email_temp')
     active
 @endsection
-
-@section('newsletter_active')
+@section('settings_active')
     active
 @endsection
 
@@ -57,7 +56,8 @@
                                 <table class="table table-bordered table-striped">
                                     <thead>
                                     <tr role="row">
-                                        <th>#</th>                                       
+                                        <th>#</th>
+                                        <th>{{ __('language') }}</th>
                                         <th>{{ __('email_group') }}</th>
                                         <th>{{ __('subject') }}</th>
                                         <th>{{ __('options') }}</th>
@@ -68,7 +68,7 @@
                                         @foreach ($emailTemplates as $template)
                                             <tr role="row" class="odd">
                                                 <td class="sorting_1">{{ $template->id }}</td>
-                                               
+                                                <td class="sorting_1">{{ $template->lang }}</td>
                                                 <td>{{ $template->email_group }}</td>
                                                 <td>{{ $template->subject }}</td>
                                                 <td>

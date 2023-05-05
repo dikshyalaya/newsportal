@@ -2,15 +2,17 @@
 
 namespace App\Http\Controllers\Site;
 
-use App\Http\Controllers\Controller;
-use Cartalyst\Sentinel\Laravel\Facades\Sentinel;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Cache;
 use Modules\Post\Entities\Comment;
 use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\URL;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Cookie;
+use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Redirect;
-use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
-use Session;
+use Illuminate\Support\Facades\Response;
+use Cartalyst\Sentinel\Laravel\Facades\Sentinel;
 
 class CommentController extends Controller
 {
@@ -56,12 +58,11 @@ class CommentController extends Controller
 
         App::setLocale($lang);
         Session::put('locale', $lang);
-        LaravelLocalization::setLocale($lang);
+        getLocale($lang);
 
         Cache::Flush();
 
-        $url                = \LaravelLocalization::getLocalizedURL(App::getLocale(), \URL::previous());
-
+        $url                = URL::to('/').'/'.App::getLocale();
         return response()->json($url);
     }
 

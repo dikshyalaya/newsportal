@@ -14,7 +14,9 @@ use Validator;
 class MenuController extends Controller
 {
     public function addMenu(Request $request){
-        
+        if (strtolower(\Config::get('app.demo_mode')) == 'yes'):
+            return redirect()->back()->with('error', 'You are not allowed to add/modify in demo mode.');
+        endif;
         Validator::make($request->all(), [
             'title'     => 'required|min:2|max:30'
         ])->validate();
@@ -33,7 +35,9 @@ class MenuController extends Controller
     }
 
     public function updateMenu(Request $request){
-        
+        if (strtolower(\Config::get('app.demo_mode')) == 'yes'):
+            return redirect()->back()->with('error', 'You are not allowed to add/modify in demo mode.');
+        endif;
         Validator::make($request->all(), [
             'title'     => 'required|min:2|max:30',
             'menu_id'   => 'required'
@@ -53,7 +57,9 @@ class MenuController extends Controller
     }
 
     public function updateMenuLocation(Request $request){
-        
+        if (strtolower(\Config::get('app.demo_mode')) == 'yes'):
+            return redirect()->back()->with('error', 'You are not allowed to add/modify in demo mode.');
+        endif;
         $total_item=count($request->menu_location_id);
 
         for($i=0;$i<$total_item;$i++):

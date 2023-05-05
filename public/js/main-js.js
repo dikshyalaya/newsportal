@@ -18,7 +18,6 @@
 
     if ($(".menu-list").length) {
         $('.menu-list').slimScroll({
-            color:"#686868"
 
         });
     }

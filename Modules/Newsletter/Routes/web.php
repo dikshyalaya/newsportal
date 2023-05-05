@@ -26,8 +26,8 @@
 
 Route::group(
     [
-        'prefix' => LaravelLocalization::setLocale(),
-        'middleware' => ['localeSessionRedirect', 'localizationRedirect', 'localeViewPath', 'isInstalledCheck']
+        'prefix' => getlocale(),
+        'middleware' => ['localeSessionRedirect','localeViewPath', 'isInstalledCheck']
     ],
     function () {
         Route::prefix('newsletter')->group(function() {

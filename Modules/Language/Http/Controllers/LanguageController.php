@@ -14,7 +14,6 @@ use File;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Lang;
 use Illuminate\Support\Facades\Validator;
-use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 use Modules\Language\Entities\FlagIcon;
 Use Illuminate\Support\Facades\Cache;
 use Session;
@@ -86,7 +85,13 @@ class LanguageController extends Controller
     //add new language
     public function addNewLanguage(Request $request)
     {
-        
+        if (strtolower(\Config::get('app.demo_mode')) == 'yes'):
+            $data['status']     = "error";
+            $data['message']    = __('You are not allowed to add/modify in demo mode.');
+
+            echo json_encode($data);
+            exit();
+        endif;
         Validator::make($request->all(), [
             'name'              => 'required',
             'status'            => 'required',
@@ -172,7 +177,12 @@ class LanguageController extends Controller
     //update language info
     public function updateLanguageInfo(Request $request, $id)
     {
-        
+        if (strtolower(\Config::get('app.demo_mode')) == 'yes'):
+            $data['status']     = "error";
+            $data['message']    = __('You are not allowed to add/modify in demo mode.');
+
+            echo json_encode($data);
+        endif;
         Validator::make($request->all(), [
             'name'              => 'required',
             'status'            => 'required',
@@ -235,7 +245,9 @@ class LanguageController extends Controller
     public function updatePhrase(Request $request, $code)
     {
 
-        
+        if (strtolower(\Config::get('app.demo_mode')) == 'yes'):
+            return redirect()->route('language-settings')->with('error', __('You are not allowed to add/modify in demo mode.'));
+        endif;
         ini_set('max_execution_time', 600); //600 seconds
 
         $req_data       = $request->all();
@@ -294,7 +306,13 @@ class LanguageController extends Controller
     //delete language
     public function deleteLanguage(Request $request)
     {
-        
+        if (strtolower(\Config::get('app.demo_mode')) == 'yes'):
+            $data['status']     = "error";
+            $data['message']    = __('You are not allowed to add/modify in demo mode.');
+
+            echo json_encode($data);
+            exit();
+        endif;
         $id = $request->id;
 
         if ($id == 1) :
@@ -374,7 +392,9 @@ class LanguageController extends Controller
     //update default message
     public function updateDefaultMessages(Request $request, $code)
     {
-        
+        if (strtolower(\Config::get('app.demo_mode')) == 'yes'):
+            return redirect()->route('language-settings')->with('error', __('You are not allowed to add/modify in demo mode.'));
+        endif;
         $req_data       = $request->all();
         $data           = array_change_key_case(array_slice($req_data, 1));
 

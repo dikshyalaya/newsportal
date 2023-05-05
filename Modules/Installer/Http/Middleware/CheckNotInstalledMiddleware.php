@@ -4,8 +4,9 @@ namespace Modules\Installer\Http\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
-use DB;
+
 
 class CheckNotInstalledMiddleware
 {
@@ -19,19 +20,15 @@ class CheckNotInstalledMiddleware
     public function handle(Request $request, Closure $next)
     {
         try {
-            \DB::connection()->getPdo();
-              
+            DB::connection()->getPdo();
         } catch (\Exception $e) {
-
             return response()->view('installer::index');
         }
 
-
-        if (Schema::hasTable('settings') && Schema::hasTable('users') && \Config::get('app.app_installed') == 'yes') {
-            return redirect('/');
-        } 
-        return $next($request);
-
+        if (Schema::hasTable('settings') && Schema::hasTable('users') && isInstalled()) {
+            return redirect()->route('home');
+        }
+        return response()->view('installer::index');
         
     }
 }

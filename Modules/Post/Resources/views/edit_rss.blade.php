@@ -64,102 +64,7 @@ active
                     </div>
                 </div>
 
-                <!-- SEO section start -->
-                <div class="card">
-                    <div class="card-header">
-                        <h4 class="card-title">{{ __('seo_details') }}</h4>
-                        <div class="card-toolbox"></div>
-                    </div>
-                    <div class="card-body">
-                        <div class="col-sm-12">
-                            <div class="form-group">
-                                <label for="post-keywords" class="col-form-label"><b>{{ __('keywords') }}</b>
-                                    ({{ __('meta_tag') }})</label>
-                                <input id="post-keywords" name="meta_keywords" value="{{ $feed->meta_keywords }}" type="text" class="form-control">
-                            </div>
-                        </div>
-                        <div class="col-sm-12">
-                            <div class="form-group">
-                                <label for="post_tags" class="col-form-label">{{ __('tags') }}</label>
-                                <input id="post_tags" name="tags" type="text" value="{{ $feed->tags }}" data-role="tagsinput" class="form-control" />
-                            </div>
-                        </div>
-                        <div class="col-sm-12">
-                            <div class="form-group">
-                                <label for="post_desc"><b>{{ __('description') }}</b> ({{ __('meta_tag') }}
-                                    )</label>
-                                <textarea class="form-control" id="meta_description" name="meta_description" rows="3">{{ $feed->meta_description }}</textarea>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- SEO section end -->
-            </div>
 
-
-            <div class="col-4">
-
-                <!-- right sidebar start -->
-                <div class="card">
-                    <div class="card-header">
-                        <h4 class="card-title">{{ __('publish') }}*</h4>
-                        <div class="card-toolbox"></div>
-                    </div>
-                    <div class="card-body">
-                        <div class="col-sm-12">
-                            <div class="form-group">
-                                <select class="form-control" id="post_status" name="status" required>
-                                    <option @if($feed->status==1 && $feed->scheduled==0) selected
-                                        @endif value="1">{{ __('published') }}</option>
-                                    <option @if($feed->status==0 && $feed->scheduled==0) selected
-                                        @endif value="0">{{ __('draft') }}</option>
-                                    <option @if($feed->status==0 && $feed->scheduled==1) selected
-                                        @endif value="2">{{ __('scheduled') }}</option>
-                                </select>
-                            </div>
-                        </div>
-
-                        <div class="col-sm-12 divScheduleDate" @if($feed->scheduled==1) @else id="display-nothing" @endif>
-                            <label for="scheduled_date">{{ __('schedule_date') }}</label>
-                            <div class="input-group">
-                                <label class="input-group-text" for="scheduled_date"><i class="fa fa-calendar-alt"></i></label>
-                                <input type="text" class="form-control date" id="scheduled_date" value="{{ Carbon\Carbon::parse($feed->scheduled_date)->format('m/d/Y g:i A') }}" name="scheduled_date" />
-                            </div>
-                        </div>
-                        <div class="col-sm-12">
-                            <div class="form-group">
-                               
-                                <button type="submit" name="btnSubmit" class="btn btn-primary pull-right"><i class="m-r-10 mdi mdi-content-save-all"></i>{{ __('update_rss') }}
-                                </button>
-                                
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-
-                <div class="card">
-                    <div class="card-header">
-                        <h4 class="card-title">{{ __('category') }}*</h4>
-                        <div class="card-toolbox"></div>
-                    </div>
-                    <div class="card-body">
-                        <div class="form-group d-none">
-                            <label for="post_language">{{ __('select_language') }}*</label>
-                            <select class="form-control dynamic-category" id="post_language" name="language" data-dependent="category_id">
-                                @foreach ($activeLang as $lang)
-                                <option @if($feed->language==$lang->code) Selected
-                                    @endif value="{{ $lang->code }}">{{ $lang->name }}
-                                </option>
-                                @endforeach
-                            </select>
-                        </div>
-
-                        <div class="form-group">
-                            @include('post::post_category_render_radio', ['categories'=>$categories, 'depth'=>0, 'selected_categories'=>$feed->pluck("category_id")->toArray()])
-                        </div>
-                    </div>
-                </div>
 
                 <div class="card">
                     <div class="card-header">
@@ -280,7 +185,106 @@ active
                             </div>
                         </div>
                     </div>
+                </div>                
+
+                <!-- SEO section start -->
+                <div class="card">
+                    <div class="card-header">
+                        <h4 class="card-title">{{ __('seo_details') }}</h4>
+                        <div class="card-toolbox"></div>
+                    </div>
+                    <div class="card-body">
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <label for="post-keywords" class="col-form-label"><b>{{ __('keywords') }}</b>
+                                    ({{ __('meta_tag') }})</label>
+                                <input id="post-keywords" name="meta_keywords" value="{{ $feed->meta_keywords }}" type="text" class="form-control">
+                            </div>
+                        </div>
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <label for="post_tags" class="col-form-label">{{ __('tags') }}</label>
+                                <input id="post_tags" name="tags" type="text" value="{{ $feed->tags }}" data-role="tagsinput" class="form-control" />
+                            </div>
+                        </div>
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <label for="post_desc"><b>{{ __('description') }}</b> ({{ __('meta_tag') }}
+                                    )</label>
+                                <textarea class="form-control" id="meta_description" name="meta_description" rows="3">{{ $feed->meta_description }}</textarea>
+                            </div>
+                        </div>
+                    </div>
                 </div>
+                <!-- SEO section end -->
+            </div>
+
+
+            <div class="col-4">
+
+                <!-- right sidebar start -->
+                <div class="card">
+                    <div class="card-header">
+                        <h4 class="card-title">{{ __('publish') }}*</h4>
+                        <div class="card-toolbox"></div>
+                    </div>
+                    <div class="card-body">
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <select class="form-control" id="post_status" name="status" required>
+                                    <option @if($feed->status==1 && $feed->scheduled==0) selected
+                                        @endif value="1">{{ __('published') }}</option>
+                                    <option @if($feed->status==0 && $feed->scheduled==0) selected
+                                        @endif value="0">{{ __('draft') }}</option>
+                                    <option @if($feed->status==0 && $feed->scheduled==1) selected
+                                        @endif value="2">{{ __('scheduled') }}</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-12 divScheduleDate" @if($feed->scheduled==1) @else id="display-nothing" @endif>
+                            <label for="scheduled_date">{{ __('schedule_date') }}</label>
+                            <div class="input-group">
+                                <label class="input-group-text" for="scheduled_date"><i class="fa fa-calendar-alt"></i></label>
+                                <input type="text" class="form-control date" id="scheduled_date" value="{{ Carbon\Carbon::parse($feed->scheduled_date)->format('m/d/Y g:i A') }}" name="scheduled_date" />
+                            </div>
+                        </div>
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                               
+                                <button type="submit" name="btnSubmit" class="btn btn-primary pull-right"><i class="m-r-10 mdi mdi-content-save-all"></i>{{ __('update_rss') }}
+                                </button>
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="card">
+                    <div class="card-header">
+                        <h4 class="card-title">{{ __('category') }}*</h4>
+                        <div class="card-toolbox"></div>
+                    </div>
+                    <div class="card-body">
+                        <div class="form-group d-none">
+                            <label for="post_language">{{ __('select_language') }}*</label>
+                            <select class="form-control dynamic-category" id="post_language" name="language" data-dependent="category_id">
+                                @foreach ($activeLang as $lang)
+                                <option @if($feed->language==$lang->code) Selected
+                                    @endif value="{{ $lang->code }}">{{ $lang->name }}
+                                </option>
+                                @endforeach
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            @include('post::post_category_render_radio', ['categories'=>$categories, 'depth'=>0, 'selected_categories'=>$feed->pluck("category_id")->toArray()])
+                        </div>
+                    </div>
+                </div>
+
+
 
 
 

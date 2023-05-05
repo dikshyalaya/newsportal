@@ -3,14 +3,14 @@
 namespace Modules\User\Providers;
 
 use Illuminate\Support\ServiceProvider;
-use Illuminate\Database\Eloquent\Factory;
+
 
 class UserServiceProvider extends ServiceProvider
 {
     protected $middleware = [
 
         'loginCheck'        => \Modules\User\Http\Middleware\LoginCheckMiddleware::class,
-        'permissionCheck'   => \Modules\User\Http\Middleware\PermissionCheckMiddleware::class,
+        'permissionCheck'   => \Modules\User\Http\Middleware\permissionCheckMiddleware::class,
 
     ];
 
@@ -24,7 +24,7 @@ class UserServiceProvider extends ServiceProvider
         $this->registerTranslations();
         $this->registerConfig();
         $this->registerViews();
-        $this->registerFactories();
+        
         $this->registerMiddleware();
         $this->loadMigrationsFrom(__DIR__ . '/../Database/Migrations');
     }

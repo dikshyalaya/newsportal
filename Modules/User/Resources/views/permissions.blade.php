@@ -131,7 +131,7 @@
                                 </div>
                                 <div class="col-12 col-sm-6 text-right">
                                     <div class="table-info-pagination float-right">
-                                        {!! $permissions->render() !!}
+                                        {!! $permissions->onEachSide(1)->links() !!}
 
                                     </div>
                                 </div>

@@ -19,7 +19,7 @@
                         <p>{{ $author->about_us }}</p>
                         <div class="entry-meta">
                             <ul class="global-list">
-                                <li><a href="#">{{ __('member_since') }} {{ $author->created_at->format('F j, Y') }}</a></li>
+                                <li><a href="#">{{ __('member_since') }} {{ $author->created_at->translatedFormat('F j, Y') }}</a></li>
                                 @if(@$author->permissions['email_show'] == 1)
                                     <li><i class="fa fa-envelope-o"></i><a href="mailto: {{ $author->email }}">{{ $author->email }}</a></li>
                                 @endif
@@ -89,8 +89,8 @@
                                                 <h3 class="entry-title"><a href="{{ route('article.detail', ['id' => $post->slug]) }}"><p>{!! \Illuminate\Support\Str::limit($post->title, 50) !!}</p></a></h3>
                                                 <div class="entry-meta mb-2">
                                                     <ul class="global-list">
-                                                        <li><a href="{{ route('site.author',['id' => $post->user->id]) }}">{{ data_get($post, 'user.first_name') }}</a></li>
-                                                        <li><a href="{{route('article.date', date('Y-m-d', strtotime($post->updated_at)))}}">{{ $post->updated_at->format('F j, Y') }}</a></li>
+                                                        <li> <a href="{{ route('site.author',['id' => $post->user->id]) }}">{{ data_get($post, 'user.first_name') }}</a></li>
+                                                        <li><a href="{{route('article.date', date('Y-m-d', strtotime($post->updated_at)))}}">{{ Carbon\Carbon::parse($post->updated_at)->translatedFormat('F j, Y') }}</a></li>
                                                     </ul>
                                                 </div><!-- /.entry-meta -->
                                                 <p> {!! strip_tags(\Illuminate\Support\Str::limit($post->content, 130)) !!}</p>

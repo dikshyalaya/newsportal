@@ -6,7 +6,6 @@ use Illuminate\Support\Facades\Cache;
 use Illuminate\View\View;
 use Modules\Post\Entities\Post;
 use Sentinel;
-use LaravelLocalization;
 
 class LastpostComposer
 {
@@ -23,7 +22,7 @@ class LastpostComposer
                     ->orderBy('id', 'desc')
                     ->where('visibility', 1)
                     ->where('status', 1)
-                    ->where('language', LaravelLocalization::setLocale() ?? settingHelper('default_language'))->first();
+                    ->where('language', \App::getLocale() ?? settingHelper('default_language'))->first();
             });
         else:
             $lastPost    = Cache::rememberForever('lastPost', function (){
@@ -31,7 +30,7 @@ class LastpostComposer
                     ->orderBy('id', 'desc')
                     ->where('visibility', 1)
                     ->where('status', 1)
-                    ->where('language', LaravelLocalization::setLocale() ?? settingHelper('default_language'))
+                    ->where('language', \App::getLocale() ?? settingHelper('default_language'))
                     ->when(Sentinel::check()== false, function ($query) {
                         $query->where('auth_required',0);
                     })->first();

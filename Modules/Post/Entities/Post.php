@@ -6,16 +6,10 @@ use App\NewsItemFeed;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\Feed\Feedable;
 use Spatie\Feed\FeedItem;
-use LaravelLocalization;
 
 class Post extends Model implements Feedable
 {
     protected $fillable = ['title'];
-
-    public function categories()
-    {
-        return $this->belongsToMany('Modules\Post\Entities\Category');
-    }
 
     public function image(){
         //   return $this->hasOne(Media::class ,'id', 'avatar_id');
@@ -29,11 +23,19 @@ class Post extends Model implements Feedable
     }
 
     public function category(){
-        return $this->belongsTo('Modules\Post\Entities\Category');
+        return $this->belongsToMany('Modules\Post\Entities\Category','category_post');
+    }    
+
+    public function categories()
+    {
+            //return $this->belongsToMany(RelatedModel, pivot_table_name, foreign_key_of_current_model_in_pivot_table, foreign_key_of_other_model_in_pivot_table);
+            return $this->belongsToMany(
+                    'Modules\Post\Entities\Category',
+                    'category_post',
+                    'post_id',
+                    'category_id');
     }
-    public function subCategory(){
-        return $this->belongsTo('Modules\Post\Entities\SubCategory');
-    }
+   
     public function user(){
         return $this->belongsTo('Modules\User\Entities\User');
     }
@@ -65,7 +67,6 @@ class Post extends Model implements Feedable
 
     public function toFeedItem(): FeedItem
     {
-
         return FeedItem::create([
             'id'        => $this->id,
             'title'     => $this->title,
@@ -83,7 +84,7 @@ class Post extends Model implements Feedable
             ->where('visibility', 1)
             ->where('status',1)
             ->whereNotNull('image_id')
-            ->where('language', LaravelLocalization::setLocale() ?? settingHelper('default_language'))
+            ->where('language', \App::getLocale() ?? settingHelper('default_language'))
             ->orderBY('id', 'desc')
             ->limit(50)->get();
     }

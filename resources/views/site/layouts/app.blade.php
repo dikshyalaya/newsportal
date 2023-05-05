@@ -4,10 +4,14 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+
     @include('site.partials.seo_og')
+
     <title>{{settingHelper('seo_title')}}</title>
+
     {{-- CSS --}}
     <link rel="stylesheet" href="{{static_asset('site/css/bootstrap.min.css') }}" >
+
     <link rel="stylesheet" href="{{static_asset('site/css/font-awesome.min.css') }}" >
     <link rel="stylesheet" href="{{static_asset('site/css/icon.min.css') }}" >
     <link rel="stylesheet"  href="{{static_asset('site/css/magnific-popup.min.css') }}" >
@@ -15,8 +19,7 @@
     <link rel="stylesheet"  href="{{static_asset('site/css/slick.min.css') }}" >
     <link rel="stylesheet"  href="{{static_asset('site/css/structure.min.css') }}" >
     <link rel="stylesheet"  href="{{static_asset('site/css/main.css') }}" >
-    
-    @if($language->text_direction == "RTL")
+    @if(optional($language)->text_direction == "RTL")
         <link rel="stylesheet" href="{{static_asset('site/css/rtl.min.css') }}" >
     @endif
     <link rel="stylesheet"  href="{{static_asset('site/css/custom.css') }}" >
@@ -27,11 +30,15 @@
     <link rel="stylesheet"  href="https://fonts.googleapis.com/css2?family={{data_get(activeTheme(), 'options.fonts')}}:wght@400;500;600;700&display=swap" >
 
     {{-- icons --}}
-    <link rel="icon" href="{{static_asset(settingHelper('favicon')) }}">
-    <link rel="apple-touch-icon" sizes="144x144" href="{{static_asset('site/images/ico/apple-touch-icon-precomposed.png') }}">
-    <link rel="apple-touch-icon" sizes="114x114" href="{{static_asset('site/images/ico/apple-touch-icon-114-precomposed.png') }}">
-    <link rel="apple-touch-icon" sizes="72x72" href="{{static_asset('site/images/ico/apple-touch-icon-72-precomposed.png') }}">
-    <link rel="apple-touch-icon" sizes="57x57" href="{{static_asset('site/images/ico/apple-touch-icon-57-precomposed.png') }}">
+    <link  rel="icon" href="{{static_asset(settingHelper('favicon')) }}">
+    <link  rel="apple-touch-icon" sizes="144x144"
+          href="{{static_asset('site/images/ico/apple-touch-icon-precomposed.png') }}">
+    <link  rel="apple-touch-icon" sizes="114x114"
+          href="{{static_asset('site/images/ico/apple-touch-icon-114-precomposed.png') }}">
+    <link  rel="apple-touch-icon" sizes="72x72"
+          href="{{static_asset('site/images/ico/apple-touch-icon-72-precomposed.png') }}">
+    <link  rel="apple-touch-icon" sizes="57x57"
+          href="{{static_asset('site/images/ico/apple-touch-icon-57-precomposed.png') }}">
 
     @if(settingHelper('predefined_header')!=null)
         {!! base64_decode(settingHelper('predefined_header')) !!}
@@ -44,7 +51,9 @@
 
     {{-- icons --}}
 
+<!-- Template Developed By  -->
     @stack('style')
+
     <style type="text/css">
         :root {
             --primary-color: {{data_get(activeTheme(), 'options.primary_color')}};
@@ -62,18 +71,18 @@
         }
 
         gtag('js', new Date());
-        gtag('config', '{{ settingHelper("google_analytics_id") }}');
+        gtag('config', '{{ settingHelper('google_analytics_id') }}');
     </script>
 </head>
 {{-- dark class="sg-dark" --}}
 <body class="{{defaultModeCheck()}}">
-<!-- <div id="switch-mode" class="{{defaultModeCheck() == 'sg-dark'? 'active':''}}">
+<div id="switch-mode" class="{{defaultModeCheck() == 'sg-dark'? 'active':''}}">
     <div class="sm-text">{{__('dark_mode')}}</div>
     <div class="sm-button">
         <input type="hidden" id="url" value="{{url('/')}}">
         <span></span>
     </div>
-</div> -->
+</div>
 @if(settingHelper('preloader_option')==1)
     <div id="preloader">
         <img src="{{static_asset('site/images/')}}/preloader-2.gif" alt="Image" class="tr-preloader img-fluid">

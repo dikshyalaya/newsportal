@@ -25,7 +25,7 @@ active
 <div class="dashboard-ecommerce">
     <div class="container-fluid dashboard-content ">
         <!-- page info start-->
-        {!! Form::open(['route' => ['save-new-post'],'method' => 'post','enctype'=>'multipart/form-data']) !!}
+        {!! Form::open(['route' => ['save-new-post','article'],'method' => 'post','enctype'=>'multipart/form-data']) !!}
         <input type="hidden" id="images" value="{{ $countImage }}">
         <input type="hidden" id="videos" value="{{ $countVideo }}">
         <input type="hidden" id="imageCount" value="1" class="imageCount">
@@ -57,7 +57,7 @@ active
                     </div>
 
                     <!-- Main Content section start -->
-                    <div class="col-9 p-l-0">
+                    <div class="col-9 ">
 
                         <div class="card ">
                             <div class="card-header p-0">
@@ -96,7 +96,7 @@ active
 
                                             <div class="form-group">
                                                 <label for="post_content" class="col-form-label">{{ __('content') }}*</label>
-                                                <textarea name="content" class="form-control post-content" value="{{ old('content') }}" id="post_content" cols="25" rows="8"></textarea>
+                                                <textarea required name="content" class="form-control post-content"  id="post_content" cols="25" rows="8">{{ old('content') }}</textarea>
                                             </div>
                                         </div>
 
@@ -150,24 +150,7 @@ active
                                                                 <!-- <label>{{ __('code') }}</label> -->
                                                             </div>
                                                         </div>
-                                                        <div class="col-md-1 pr-0 text-center area">
-                                                            <div class="item content-item" onclick="addContent('twitter-embed')">
-                                                                <img src="{{static_asset('default-image/content-icon/twitter.png') }}">
-                                                                <!-- <label>{{ __('twitter') }}</label> -->
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-md-1 pr-0 text-center area">
-                                                            <div class="item content-item" onclick="addContent('vimeo-embed')">
-                                                                <img src="{{static_asset('default-image/content-icon/vimeo.png') }}">
-                                                                <!-- <label>{{ __('vimeo') }}</label> -->
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-md-1 pr-0 text-center area">
-                                                            <div class="item content-item" onclick="addContent('youtube-embed')">
-                                                                <img src="{{static_asset('default-image/content-icon/youtube.png') }}">
-                                                                <!-- <label>{{ __('youtube') }}</label> -->
-                                                            </div>
-                                                        </div>
+                                            
                                                     </div>
                                                 </div>
                                             </div>
@@ -280,6 +263,7 @@ active
                                 </div>
                                 <div class="col-12-">
                                     <div class="form-group">
+                                        <input type="text" style='display:none' name="selected_post_categories" required>
                                         @include('post::post_category_render_option', ['categories'=>$categories, 'depth'=>0, "selected_categories"=>[]])
                                     </div>
                                 </div>
@@ -553,7 +537,19 @@ active
 </script>
 <script type="text/javascript" src="{{static_asset('js/post.js') }}"></script>
 <script type="text/javascript" src="{{static_asset('js/tagsinput.js') }}"></script>
-<script>
+<script type="text/javascript">
+
+$(document).ready(function(){
+    tinyMceEditor.init("textarea.post-content");
+    $('.post-categories').click(function() {
+        checked = $("input[type=checkbox].post-categories:checked").length;
+        if(checked==0) checked="";
+        $("input[name=selected_post_categories]").val(checked);
+        console.log("check clicked "+ checked);
+    });
+
+});
+
     addContent = function(value) {
 
         var content_number = $("#content_number").val();
@@ -586,6 +582,9 @@ active
 
         });
     }
+
+ 
+     
 
     $(document).on("click", ".add-new-page .row_remove", function() {
         let element = $(this).parents('.add-new-page');

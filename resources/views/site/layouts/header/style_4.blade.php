@@ -9,14 +9,14 @@
                             <div class="sg-language">
                                 <select name="code" id="languges-changer">
                                     @foreach ($activeLang as $lang)
-                                        <option value="{{$lang->code}}" {{ LaravelLocalization::setLocale() == ""? ( settingHelper('default_language') == $lang->code? 'selected':'' ) : (LaravelLocalization::setLocale() == $lang->code ? 'selected':'') }}>{{ $lang->name }}</option>
+                                        <option value="{{$lang->code}}" {{ \App::getLocale() == ""? ( settingHelper('default_language') == $lang->code? 'selected':'' ) : (\App::getLocale() == $lang->code ? 'selected':'') }}>{{ $lang->name }}</option>
                                     @endforeach
                                 </select>
                             </div>
 
                         </div>
                         <div class="date">
-                            <span><i class="fa fa-calendar mr-2" aria-hidden="true"></i>{{date('l, d F Y')}}</span>
+                            <span><i class="fa fa-calendar mr-2" aria-hidden="true"></i>{{ Carbon\Carbon::parse(date('l, d F Y'))->translatedFormat('l, d F Y')}}</span>
                         </div>
                     </div>
 
@@ -52,7 +52,7 @@
                     </div>
                 </div>
                 <!-- /.left-contennt -->
-                <div class="right-content d-flex ">
+                <div class="right-content d-flex align-self-center">
                     @if(settingHelper('submit_news_status')==1)
                         <div class="d-flex">
                             <div class="submit-news d-none d-md-block">
@@ -78,7 +78,7 @@
                 <div class="ad-thumb">
                     @include('site.partials.ads', ['ads' => $headerWidgets])
                 </div>
-                <a class="navbar-brand " href="{{ route('home') }}"><img src="{{ static_asset(settingHelper('logo')) }}" alt="Logo" class="img-fluid"></a>
+                <a class="navbar-brand align-self-center" href="{{ route('home') }}"><img src="{{ static_asset(settingHelper('logo')) }}" alt="Logo" class="img-fluid"></a>
             </div>
         </div><!-- /.container -->
     </div><!-- /.header-bottom -->
@@ -163,7 +163,7 @@
                                                                                         <a href="{{ route('article.detail', ['id' => $item->slug]) }}"><p>{!!Str::limit( $item->title , 35)!!}</p></a>
                                                                                         <div class="entry-meta">
                                                                                             <ul class="global-list">
-                                                                                               <li><a href="{{ route('site.author',['id' => $item->user->id]) }}">{{$item->user->first_name}} </a> <a href="{{route('article.date', date('Y-m-d', strtotime($item->updated_at)))}}"> {{date('d F Y', strtotime($item->created_at))}}</a></li>
+                                                                                               <li> <a href="{{ route('site.author',['id' => $item->user->id]) }}">{{$item->user->first_name}} </a> <a href="{{route('article.date', date('Y-m-d', strtotime($item->updated_at)))}}"> {{Carbon\Carbon::parse($item->created_at)->translatedFormat('d F Y')}}</a></li>
                                                                                             </ul>
                                                                                         </div><!-- /.entry-meta -->
                                                                                     </div><!-- /.entry-content -->

@@ -43,7 +43,34 @@ class PagesTableSeeder extends Seeder
             "description" => htmlspecialchars($faker->realText(3000))
         ]);
 
-       
+        // arabic start
+        if (strtolower(\Config::get('app.demo_mode')) == 'yes'):
+            $faker = Faker::create('ar_JO');
+
+            Page::create([
+                "title"         =>'اتصل بنا',
+                "language"      => "ar",
+                "page_type"     => "2",
+                "slug"          => $this->make_slug("اتصل بنا"),
+                "template"      => "1",
+                "visibility"    => "1",
+                "show_title"    => "1",
+                "show_breadcrumb" => "1",
+                "description"   => htmlspecialchars($faker->realText(3000))
+            ]);
+
+            Page::create([
+                "title"         =>'معلومات عنا',
+                "language"      => "ar",
+                "page_type"     => "1",
+                "slug"          => $this->make_slug("معلومات عنا"),
+                "template"      => "1",
+                "visibility"    => "1",
+                "show_title"    => "1",
+                "show_breadcrumb" => "1",
+                "description" => htmlspecialchars($faker->realText(3000))
+            ]);
+        endif;
         Model::unguard();
 
         // $this->call("OthersTableSeeder");

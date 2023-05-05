@@ -81,7 +81,7 @@
                                 </div>
                                 <div class="col-sm-12 mt-4">
                                     <div class="row">
-                                        <div class="col-sm-9">
+                                        <div class="col-sm-7">
                                             <div class="form-group">
                                                 <label for="role-slug"
                                                        class="col-form-label"><b>{{ __('template_body') }}</b></label>
@@ -91,7 +91,7 @@
                                                 </textarea>
                                             </div>
                                         </div>
-                                        <div class="col-sm-3">
+                                        <div class="col-sm-5">
                                             <div class="form-group">
                                                 <label for="role-slug"
                                                        class="col-form-label"><b>{{ __('available_merge_fields') }}</b></label>

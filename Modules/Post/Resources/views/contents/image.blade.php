@@ -9,6 +9,13 @@
         <input type="hidden" value="{{ $content_count }}" id="content_count">
         <div class="row">
             <div class="col-md-4">
+            <div class="form-group">
+                    <!-- Large modal -->
+                    <center>
+                        <button type="button" id="btn_image_modal" class="btn btn-primary btn-image-modal" data-id="1" data-toggle="modal" data-target=".image-modal-lg">{{ __('add_image') }}</button>
+                        <input id="image_id_content" name="new_content[{{$content_count}}][image][image_id]" type="hidden" class="form-control image_id" value="{{isset($content)? $content['image'][0]['image_id']:''}}">
+                    </center>
+                </div>
                 <div class="form-group">
                     <div class="form-group text-center">
                         @if(isset($content) && $content['image'][0]['image_id'] != "")
@@ -25,13 +32,7 @@
                         @endif
                     </div>
                 </div>
-                <div class="form-group">
-                    <!-- Large modal -->
-                    <center>
-                        <button type="button" id="btn_image_modal" class="btn btn-primary btn-image-modal" data-id="1" data-toggle="modal" data-target=".image-modal-lg">{{ __('add_image') }}</button>
-                        <input id="image_id_content" name="new_content[{{$content_count}}][image][image_id]" type="hidden" class="form-control image_id" value="{{isset($content)? $content['image'][0]['image_id']:''}}">
-                    </center>
-                </div>
+                
             </div>
 
         </div>

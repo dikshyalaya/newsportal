@@ -15,7 +15,7 @@ if (!function_exists('DummyFunction')) {
     function sendMail($user, $code, $emailTemplateName, $password = '')
     {
         $emailTemplate        = EmailTemplate::where('email_group', $emailTemplateName)
-                                            ->where('lang', LaravelLocalization::setLocale() ?? settingHelper('default_language'))
+                                            ->where('lang', \App::getLocale() ?? settingHelper('default_language'))
                                             ->first();
 
         if($emailTemplateName       == 'activate_account'):

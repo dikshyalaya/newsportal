@@ -10,7 +10,6 @@ use Modules\Setting\Entities\Setting;
 use Modules\Tag\Entities\Tag;
 use Modules\Widget\Entities\Widget;
 use Modules\Widget\Enums\WidgetContentType;
-use LaravelLocalization;
 use Sentinel;
 
 class FooterWidgetService extends Service
@@ -30,7 +29,7 @@ class FooterWidgetService extends Service
         return Post::with(['image', 'user'])
                 ->orderBy('total_hit', 'DESC')
                 ->take(4)
-                ->where('language', LaravelLocalization::setLocale() ?? settingHelper('default_language'))
+                ->where('language', \App::getLocale() ?? settingHelper('default_language'))
                 ->where('visibility', 1)
                 ->where('status', 1)
                 ->when(Sentinel::check()== false, function ($query) {
@@ -42,7 +41,7 @@ class FooterWidgetService extends Service
     private function categories()
     {
         return Category::select('category_name','slug')
-            ->where('language', LaravelLocalization::setLocale() ?? settingHelper('default_language'))
+            ->where('language', \App::getLocale() ?? settingHelper('default_language'))
             ->orderBy('order', 'asc')
             ->withCount('post')
             ->get();
@@ -67,7 +66,7 @@ class FooterWidgetService extends Service
             ->where('editor_picks', 1)
             ->orderBy('id','desc')
             ->take(4)
-            ->where('language', LaravelLocalization::setLocale() ?? settingHelper('default_language'))
+            ->where('language', \App::getLocale() ?? settingHelper('default_language'))
             ->where('visibility', 1)
             ->where('status', 1)
             ->when(Sentinel::check()== false, function ($query) {
@@ -83,7 +82,7 @@ class FooterWidgetService extends Service
                         ->where('status', 1)
                         ->where('location', \Modules\Widget\Enums\WidgetLocation::FOOTER)
                         ->orderBy('order', 'asc')
-                        ->where('language', LaravelLocalization::setLocale() ?? settingHelper('default_language'))
+                        ->where('language', \App::getLocale() ?? settingHelper('default_language'))
                         ->get();
 
         foreach ($widgets as $widget) {

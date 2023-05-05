@@ -11,7 +11,7 @@
                         <div class="entry-meta">
                             <ul class="global-list">
                                 <li class="d-sm-none d-md-none d-lg-block"><a href="{{ route('site.author',['id' => $post->user->id]) }}"> {{ data_get($post, 'user.first_name') }}</a></li>
-                                <li><a href="{{route('article.date', date('Y-m-d', strtotime($post->updated_at)))}}"> {{ $post->updated_at->format('F j, Y') }}</a></li>
+                                <li><a href="{{route('article.date', date('Y-m-d', strtotime($post->updated_at)))}}"> {{ Carbon\Carbon::parse($post->updated_at)->translatedFormat('F j, Y') }}</a></li>
                             </ul>
                         </div>
                     </div>

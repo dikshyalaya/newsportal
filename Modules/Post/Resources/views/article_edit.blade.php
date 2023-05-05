@@ -90,7 +90,7 @@ active
 
                                             <div class="form-group">
                                                 <label for="post_content" class="col-form-label">{{ __('content') }}*</label>
-                                                <textarea name="content" class="form-control post-content" value="{{ $post->content }}" id="post_content" rows="3">
+                                                <textarea required name="content" class="form-control post-content" value="{{ $post->content }}" id="post_content" rows="3">
                                                         {!! $post->content !!}
                                                     </textarea>
                                             </div>
@@ -148,24 +148,7 @@ active
                                                                 <!-- <label>{{ __('code') }}</label> -->
                                                             </div>
                                                         </div>
-                                                        <div class="col-md-1 pr-0 text-center area">
-                                                            <div class="item content-item" onclick="addContent('twitter-embed')">
-                                                                <img src="{{static_asset('default-image/content-icon/twitter.png') }}">
-                                                                <!-- <label>{{ __('twitter') }}</label> -->
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-md-1 pr-0 text-center area">
-                                                            <div class="item content-item" onclick="addContent('vimeo-embed')">
-                                                                <img src="{{static_asset('default-image/content-icon/vimeo.png') }}">
-                                                                <!-- <label>{{ __('vimeo') }}</label> -->
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-md-1 pr-0 text-center area">
-                                                            <div class="item content-item" onclick="addContent('youtube-embed')">
-                                                                <img src="{{static_asset('default-image/content-icon/youtube.png') }}">
-                                                                <!-- <label>{{ __('youtube') }}</label> -->
-                                                            </div>
-                                                        </div>
+                                                        
                                                     </div>
                                                 </div>
                                             </div>
@@ -238,7 +221,7 @@ active
 
 
                     <!-- right sidebar start -->
-                    <div class="col-3 px-0">
+                    <div class="col-3 p-l-0">
 
                         <div class="card">
                             <div class="card-header">
@@ -278,7 +261,7 @@ active
                                 <h4 class="card-title"><label for="category_id">{{ __('category') }}*</label></h4>
                             </div>
                             <div class="card-body">
-
+                                <input type="text" style='display:none' name="selected_post_categories" required value="{{$post->categories->count()}}">
                                 <div class="form-group">
                                     @include('post::post_category_render_option', ['categories'=>$categories, 'depth'=>0, 'selected_categories'=>$post->categories->pluck("id")->toArray()])
                                 </div>
@@ -513,7 +496,9 @@ active
 
 @endsection
 @section('script')
-<script>
+<script type="text/javascript">
+
+
     $(document).ready(function() {
 
         $('.dynamic-category').change(function() {
@@ -570,6 +555,14 @@ active
         $('#category_id').change(function() {
             $('#sub_category_id').val('');
         });
+
+        $('.post-categories').click(function() {
+        checked = $("input[type=checkbox].post-categories:checked").length;
+        if(checked==0) checked="";
+        $("input[name=selected_post_categories]").val(checked);
+        console.log("check clicked "+ checked);
+});
+
 
 
     });

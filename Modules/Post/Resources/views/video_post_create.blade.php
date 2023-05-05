@@ -8,7 +8,7 @@
 @section('post')
     active
 @endsection
-@section('create_video')   
+@section('create_video')
     active
 @endsection
 @section('modal')

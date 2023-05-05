@@ -24,11 +24,8 @@ class MenuItemController extends Controller
         $menus              = Menu::all();
         $selectedMenu       = Menu::first();
         $selectedLanguage   = settingHelper('default_language');
-        //$categories         = Category::orderBy('id','ASC')->where('language',$selectedLanguage)->get();
-        $categories       = Category::with('childrenRecursive')->where('parent_id', 0)->get();
+        $categories         = Category::orderBy('id','ASC')->where('language',$selectedLanguage)->get();
 
-        // var_dump($categories);
-        // exit;
         $menuItems          = MenuItem::with(['children'])
                                     ->where('parent', null)
                                     ->where('menu_id', $selectedMenu->id)
@@ -36,12 +33,15 @@ class MenuItemController extends Controller
                                     ->orderBy('order', 'asc')
                                     ->get();
 
+                                      
+
         $pages              = Page::where('language',$selectedLanguage)->get();
 
         $posts              = Post::select('id', 'title')
                                 ->orderBy('id', 'desc')->where('language',$selectedLanguage)->get();
         $activeLang         = Language::where('status', 'active')
                                     ->orderBy('name', 'ASC')->get();
+
 
         return view('appearance::menu_item',[
                                             'menuItems'         => $menuItems,
@@ -72,8 +72,8 @@ class MenuItemController extends Controller
         $pages              = Page::all()->where('language',$selectedLanguage);
         $posts              = Post::select('id', 'title')->where('language',$selectedLanguage)->orderBy('id', 'desc')->get();
         $activeLang         = Language::where('status', 'active')->orderBy('name', 'ASC')->get();
-        //$categories         = Category::orderBy('id','ASC')->where('language',$selectedLanguage)->get();
-        $categories       = Category::with('childrenRecursive')->orderBy('id','ASC')->where('language',$selectedLanguage)->where('parent_id', 0)->get();
+        $categories         = Category::orderBy('id','ASC')->where('language',$selectedLanguage)->get();
+
         return view('appearance::menu_item', [
                                             'menuItems' => $menuItems,
                                             'menus' => $menus,
@@ -89,7 +89,13 @@ class MenuItemController extends Controller
 
     public function changeMenuOrder(Request $request)
     {
-        
+        if (strtolower(\Config::get('app.demo_mode')) == 'yes'):
+            $data['status']     = "error";
+            $data['message']    = __('You are not allowed to add/modify in demo mode.');
+
+            echo json_encode($data);
+            exit();
+        endif;
 
         $data   = \json_decode($request->data);
         $order  = 0;
@@ -134,7 +140,9 @@ class MenuItemController extends Controller
 
     public function menuItemSave(Request $request){
 
-        
+        if (strtolower(\Config::get('app.demo_mode')) == 'yes'):
+            return redirect()->back()->with('error', 'You are not allowed to add/modify in demo mode.');
+        endif;
 
 
         Validator::make($request->all(), [
@@ -142,9 +150,9 @@ class MenuItemController extends Controller
             'menu_id'   => 'required'
         ])->validate();
 
+        $itemOrder = MenuItem::where("source",$request->source == 'page')->orderBy("id","desc")->pluck('order')->first()+1;
+      
 
-        $display_order=((int)MenuItem::max('order'))+1;
-        
         if ($request->source == 'page') :
 
             if(!isset($request->page_id)){
@@ -170,8 +178,8 @@ class MenuItemController extends Controller
                 $menuItem->language = $request->language ?? app()->getLocale();
                 $menuItem->source   = $request->source;
                 $menuItem->parent   = null;
+                $menuItem->order    = $itemOrder;
                 $menuItem->status   = 1;
-                $menuItem->order  = $display_order;
                 $menuItem->save();
             }
 
@@ -191,8 +199,9 @@ class MenuItemController extends Controller
                 $menuItem->source   = $request->source;
                 $menuItem->parent   = null;
                 $menuItem->post_id  = $request->post_id[$i];
+                $menuItem->order    = $itemOrder;
                 $menuItem->status   = 1;
-                $menuItem->order  = $display_order;
+
                 $menuItem->save();
             endfor;
 
@@ -209,39 +218,14 @@ class MenuItemController extends Controller
                     $menuItem->source       = $request->source;
                     $menuItem->parent       = null;
                     $menuItem->category_id  = $request->category_id[$i];
+                    $menuItem->order    = $itemOrder;
                     $menuItem->status       = 1;
-                    $menuItem->order  = $display_order;
+
                     $menuItem->save();
                 endfor;
             else:
                 return redirect()->back()->with('error',__('please_select_at_least_one_item'));
-            endif;
-
-
-        elseif ($request->source == 'sub-category') :
-
-            if(!isset($request->sub_category_id)){
-                return redirect()->back()->with('error',__('please_select_at_least_one_item'));
-            }
-
-                if($request->sub_category_id !=null):
-                    for($i=0; count($request->sub_category_id)>$i; $i++):
-
-                        $menuItem               = new MenuItem();
-                        $category               = SubCategory::find($request->sub_category_id[$i]);
-                        $menuItem->label        = $category->sub_category_name;
-                        $menuItem->menu_id      = $request->menu_id;
-                        $menuItem->language     = $request->language ?? app()->getLocale();
-                        $menuItem->source       = $request->source;
-                        $menuItem->parent       = null;
-                        $menuItem->sub_category_id  = $request->sub_category_id[$i];
-                        $menuItem->status       = 1;
-                        $menuItem->order  = $display_order;
-                        $menuItem->save();
-                    endfor;
-                else:
-                    return redirect()->back()->with('error',__('please_select_at_least_one_item'));
-                endif;
+            endif;       
 
 
         else:
@@ -255,8 +239,9 @@ class MenuItemController extends Controller
             $menuItem->url              = $request->url;
             $menuItem->post_id          = $request->post_id;
             $menuItem->page_id          = $request->page_id;
+            $menuItem->order    = $itemOrder;
             $menuItem->status           = 1;
-            $menuItem->order  = $display_order;
+
             $menuItem->save();
         endif;
 
@@ -268,7 +253,9 @@ class MenuItemController extends Controller
 
     public function menuItemUpdate(Request $request){
 
-        
+        if (strtolower(\Config::get('app.demo_mode')) == 'yes'):
+            return redirect()->back()->with('error', 'You are not allowed to add/modify in demo mode.');
+        endif;
         if(blank($request->label) || blank($request->menu_item_id)){
 
             return redirect()->back()->with('error', __('not_found'));
@@ -336,7 +323,13 @@ class MenuItemController extends Controller
     }
 
     public function menuItemDelete(Request $request){
-       
+        if (strtolower(\Config::get('app.demo_mode')) == 'yes'):
+            $data['status']     = "error";
+            $data['message']    =  __('You are not allowed to add/modify in demo mode.');
+
+            echo json_encode($data);
+            exit();
+        endif;
         $query= MenuItem::where('id',$request->row_id)->with(['children'])->first();
 
         if ($query->count() > 0) :

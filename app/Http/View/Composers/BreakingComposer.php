@@ -6,7 +6,6 @@ use Illuminate\Support\Facades\Cache;
 use Sentinel;
 use Illuminate\View\View;
 use Modules\Post\Entities\Post;
-use LaravelLocalization;
 
 class BreakingComposer
 {
@@ -23,7 +22,7 @@ class BreakingComposer
                                             ->where('breaking',1)
                                             ->where('visibility', 1)
                                             ->where('status', 1)
-                                            ->where('language', LaravelLocalization::setLocale() ?? settingHelper('default_language'))
+                                            ->where('language', \App::getLocale() ?? settingHelper('default_language'))
                                             ->limit(10)->get();
                                       });
         else:
@@ -32,7 +31,7 @@ class BreakingComposer
                     ->where('breaking',1)
                     ->where('visibility', 1)
                     ->where('status', 1)
-                    ->where('language', LaravelLocalization::setLocale() ?? settingHelper('default_language'))
+                    ->where('language', \App::getLocale() ?? settingHelper('default_language'))
                     ->when(Sentinel::check()== false, function ($query) {
                         $query->where('auth_required',0);
                     })->limit(10)->get();

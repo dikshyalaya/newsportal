@@ -24,7 +24,7 @@ class TagDatabaseSeeder extends Seeder
         Tag::create(['title'=> 'Business','total_hit' => 10]);
         Tag::create(['title'=> 'Technology','total_hit' => 10]);
         Tag::create(['title'=> 'Science','total_hit' => 10]);
-        Tag::create(['title'=> 'Nepal','total_hit' => 2]);
+        Tag::create(['title'=> 'Bangladesh','total_hit' => 2]);
         Tag::create(['title'=> 'World Cup','total_hit' => 10]);
         Tag::create(['title'=> 'Politics','total_hit' => 6]);
         Tag::create(['title'=> 'Computer','total_hit' => 2]);

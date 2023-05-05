@@ -10,7 +10,6 @@ use Modules\Setting\Entities\Setting;
 use Modules\Tag\Entities\Tag;
 use Modules\Widget\Entities\Widget;
 use Modules\Widget\Enums\WidgetContentType;
-use LaravelLocalization;
 use Sentinel;
 
 class HeaderWidgetService extends Service
@@ -27,7 +26,7 @@ class HeaderWidgetService extends Service
                         ->where('status', 1)
                         ->where('location', \Modules\Widget\Enums\WidgetLocation::HEADER)
                         ->orderBy('order', 'asc')
-                        ->where('language', LaravelLocalization::setLocale() ?? settingHelper('default_language'))
+                        ->where('language', \App::getLocale() ?? settingHelper('default_language'))
                         ->get();
 
 

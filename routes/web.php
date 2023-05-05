@@ -12,7 +12,7 @@
 */
 // Route::group(
 //     [
-//         'prefix' => LaravelLocalization::setLocale(),
+//         'prefix' => getlocale(),
 //         'middleware' => [ 'localeSessionRedirect', 'localizationRedirect', 'localeViewPath' ]
 //     ],
 //     function()

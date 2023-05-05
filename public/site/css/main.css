@@ -2,7 +2,7 @@ body,
 html {
     font-weight: 400;
     color: #484848;
-    font-size: 13px;
+    font-size: 16px;
     background-color: #f2f2f2;
     font-family: var(--primary-font);
     -webkit-font-smoothing: antialiased
@@ -42,7 +42,6 @@ a:hover {
 
 :root {
     --primary-color: #5969FF;
-    --secondary-color:#35495a;
     --primary-font: 'Roboto', sans-serif
 }
 
@@ -81,7 +80,7 @@ textarea:focus {
     font-size: 14px;
     color: #fff;
     font-weight: 600;
-    padding: 15px;
+    padding: 15px 35px;
     letter-spacing: 4px;
     text-transform: uppercase;
     display: inline-block;
@@ -89,8 +88,8 @@ textarea:focus {
     position: relative;
     z-index: 1;
     overflow: hidden;
-    /* border-color: var(--secondary-color); */
-    background-color: var(--secondary-color) !important
+    border-color: var(--primary-color);
+    background-color: var(--primary-color) !important
 }
 
 .btn.btn-primary:hover {
@@ -143,10 +142,10 @@ textarea:focus {
 }
 
 .form-control {
-    
+    height: 45px;
     border-radius: 4px;
     padding: 6px 20px;
-    margin-bottom: 10px;
+    margin-bottom: 30px;
     border: 1px solid #d8e2e9
 }
 
@@ -536,8 +535,8 @@ textarea:focus {
 .sg-menu .navbar-nav li a {
     color: #333;
     display: block;
-   
-    padding:11px 5px;
+    font-weight: 500;
+    padding: 20px
 }
 
 .sg-menu .navbar-nav li span {
@@ -772,7 +771,7 @@ textarea:focus {
 .navbar-nav .mega-menu-content li a {
     padding: 0;
     border: 0;
-    font-size: 12px;
+    font-size: 14px;
     font-weight: 400;
     background-color: transparent
 }
@@ -854,9 +853,13 @@ textarea:focus {
 .sg-post {
     position: relative;
     overflow: hidden;
-    margin-bottom: 10px;
+    margin-bottom: 30px;
     background-color: #fff;
-    
+    -webkit-box-shadow: 0 6px 12px rgba(0, 0, 0, .075);
+    -moz-box-shadow: 0 6px 12px rgba(0, 0, 0, .075);
+    -ms-box-shadow: 0 6px 12px rgba(0, 0, 0, .075);
+    -o-box-shadow: 0 6px 12px rgba(0, 0, 0, .075);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, .075)
 }
 
 .post-style-2 .entry-content,
@@ -933,7 +936,7 @@ textarea:focus {
 }
 
 .sg-post .entry-content {
-    padding: 10px;
+    padding: 10px 15px;
     font-size: 14px
 }
 
@@ -963,18 +966,18 @@ textarea:focus {
 }
 
 .entry-meta ul li {
-    margin-right: 10px;
+    margin-right: 20px;
     position: relative
 }
 
 .entry-meta ul li:after {
     position: absolute;
     content: "";
-    right: -7px;
-    top: 10px;
-    width: 3px;
-    height: 3px;
-    background-color: #aaa;
+    right: -10px;
+    top: 4px;
+    width: 1px;
+    height: 15px;
+    background-color: #aaa
 }
 
 .sg-post.featured-post .entry-meta ul li:after {
@@ -1013,8 +1016,9 @@ a.read-more {
 }
 
 .small-post .entry-content {
-    font-size: 12px;
-   width:100%;
+    font-size: 13px;
+    -ms-flex-item-align: center !important;
+    align-self: center !important
 }
 
 .small-post .entry-meta {
@@ -1058,11 +1062,11 @@ a.read-more {
 }
 
 .sg-post.post-style-1 {
-    margin-bottom: 5px
+    margin-bottom: 15px
 }
 
 .medium-post-style-1 .entry-thumbnail {
-    width: 250px
+    width: 350px
 }
 
 .video-icon {
@@ -1246,7 +1250,7 @@ a.read-more {
 }
 
 .sg-widget {
-    margin-bottom: 15px
+    margin-bottom: 30px
 }
 
 .widget-title {
@@ -1254,13 +1258,14 @@ a.read-more {
     color: #fff;
     font-size: 14px;
     padding: 8px 20px;
-    margin-bottom: 0px;
+    /* margin-bottom: 20px; */
+    margin-bottom: 0;
     text-transform: uppercase;
     background-color: var(--primary-color)
 }
 
 .widget-social ul {
-    padding: 10px 10px 0;
+    padding: 30px 30px 10px;
     overflow: hidden;
     background-color: #fff;
     -webkit-box-shadow: 0 6px 12px rgba(0, 0, 0, .075);
@@ -1273,7 +1278,7 @@ a.read-more {
 .widget-social ul li {
     width: 50%;
     float: left;
-    margin-bottom: 10px;
+    margin-bottom: 20px;
     font-size: 12px;
     overflow: hidden;
     text-align: center
@@ -1354,7 +1359,7 @@ a.read-more {
 }
 
 .widget-newsletter {
-    padding: 10px 15px;
+    padding: 20px 30px;
     background-color: #fff;
     -webkit-box-shadow: 0 6px 12px rgba(0, 0, 0, .075);
     -moz-box-shadow: 0 6px 12px rgba(0, 0, 0, .075);
@@ -1365,7 +1370,7 @@ a.read-more {
 
 .widget-newsletter .icon {
     color: #d9d9d9;
-    
+    font-size: 80px
 }
 
 .widget-newsletter form {
@@ -2257,25 +2262,24 @@ textarea.form-control {
 }
 
 .footer a:hover {
-    color: var(--secondary-color)
+    color: var(--primary-color)
 }
 
 .footer-widget {
     margin-bottom: 30px
 }
 
-.footer-widget .sg-post, .footer-widget.categories-widget ul {
+.footer-widget .sg-post,
+.footer-widget.categories-widget ul {
     padding: 0;
-    background-color: #ffffff1a;
-    padding: 10px;
-    border: 1px solid #ffffff1a;
+    background-color: transparent
 }
 
 .footer-widget h3 {
     font-size: 18px;
     font-weight: 600;
     text-transform: uppercase;
-    margin-bottom: 15px
+    margin-bottom: 30px
 }
 
 .footer-widget .twitte .icon {
@@ -2283,7 +2287,7 @@ textarea.form-control {
 }
 
 .footer-widget ul li {
-    margin-bottom: 5px
+    margin-bottom: 15px
 }
 
 .footer-widget ul li:last-child {
@@ -2304,8 +2308,7 @@ textarea.form-control {
 }
 
 .footer-top {
-    padding: 30px 0 0;
-    margin-top:15px;
+    padding: 60px 0 30px
 }
 
 .footer-middle .middle-content {
@@ -2344,8 +2347,8 @@ textarea.form-control {
 
 .footer-bottom {
     color: #fff;
-    padding: 15px 0;
-    background-color: var(--secondary-color);
+    padding: 20px 0;
+    background-color: #0d0d0d
 }
 
 .footer-bottom ul li {
@@ -2392,11 +2395,14 @@ textarea.form-control {
 }
 
 .footer-content .form-control {
-    height: 40px;
+    height: 55px;
     color: #fff;
     background-color: transparent
 }
 
+.footer-content form {
+    margin-top: 30px
+}
 
 .btn.btn-primary {
     font-size: 12px;

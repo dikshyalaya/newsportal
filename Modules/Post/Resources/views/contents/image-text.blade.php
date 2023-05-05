@@ -13,7 +13,7 @@
         <div class="row">
             <div class="col-4">
                 <div class="form-group">
-                    <label for="" class="col-form-label">{{ __('Image') }}</label>
+                  
                     <div class="form-input text-center">
                         @if(isset($content) && $content['image-text'][0]['image_id'] != "")
 
@@ -43,8 +43,8 @@
                 </div>
             </div>
             <div class="col-8">
-                <label for="" class="col-form-label">{{ __('content') }}</label>
-                <textarea class="form-control post-content" name="new_content[{{$content_count}}][image-text][text]" id="" cols="60" rows="10">{{isset($content)? $content['image-text'][1]['text']:''}}</textarea>
+              
+                <textarea required class="form-control post-content" name="new_content[{{$content_count}}][image-text][text]" id="" cols="60" rows="10">{{isset($content)? $content['image-text'][1]['text']:''}}</textarea>
             </div>
         </div>
     </div>

@@ -8,7 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <!-- favicon -->
 
-    <link rel="icon" href="{{static_asset(SettingHelper('favicon'))}}" type="image/png" />
+    <link rel="icon" href="{{static_asset(SettingHelper('favicon'))}}" type="image/png"/>
     <meta name="msapplication-TileColor" content="#ffffff">
     <meta name="theme-color" content="#ffffff">
     <!-- end favicon -->
@@ -49,17 +49,22 @@
     <!-- ============================================================== -->
     <!-- main wrapper -->
     <!-- ============================================================== -->
+    <div class="overlay-text d-none" id="overlay-preloader">
+        <div>
+            <img src="{{ static_asset('images/preloader.gif') }}" alt="updater">
+            <p>Update started</p>
+            <p>Don't Close/Refresh your browser.</p>
+        </div>
+    </div>
     <div class="dashboard-main-wrapper">
-        @include('common::layouts.header')
-        @include('common::layouts.left-sidebar')
+    @include('common::layouts.header')
+    @include('common::layouts.left-sidebar')
 
         <!-- ============================================================== -->
         <!-- wrapper  -->
         <!-- ============================================================== -->
-        <div class="dashboard-wrapper bg-white">
-
-            @yield('content')
-
+        <div class="dashboard-wrapper">
+                @yield('content')
         </div>
         <!-- ============================================================== -->
         <!-- end wrapper  -->
@@ -80,7 +85,7 @@
 
     <!-- Tinemce -->
     <script src="{{static_asset('vendor/tinymce/tinymce.min.js')}}"></script>
-    <script>
+    <script type="text/javascript">
         var tinyMceEditor = function() {
 
             return {
@@ -89,7 +94,7 @@
                     //reset if already initialized
                     tinymce.remove();
                     tinymce.EditorManager.editors = [];
-               
+
                     //TinyMCE
                     tinymce.init({
                         selector: element_selector,
@@ -103,17 +108,20 @@
                         ],
                         toolbar1: 'insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image',
                         toolbar2: 'print preview media | forecolor backcolor emoticons',
-                        image_advtab: true
+                        image_advtab: true,
+                        setup: function (editor) {
+                                    editor.on('change', function (e) {
+                                        editor.save();
+                                    });
+                                }
                     });
+
+                    //tinymce.triggerSave();
                 },
                 
             }
         }();
 
-        $(document).ready(function() {
-
-            tinyMceEditor.init("textarea.post-content");
-        });
     </script>
     <!-- slimscroll js -->
     <script src="{{static_asset('vendor')}}/slimscroll/jquery.slimscroll.js"></script>
@@ -132,13 +140,13 @@
 
     <script src="{{static_asset('js/flatpickr.js') }}"></script>
     <script>
-        const fp = flatpickr(".date", {
-            enableTime: true,
-            dateFormat: "F j, Y h:i K",
-            minDate: "today",
-            weekNumbers: true,
-            minTime: "now",
-        });
+    const fp = flatpickr(".date", {
+        enableTime: true,
+        dateFormat: "F j, Y h:i K",
+        minDate: "today",
+        weekNumbers: true,
+        minTime: "now",
+    });
     </script>
 
     <!-- SwAl -->
@@ -148,150 +156,150 @@
     <script type="text/javascript">
         function delete_item(table_name, row_id) {
             var table_row = '#row_' + row_id
-            if (table_name == 'quiz_questions') {
+            if(table_name == 'quiz_questions'){
                 var table_row = '#panel_quiz_question_' + row_id
             }
 
-            if (table_name == 'quiz_answers') {
+            if(table_name == 'quiz_answers'){
                 var table_row = '#quiz_answer_' + row_id
             }
 
-            if (table_name == 'quiz_results') {
+            if(table_name == 'quiz_results'){
                 var table_row = '#panel_quiz_result_' + row_id
             }
-            var token = "{{ csrf_token() }}";
+            var token =  "{{ csrf_token() }}";
             url = "{{ route('delete') }}"
 
             swal({
-                    title: "{{ __('are_you_sure?') }}",
-                    text: "{{ __('it_will_be_deleted_permanently') }}",
-                    icon: "warning",
-                    buttons: true,
-                    buttons: ["{{ __('cancel') }}", "{{ __('delete') }}"],
-                    dangerMode: true,
-                    closeOnClickOutside: false
+                title: "{{ __('are_you_sure?') }}",
+                text: "{{ __('it_will_be_deleted_permanently') }}",
+                icon: "warning",
+                buttons: true,
+                buttons: ["{{ __('cancel') }}", "{{ __('delete') }}"],
+                dangerMode: true,
+                closeOnClickOutside: false
                 })
-                .then(function(confirmed) {
-                    if (confirmed) {
-                        $.ajax({
-                                url: url,
-                                type: 'post',
-                                headers: {
-                                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                                },
-                                data: 'row_id=' + row_id + '&table_name=' + table_name + '&_token=' + token + '&_method=DELETE',
-                                dataType: 'json'
-                            })
-                            .done(function(response) {
-                                console.log(response);
-                                swal.stopLoading();
-                                if (response.status == "success") {
-                                    console.log(response);
-                                    swal("{{ __('deleted') }}!", response.message, response.status);
-                                    $(table_row).fadeOut(2000).remove();
-                                    if (table_name == 'menu') {
-                                        window.location = response.url
-                                    }
+            .then(function(confirmed){
+                if (confirmed){
+                     $.ajax({
+                        url: url,
+                        type: 'post',
+                        headers: {
+                          'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        },
+                        data: 'row_id=' + row_id + '&table_name=' + table_name+'&_token='+token+ '&_method=DELETE',
+                        dataType: 'json'
+                     })
+                     .done(function(response){
+                        console.log(response);
+                        swal.stopLoading();
+                        if(response.status == "success"){
+                            console.log(response);
+                            swal("{{ __('deleted') }}!", response.message, response.status);
+                            $(table_row).fadeOut(2000).remove();
+                            if(table_name=='menu'){
+                                 window.location = response.url
+                            }
 
-                                } else {
-                                    swal("Error!", response.message, response.status);
-                                }
-                            })
-                            .fail(function() {
-                                swal('Oops...', "{{ __('something_went_wrong_with_ajax ') }}", 'error');
-                            })
-                    }
-                })
+                        }else{
+                            swal("Error!", response.message, response.status);
+                        }
+                     })
+                     .fail(function(){
+                        swal('Oops...', '{{ __('something_went_wrong_with_ajax') }}', 'error');
+                     })
+                }
+            })
         }
     </script>
 
     <script type="text/javascript">
-        function remove_post_form(page, feature, row_id) {
+        function remove_post_form(page,feature, row_id) {
             var table_row = '#row_' + row_id
-            var token = "{{ csrf_token() }}";
+            var token =  "{{ csrf_token() }}";
             url = "{{ route('remove-post-form') }}"
 
             swal({
-                    title: "{{ __('are_you_sure?') }}",
-                    text: "{{ __('it_will_be_remove_form_this_feature') }}",
-                    icon: "warning",
-                    buttons: true,
-                    buttons: ["{{ __('cancel') }}", "{{ __('remove') }}"],
-                    dangerMode: true,
-                    closeOnClickOutside: false
+                title: "{{ __('are_you_sure?') }}",
+                text: "{{ __('it_will_be_remove_form_this_feature') }}",
+                icon: "warning",
+                buttons: true,
+                buttons: ["{{ __('cancel') }}", "{{ __('remove') }}"],
+                dangerMode: true,
+                closeOnClickOutside: false
                 })
-                .then(function(confirmed) {
-                    if (confirmed) {
-                        $.ajax({
-                                url: url,
-                                type: 'post',
-                                headers: {
-                                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                                },
-                                data: 'post_id=' + row_id + '&feature=' + feature + '&_token=' + token + '&_method=DELETE',
-                                dataType: 'json'
-                            })
-                            .done(function(response) {
-                                swal.stopLoading();
-                                if (response.status == "success") {
-                                    console.log(response);
-                                    swal("{{ __('removed') }}!", response.message, response.status);
-                                    if (page == 'index') {
-                                        window.location.reload();
-                                    } else {
-                                        $(table_row).fadeOut(2000);
-                                    }
+            .then(function(confirmed){
+                if (confirmed){
+                     $.ajax({
+                        url: url,
+                        type: 'post',
+                        headers: {
+                          'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        },
+                        data: 'post_id=' + row_id + '&feature=' + feature+'&_token='+token+ '&_method=DELETE',
+                        dataType: 'json'
+                     })
+                     .done(function(response){
+                        swal.stopLoading();
+                        if(response.status == "success"){
+                            console.log(response);
+                            swal("{{ __('removed') }}!", response.message, response.status);
+                            if(page=='index'){
+                                window.location.reload();
+                            }else{
+                                $(table_row).fadeOut(2000);
+                            }
 
-                                } else {
-                                    swal("Error!", response.message, response.status);
-                                }
-                            })
-                            .fail(function() {
-                                swal('Oops...', "{{ __('something_went_wrong_with_ajax ') }}", 'error');
-                            })
-                    }
-                })
+                        }else{
+                            swal("Error!", response.message, response.status);
+                        }
+                     })
+                     .fail(function(){
+                        swal('Oops...', '{{ __('something_went_wrong_with_ajax') }}', 'error');
+                     })
+                }
+            })
         }
     </script>
 
     <script type="text/javascript">
         function add_post_to(feature, row_id) {
             var table_row = '#row_' + row_id
-            var token = "{{ csrf_token() }}";
+            var token =  "{{ csrf_token() }}";
             url = "{{ route('add-to') }}"
 
             swal({
-                    title: "{{ __('are_you_sure?') }}",
-                    text: "{{ __('it_will_be_added_to_this_feature') }}",
-                    icon: "info",
-                    buttons: true,
-                    buttons: ["{{ __('cancel') }}", "{{ __('add') }}"],
-                    dangerMode: false,
-                    closeOnClickOutside: false
+                title: "{{ __('are_you_sure?') }}",
+                text: "{{ __('it_will_be_added_to_this_feature') }}",
+                icon: "info",
+                buttons: true,
+                buttons: ["{{ __('cancel') }}", "{{ __('add') }}"],
+                dangerMode: false,
+                closeOnClickOutside: false
                 })
-                .then(function(confirmed) {
-                    if (confirmed) {
-                        $.ajax({
-                                url: url,
-                                type: 'post',
-                                data: 'post_id=' + row_id + '&feature=' + feature + '&_token=' + token,
-                                dataType: 'json'
-                            })
-                            .done(function(response) {
-                                swal.stopLoading();
-                                if (response.status == "success") {
-                                    console.log(response);
-                                    swal("{{ __('added') }}!", response.message, response.status);
-                                    window.location.reload();
-                                } else {
-                                    swal("Error!", response.message, response.status);
-                                }
-                            })
-                            .fail(function() {
-                                swal('Oops...', "{{ __('something_went_wrong_with_ajax ') }}", 'error');
-                            })
-                    }
-                })
+            .then(function(confirmed){
+                if (confirmed){
+                     $.ajax({
+                        url: url,
+                        type: 'post',
+                        data: 'post_id=' + row_id + '&feature=' + feature+'&_token='+token,
+                        dataType: 'json'
+                     })
+                     .done(function(response){
+                        swal.stopLoading();
+                        if(response.status == "success"){
+                            console.log(response);
+                            swal("{{ __('added') }}!", response.message, response.status);
+                            window.location.reload();
+                        }else{
+                            swal("Error!", response.message, response.status);
+                        }
+                     })
+                     .fail(function(){
+                        swal('Oops...', '{{ __('something_went_wrong_with_ajax') }}', 'error');
+                     })
+                }
+            })
         }
     </script>
 
