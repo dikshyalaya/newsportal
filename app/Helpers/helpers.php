@@ -15,12 +15,17 @@ function activeTheme()
 
 function menuUrl($menu)
 {
+
+       
+       
+
+   
     if ($menu->source       == 'custom'):
 
         return $menu->url ?? '#';
 
     elseif ($menu->source   == 'category') :
-        return route('site.category', ['slug' => $menu['category']->slug]);
+        return route('site.category', ['slug' => @$menu['category']->slug?$menu['category']->slug:"slug"]);
 
     elseif ($menu->source   == 'sub-category') :
             return route('site.sub-category', ['slug' => $menu['subCategory']->slug]);
