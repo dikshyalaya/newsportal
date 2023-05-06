@@ -21,9 +21,13 @@ class UserController extends Controller
 {
     public function showLoginForm()
     {
-        $widgetService          = new WidgetService();
-        $widgets                = $widgetService->getWidgetDetails();
 
+       
+        $widgetService          = new WidgetService();
+
+       
+        $widgets                = $widgetService->getWidgetDetails();
+      
         return view('site.auth.login', compact('widgets'));
     }
 

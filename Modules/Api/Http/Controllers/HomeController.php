@@ -123,10 +123,10 @@ class HomeController extends Controller
             ->when(Sentinel::check() == false, function ($query) {
                 $query->where('auth_required', 0);
             })
-            ->when($category_id != '', function ($query) use ($category_id){
-                $query->where('category_id', $category_id);
-            })
-            ->select('id','category_id','image_id','user_id','title','slug','post_type','tags','created_at')
+            // ->when($category_id != '', function ($query) use ($category_id){
+            //     $query->where('category_id', $category_id);
+            // })
+            ->select('id','image_id','user_id','title','slug','post_type','tags','created_at')
             ->orderBy('total_hit','DESC')
             ->offset($offset)
             ->take($limit)
@@ -142,10 +142,10 @@ class HomeController extends Controller
             ->when(Sentinel::check() == false, function ($query) {
                 $query->where('auth_required', 0);
             })
-            ->when($category_id != '', function ($query) use ($category_id){
-                $query->where('category_id', $category_id);
-            })
-            ->select('id','category_id','image_id','user_id','title','slug','post_type','tags','created_at')
+            // ->when($category_id != '', function ($query) use ($category_id){
+            //     $query->where('category_id', $category_id);
+            // })
+            ->select('id','image_id','user_id','title','slug','post_type','tags','created_at')
             ->orderBy('id', 'desc')
             ->offset($offset)
             ->take($limit)
@@ -177,14 +177,14 @@ class HomeController extends Controller
 
     private function getFeaturedPosts($category, $language, $limit = 0, $offset = 0){
        return Post::with('image','user:id,first_name,last_name')
-            ->where('category_id', $category)
+            //->where('category_id', $category)
             ->where('visibility', 1)
             ->where('status', 1)
             ->where('language',$language)
             ->when(Sentinel::check() == false, function ($query) {
                 $query->where('auth_required', 0);
             })
-            ->select('id','category_id','image_id','user_id','title','slug','post_type','tags','created_at')
+            ->select('id','image_id','user_id','title','slug','post_type','tags','created_at')
             ->orderBy('id', 'desc')
            ->offset($offset)
             ->take($limit)
@@ -193,18 +193,18 @@ class HomeController extends Controller
 
     private function trendingPosts($language, $category_id = ''){
 
-        $hitPosts = VisitorTracker::with('posts:id,category_id,image_id,user_id,title,slug,post_type,language,tags,created_at','posts.image','posts.category:id,category_name,slug','posts.user:id,first_name,last_name')
+        $hitPosts = VisitorTracker::with('posts:id,image_id,user_id,title,slug,post_type,language,tags,created_at','posts.image','posts.category:id,category_name,slug','posts.user:id,first_name,last_name')
             ->whereHas('posts', function ($inner_query) use ($language){
                 $inner_query->where('language',$language);
             })
             ->select(DB::raw('count(*) as hitsCount, slug'))->where('page_type',VisitorPageType::PostDetailPage)
-            ->when($category_id != '', function ($query) use ($category_id, $language){
-                $query->whereHas('posts', function ($inner_query) use ($category_id, $language) {
-                    $inner_query->where('category_id',$category_id)
-                                ->where('visibility', 1)
-                                ->where('status', 1);
-                });
-            })
+            // ->when($category_id != '', function ($query) use ($category_id, $language){
+            //     $query->whereHas('posts', function ($inner_query) use ($category_id, $language) {
+            //         $inner_query->where('category_id',$category_id)
+            //                     ->where('visibility', 1)
+            //                     ->where('status', 1);
+            //     });
+            // })
             ->groupBy('slug')->orderBy('hitsCount', 'desc')
             ->where('created_at', '>=',  Carbon::now()->subDay(7))
             ->take(10)

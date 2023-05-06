@@ -86,8 +86,8 @@ class ColumnUpdate extends Migration
             $table->index(['recommended_order','featured_order','id']);
             $table->index(['post_type','video_url_type','total_hit']);
             $table->index(['created_at','updated_at']);
-            $table->index(['user_id','category_id']) ;
-            $table->index(['sub_category_id','video_thumbnail_id']) ;
+            
+            
         });
 
         Schema::table('widgets', function (Blueprint $table) {

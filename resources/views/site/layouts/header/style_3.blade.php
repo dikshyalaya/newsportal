@@ -177,7 +177,7 @@
                                                                                         <a href="{{ route('article.detail', ['id' => $item->slug]) }}"><p>{!!Str::limit( $item->title , 35)!!}</p></a>
                                                                                         <div class="entry-meta">
                                                                                             <ul class="global-list">
-                                                                                               <li>{{ __('post_by') }} <a href="{{ route('site.author',['id' => $item->user->id]) }}">{{$item->user->first_name}} </a> <a href="{{route('article.date', date('Y-m-d', strtotime($item->updated_at)))}}"> {{Carbon\Carbon::parse($item->created_at)->translatedFormat('d F Y')}}</a></li>
+                                                                                               <li> <a href="{{ route('site.author',['id' => $item->user->id]) }}">{{$item->user->first_name}} </a> <a href="{{route('article.date', date('Y-m-d', strtotime($item->updated_at)))}}"> {{Carbon\Carbon::parse($item->created_at)->translatedFormat('d F Y')}}</a></li>
                                                                                             </ul>
                                                                                         </div><!-- /.entry-meta -->
                                                                                     </div><!-- /.entry-content -->

@@ -9,203 +9,208 @@
 
     <div class="dashboard-ecommerce">
         <div class="container-fluid dashboard-content ">
-            <!-- page info start-->
-            {!!  Form::open(['route' => ['update-widget',$widget->id],'method' => 'put', 'enctype'=>'multipart/form-data']) !!}
-            <div class="row clearfix">
-                <div class="col-12">
-                    <div class="add-new-page  bg-white p-20 m-b-20">
-                        <div class="add-new-header clearfix">
-                            <div class="row">
-                                <div class="col-6">
-                                    <div class="block-header">
-                                        <h2>{{ __('update_widget') }}</h2>
+
+        <div class="add-new-header clearfix">
+                                       
+            @if(session('error'))
+                <div id="error_m" class="alert alert-danger">
+                    {{session('error')}}
+                </div>
+            @endif
+            @if(session('success'))
+                <div id="success_m" class="alert alert-success">
+                    {{session('success')}}
+                </div>
+            @endif
+            @if ($errors->any())
+                <div class="alert alert-danger">
+                    <ul>
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
+        </div>
+
+
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="card-title">{{ __('update_widget') }}</h4>
+                    <div class="card-toolbox text-right"> <a href="{{ route('widgets') }}" class="btn btn-primary btn-add-new btn-sm"><i class="fas fa-arrow-left"></i>
+                            {{ __('back_to_widgets') }}
+                        </a></div>
+                </div>
+                <div class="card-body">
+                        <!-- page info start-->
+                        {!!  Form::open(['route' => ['update-widget',$widget->id],'method' => 'put', 'enctype'=>'multipart/form-data']) !!}
+                        <div class="row ">
+                            <div class="col-4">
+                               
+                                   
+                                    <div class="col-sm-12">
+                                        <div class="form-group">
+                                            <label for="widget_title" class="col-form-label">{{ __('title') }}*</label>
+                                            <input id="widget_title" name="title" value="{{ $widget->title }}" type="text"
+                                                class="form-control">
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="col-6 text-right">
-                                    <a href="{{ route('widgets') }}" class="btn btn-primary btn-add-new btn-sm"><i
-                                            class="fas fa-arrow-left"></i>
-                                        {{ __('back_to_widgets') }}
-                                    </a>
-                                </div>
-                            </div>
-                            @if(session('error'))
-                                <div id="error_m" class="alert alert-danger">
-                                    {{session('error')}}
-                                </div>
-                            @endif
-                            @if(session('success'))
-                                <div id="success_m" class="alert alert-success">
-                                    {{session('success')}}
-                                </div>
-                            @endif
-                            @if ($errors->any())
-                                <div class="alert alert-danger">
-                                    <ul>
-                                        @foreach ($errors->all() as $error)
-                                            <li>{{ $error }}</li>
-                                        @endforeach
-                                    </ul>
-                                </div>
-                            @endif
-                        </div>
-                        <div class="col-sm-12">
-                            <div class="form-group">
-                                <label for="widget_title" class="col-form-label">{{ __('title') }}*</label>
-                                <input id="widget_title" name="title" value="{{ $widget->title }}" type="text"
-                                       class="form-control">
-                            </div>
-                        </div>
 
-                        <div class="col-sm-12">
-                            <div class="form-group">
-                                <label for="language">{{ __('language') }}</label>
-                                <select class="form-control" name="language" id="language">
-                                    @foreach ($activeLang as  $lang)
-                                        <option
-                                            @if($widget->language==$lang->code) Selected
-                                            @endif value="{{$lang->code}}">{{$lang->name}}
-                                        </option>
-                                    @endforeach
-                                </select>
-                            </div>
-                        </div>
+                                    <div class="col-sm-12 d-none">
+                                        <div class="form-group">
+                                            <label for="language">{{ __('language') }}</label>
+                                            <select class="form-control" name="language" id="language">
+                                                @foreach ($activeLang as  $lang)
+                                                    <option
+                                                        @if($widget->language==$lang->code) Selected
+                                                        @endif value="{{$lang->code}}">{{$lang->name}}
+                                                    </option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    </div>
 
-                        <div class="col-sm-12">
-                            <div class="form-group">
-                                <label for="language">{{ __('location') }}</label>
-                                <select class="form-control" name="location" id="location">
-                                    @foreach (__('widget::widget.location') as $value => $item)
-                                        <option value="{{$value}}"
-                                                @if($widget->location == $value) Selected @endif>{{$item}}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                        </div>
+                                    <div class="col-sm-12">
+                                        <div class="form-group">
+                                            <label for="language">{{ __('location') }}</label>
+                                            <select class="form-control" name="location" id="location">
+                                                @foreach (__('widget::widget.location') as $value => $item)
+                                                    <option value="{{$value}}"
+                                                            @if($widget->location == $value) Selected @endif>{{$item}}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    </div>
 
-                        <div class="col-sm-12">
-                            <div class="form-group">
-                                <label for="language">{{ __('Content Type') }}</label>
-                                <select
-                                    class="form-control {{$widget->location == \Modules\Widget\Enums\WidgetLocation::RIGHT_SIDEBAR? '':'d-none'}}"
-                                    name="content_type" id="content_type">
-                                    @foreach (__('widget::widget.content_type') as $value => $item)
-                                        <option value="{{$value}}"
-                                                @if($widget->content_type == $value) Selected @endif>{{$item}}</option>
-                                    @endforeach
-                                </select>
-                                <select
-                                    class="form-control {{$widget->location == \Modules\Widget\Enums\WidgetLocation::FOOTER? '':'d-none'}}"
-                                    name="content_type_footer" id="content_type_footer">
-                                    @foreach (__('widget::widget.content_type_footer') as $value => $item)
-                                        <option value="{{$value}}"
-                                                @if($widget->content_type == $value) Selected @endif>{{$item}}</option>
-                                    @endforeach
-                                </select>
-                                <select
-                                    class="form-control {{$widget->location == \Modules\Widget\Enums\WidgetLocation::HEADER? '':'d-none'}}"
-                                    name="content_type_header" id="content_type_header">
-                                    @foreach (__('widget::widget.content_type_header') as $value => $item)
-                                        <option value="{{$value}}"
-                                                @if($widget->content_type == $value) Selected @endif>{{$item}}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                        </div>
-                        <div class="col-sm-12 d-none" id="addBlocekerDetected">
-                            <div class="form-group">
-                                <label for="widget-order" class="col-form-label alert-danger">Please Unblock the
-                                    adBlocker</label>
-                            </div>
-                        </div>
-                        <div class="col-sm-12 {{$widget->content_type == \Modules\Widget\Enums\WidgetContentType::TAGS? '':'d-none'}}" id="tags_container">
-                            <div class="form-group">
-                                <label for="widget_title" class="col-form-label">{{ __('tags') }}*</label>
-                                <input id="widget_title" name="tags" type="text" class="form-control" data-role="tagsinput" value="{{ $widget->content }}">
-                            </div>
-                        </div>
-                        <div
-                            class="col-sm-12 {{$widget->content_type == \Modules\Widget\Enums\WidgetContentType::AD? '':'d-none'}}"
-                            id="ad-area">
-                            <div class="form-group">
-                                <label for="language">{{ __('ad') }}</label>
-                                <select class="form-control" name="ad" id="ad">
-                                    @foreach ($ads as $value => $ad)
-                                        <option value="{{$ad->id}}">{{$ad->ad_name}}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                        </div>
+                                    <div class="col-sm-12">
+                                        <div class="form-group">
+                                            <label for="language">{{ __('Content Type') }}</label>
+                                            <select
+                                                class="form-control {{$widget->location == \Modules\Widget\Enums\WidgetLocation::RIGHT_SIDEBAR? '':'d-none'}}"
+                                                name="content_type" id="content_type">
+                                                @foreach (__('widget::widget.content_type') as $value => $item)
+                                                    <option value="{{$value}}"
+                                                            @if($widget->content_type == $value) Selected @endif>{{$item}}</option>
+                                                @endforeach
+                                            </select>
+                                            <select
+                                                class="form-control {{$widget->location == \Modules\Widget\Enums\WidgetLocation::FOOTER? '':'d-none'}}"
+                                                name="content_type_footer" id="content_type_footer">
+                                                @foreach (__('widget::widget.content_type_footer') as $value => $item)
+                                                    <option value="{{$value}}"
+                                                            @if($widget->content_type == $value) Selected @endif>{{$item}}</option>
+                                                @endforeach
+                                            </select>
+                                            <select
+                                                class="form-control {{$widget->location == \Modules\Widget\Enums\WidgetLocation::HEADER? '':'d-none'}}"
+                                                name="content_type_header" id="content_type_header">
+                                                @foreach (__('widget::widget.content_type_header') as $value => $item)
+                                                    <option value="{{$value}}"
+                                                            @if($widget->content_type == $value) Selected @endif>{{$item}}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-12 d-none" id="addBlocekerDetected">
+                                        <div class="form-group">
+                                            <label for="widget-order" class="col-form-label alert-danger">Please Unblock the
+                                                adBlocker</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-12 {{$widget->content_type == \Modules\Widget\Enums\WidgetContentType::TAGS? '':'d-none'}}" id="tags_container">
+                                        <div class="form-group">
+                                            <label for="widget_title" class="col-form-label">{{ __('tags') }}*</label>
+                                            <input id="widget_title" name="tags" type="text" class="form-control" data-role="tagsinput" value="{{ $widget->content }}">
+                                        </div>
+                                    </div>
+                                    <div
+                                        class="col-sm-12 {{$widget->content_type == \Modules\Widget\Enums\WidgetContentType::AD? '':'d-none'}}"
+                                        id="ad-area">
+                                        <div class="form-group">
+                                            <label for="language">{{ __('ad') }}</label>
+                                            <select class="form-control" name="ad" id="ad">
+                                                @foreach ($ads as $value => $ad)
+                                                    <option value="{{$ad->id}}">{{$ad->ad_name}}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    </div>
 
-                        <div
-                            class="col-sm-12 {{$widget->content_type == \Modules\Widget\Enums\WidgetContentType::VOTING_POLL? '':'d-none'}}"
-                            id="poll-area">
-                            <div class="form-group">
-                                <label for="language">{{ __('poll') }}</label>
-                                <select class="form-control" name="poll" id="poll">
-                                    @foreach ($polls as $value => $poll)
-                                        <option value="{{$poll->id}}" {{$widget->poll_id == $poll->id? 'selected':''}}>{{$poll->question}}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                        </div>
+                                    <div
+                                        class="col-sm-12 {{$widget->content_type == \Modules\Widget\Enums\WidgetContentType::VOTING_POLL? '':'d-none'}}"
+                                        id="poll-area">
+                                        <div class="form-group">
+                                            <label for="language">{{ __('poll') }}</label>
+                                            <select class="form-control" name="poll" id="poll">
+                                                @foreach ($polls as $value => $poll)
+                                                    <option value="{{$poll->id}}" {{$widget->poll_id == $poll->id? 'selected':''}}>{{$poll->question}}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    </div>
 
-                        <div class="col-sm-12">
-                            <div class="form-group">
-                                <label for="widget-order" class="col-form-label">{{ __('order') }}</label>
-                                <input id="widget-order" name="order" value="{{ $widget->order }}" type="number"
-                                       value="1" class="form-control">
-                            </div>
-                        </div>
-                    @if(($widget->is_custom==1))
-                        <!-- tinemcey start -->
-                            <div
-                                class="row p-l-15 {{ ($widget->content_type != \Modules\Widget\Enums\WidgetContentType::CUSTOM) ? 'd-none':'' }}"
-                                id="content_container">
-                                <div class="col-12 form-group">
-                                    <label for="content" class="col-form-label">{{ __('content') }}</label>
-                                    <textarea id="content" name="content" cols="30"
-                                              rows="5">{!! $widget->content !!}</textarea>
-                                </div>
-                            </div>
-                            <!-- tinemcey end -->
-                        @endif
+                                    <div class="col-sm-12">
+                                        <div class="form-group">
+                                            <label for="widget-order" class="col-form-label">{{ __('order') }}</label>
+                                            <input id="widget-order" name="order" value="{{ $widget->order }}" type="number"
+                                                value="1" class="form-control">
+                                        </div>
+                                    </div>
+                                
+                                    @if(($widget->is_custom==1))
+                                    <!-- tinemcey start -->
+                                        <div
+                                            class="row p-l-15 {{ ($widget->content_type != \Modules\Widget\Enums\WidgetContentType::CUSTOM) ? 'd-none':'' }}"
+                                            id="content_container">
+                                            <div class="col-12 form-group">
+                                                <label for="content" class="col-form-label">{{ __('content') }}</label>
+                                                <textarea id="content" name="content" cols="30"
+                                                        rows="5">{!! $widget->content !!}</textarea>
+                                            </div>
+                                        </div>
+                                        <!-- tinemcey end -->
+                                    @endif
 
-                        <div class="row p-l-15">
-                            <div class="col-12 col-md-4">
-                                <div class="form-title">
-                                    <label for="status">{{ __('status') }}</label>
-                                </div>
-                            </div>
-                            <div class="col-3 col-md-2">
-                                <label class="custom-control custom-radio custom-control-inline">
-                                    <input type="radio" name="status" value="1" @if($widget->status==1) checked=""
-                                           @endif class="custom-control-input">
-                                    <span class="custom-control-label">{{ __('show') }}</span>
-                                </label>
-                            </div>
-                            <div class="col-3 col-md-2">
-                                <label class="custom-control custom-radio custom-control-inline">
-                                    <input type="radio" name="status" value="0" @if($widget->status==0) checked=""
-                                           @endif class="custom-control-input">
-                                    <span class="custom-control-label">{{ __('hide') }}</span>
-                                </label>
-                            </div>
-                        </div>
+                                    <div class="row p-l-15">
+                                        <div class="col-12 col-md-4">
+                                            <div class="form-title">
+                                                <label for="status">{{ __('status') }}</label>
+                                            </div>
+                                        </div>
+                                        <div class="col-3 col-md-2">
+                                            <label class="custom-control custom-radio custom-control-inline">
+                                                <input type="radio" name="status" value="1" @if($widget->status==1) checked=""
+                                                    @endif class="custom-control-input">
+                                                <span class="custom-control-label">{{ __('show') }}</span>
+                                            </label>
+                                        </div>
+                                        <div class="col-3 col-md-2">
+                                            <label class="custom-control custom-radio custom-control-inline">
+                                                <input type="radio" name="status" value="0" @if($widget->status==0) checked=""
+                                                    @endif class="custom-control-input">
+                                                <span class="custom-control-label">{{ __('hide') }}</span>
+                                            </label>
+                                        </div>
+                                    </div>
 
-                        <div class="row">
-                            <div class="col-12">
-                                <div class="form-group form-float form-group-sm">
-                                    <button type="submit" class="btn btn-primary float-right m-t-20"><i
-                                            class="m-r-10 mdi mdi-content-save-all"></i>{{ __('update_widget') }}
-                                    </button>
-                                </div>
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <div class="form-group form-float form-group-sm">
+                                                <button type="submit" class="btn btn-primary float-right m-t-20"><i
+                                                        class="m-r-10 mdi mdi-content-save-all"></i>{{ __('update_widget') }}
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                
                             </div>
                         </div>
-                    </div>
+                        {!! Form::close() !!}
+
+
+                        <!-- page info end-->
                 </div>
             </div>
-        {!! Form::close() !!}
-        <!-- page info end-->
         </div>
     </div>
 

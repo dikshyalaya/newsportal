@@ -20,7 +20,7 @@ class WidgetController extends Controller
 
     public function widgets()
     {
-        $widgets    = Widget::orderBy('location', 'asc')->orderBy('order', 'asc')->paginate(15);
+        $widgets    = Widget::orderBy('title', 'asc')->orderBy('order', 'asc')->paginate(15);
 
         return view('widget::widgets', compact('widgets'));
     }
@@ -34,7 +34,9 @@ class WidgetController extends Controller
 
         $tags           = Tag::orderby('id')->get();
 
-        return view('widget::create', compact('activeLang', 'ads','tags', 'polls'));
+        $order          = Widget::max("order") + 1;
+
+        return view('widget::create', compact('activeLang', 'ads','tags', 'polls', 'order'));
     }
 
     public function store(Request $request)

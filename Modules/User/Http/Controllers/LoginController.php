@@ -20,6 +20,8 @@ class LoginController extends Controller
 
     public function postLogin(Request $request)
     {
+
+       
         Validator::make($request->all(), [
             'email'     => 'required|email',
             'password'  => 'required|min:6|max:30',

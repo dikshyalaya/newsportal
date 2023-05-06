@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\Log;
 use Modules\Post\Entities\Category;
 use Illuminate\Support\Facades\Cache;
 use Intervention\Image\Facades\Image;
-use Modules\Post\Entities\SubCategory;
+
 use Aws\S3\Exception\S3Exception as S3;
 use Illuminate\Support\Facades\Storage;
 use Modules\Language\Entities\Language;
@@ -31,7 +31,7 @@ class RssController extends Controller
     {
         $categories     = Category::all();
         $activeLang     = Language::where('status', 'active')->orderBy('name', 'ASC')->get();
-        $feeds          = RssFeed::orderBy('id','desc')->with('category','subCategory')->paginate('15');
+        $feeds          = RssFeed::orderBy('id','desc')->with('category')->paginate('15');
 
         return view('post::rss_feeds',compact('activeLang','categories','feeds'));
     }
@@ -43,9 +43,9 @@ class RssController extends Controller
     public function importRss()
     {
         $categories     = Category::where('language', \App::getLocale() ?? settingHelper('default_language'))->get();
-        $subCategories  = SubCategory::all();
+       
         $activeLang     = Language::where('status', 'active')->orderBy('name', 'ASC')->get();
-        return view('post::import_rss', compact('categories','subCategories','activeLang'));
+        return view('post::import_rss', compact('categories','activeLang'));
     }
 
     /**
@@ -108,10 +108,7 @@ class RssController extends Controller
         $feed           = RssFeed::findOrfail($id);
         $categories     = Category::where('language',$feed->language)->get();
 
-        $subCategories  = [];
-        if($feed->category_id != ""){
-            $subCategories  = SubCategory::where('category_id',$feed->category['id'])->get();
-        }
+       
         return view('post::edit_rss',compact('feed','activeLang','categories','subCategories'));
     }
 

@@ -23,7 +23,7 @@
                         <h3 class="entry-title"><a href="{{ route('article.detail', ['id' => $firstPost->slug]) }}">{!! \Illuminate\Support\Str::limit($firstPost->title, 50) !!}</a></h3>
                         <div class="entry-meta mb-2">
                             <ul class="global-list">
-                                <li>{{ __('post_by') }} <a href="{{ route('site.author',['id' => $firstPost->user->id]) }}">{{ data_get($firstPost, 'user.first_name') }}</a></li>
+                                <li> <a href="{{ route('site.author',['id' => $firstPost->user->id]) }}">{{ data_get($firstPost, 'user.first_name') }}</a></li>
                                 <li><a href="{{route('article.date', date('Y-m-d', strtotime($firstPost->updated_at)))}}">{{ Carbon\Carbon::parse($firstPost->updated_at)->translatedFormat('F j, Y') }}</a></li>
                             </ul>
                         </div>
@@ -40,7 +40,7 @@
                            <a href="{{ route('article.detail', ['id' => $post->slug]) }}"><p>{!! \Illuminate\Support\Str::limit($post->title, 25) !!}</p></a>
                             <div class="entry-meta">
                                 <ul class="global-list">
-                                    <li>{{ __('post_by') }} <a href="{{ route('site.author',['id' => $firstPost->user->id]) }}"> {{ data_get($post, 'user.first_name') }}</a></li>
+                                    <li> <a href="{{ route('site.author',['id' => $firstPost->user->id]) }}"> {{ data_get($post, 'user.first_name') }}</a></li>
                                     <li><a href="{{route('article.date', date('Y-m-d', strtotime($post->updated_at)))}}"> {{ Carbon\Carbon::parse($post->updated_at)->translatedFormat('F j, Y') }}</a></li>
                                 </ul>
                             </div>

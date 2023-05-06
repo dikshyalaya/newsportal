@@ -40,7 +40,7 @@
                                 </h2>
                                 <div class="entry-meta">
                                     <ul class="global-list">
-                                        <li>{{ __('post_by') }} <a
+                                        <li><a
                                                 href="{{ route('site.author',['id' => $post['user']->id]) }}">{{ data_get($post, 'user.first_name') }}</a>
                                         </li>
                                         <li><a href="{{route('article.date', date('Y-m-d', strtotime($post->updated_at)))}}">{{ Carbon\Carbon::parse($post->updated_at)->translatedFormat('F j, Y') }}</a>
@@ -95,6 +95,7 @@
                                         <p>{!! \Illuminate\Support\Str::limit($post->title, 40) !!}</p></a>
                                     <div class="entry-meta">
                                         <ul class="global-list">
+                                            <li><a  href="{{ route('site.author',['id' => $post->user->id]) }}"> {{ data_get($post, 'user.first_name') }}</a></li>
                                             <li><a href="{{route('article.date', date('Y-m-d', strtotime($post->updated_at)))}}"> {{ Carbon\Carbon::parse($post->updated_at)->translatedFormat('F j, Y') }}</a></li>
                                         </ul>
                                     </div>

@@ -9,7 +9,7 @@
     <div class="entry-meta mb-2">
         <ul class="global-list">
             <li><i class="fa fa-calendar-minus-o" aria-hidden="true"></i>
-                <a href="{{route('article.date', date('Y-m-d', strtotime($post->updated_at)))}}">{{ Carbon\Carbon::parse($post->updated_at)->locale('bn')->translatedFormat('F j, Y') }}</a>
+                <a href="{{route('article.date', date('Y-m-d', strtotime($post->updated_at)))}}">{{ Carbon\Carbon::parse($post->updated_at)->locale('en')->translatedFormat('F j, Y') }}</a>
             </li>
         </ul>
     </div>

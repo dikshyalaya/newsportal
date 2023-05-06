@@ -78,7 +78,7 @@ class WidgetService extends Service
 
     private function recommendedPosts()
     {
-        return Post::with(['image', 'user','category'])
+        return Post::with(['image', 'user','categories'])
             ->where('recommended', 1)
             ->orderBy('recommended_order')
             ->take(4)
@@ -91,7 +91,7 @@ class WidgetService extends Service
     }
     private function quiz()
     {
-        return Post::with(['image', 'user','category'])
+        return Post::with(['image', 'user','categories'])
             ->where('post_type', 'trivia-quiz')
             ->orWhere('post_type', 'personality-quiz')
             ->orderBy('id', 'desc')
@@ -105,7 +105,7 @@ class WidgetService extends Service
     }
     private function featuredPosts()
     {
-        return Post::with(['image', 'user','category'])
+        return Post::with(['image', 'user','categories'])
             ->where('featured', 1)
             ->orderBy('featured_order')
             ->take(4)

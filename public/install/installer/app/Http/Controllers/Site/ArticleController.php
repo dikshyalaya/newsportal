@@ -538,7 +538,7 @@ class ArticleController extends Controller
 	{
 
 		$skip = $request->last_id * 6;
-		$postCount = Post::where('category_id', $request->category_id)->where('visibility', 1)
+		$postCount = Post::where('visibility', 1)
 			->where('status', 1)
 			->when(Sentinel::check() == false, function ($query) {
 				$query->where('auth_required', 0);
