@@ -91,7 +91,7 @@
                                 <div class="tab-content" id="nav-tabContent">
                                     <div class="tab-pane fade show active" id="general_settings" role="tabpanel">
                                         {!!  Form::open(['route' => 'update-settings', 'method' => 'post', 'enctype' => 'multipart/form-data', 'id' => 'update-settings']) !!}
-                                        <div class="col-sm-12">
+                                        <div class="col-sm-12 d-none">
                                             <div class="form-group">
                                                 <label for="settings_language">{{ __('default_language') }}</label>
                                                 <select class="form-control" name="default_language"
@@ -105,17 +105,20 @@
                                                 </select>
                                             </div>
                                         </div>
-                                        <div class="col-sm-12">
-                                            <div class="form-group">
-                                                <label for="timezone"
-                                                       class="col-form-label">{{ __('timezone') }}</label>
-                                                @php
-                                                    $selected = settingHelper('timezone');
-                                                    $placeholder = 'Select a timezone';
-                                                    $formAttributes = array('class' => 'form-control', 'name' => 'timezone');
-                                                    $optionAttributes = array('customValue' => 'true');
-                                                @endphp
-                                                {!! Timezone::selectForm($selected, $placeholder, $formAttributes, $optionAttributes) !!}
+                                        <div class="col-sm-12-">
+                                            <div class=" row form-group">
+                                                <label for="timezone "
+                                                       class="col-form-label col-md-3">{{ __('timezone') }}</label>
+
+                                                <div class="col-md-6">
+                                                    @php
+                                                        $selected = settingHelper('timezone');
+                                                        $placeholder = 'Select a timezone';
+                                                        $formAttributes = array('class' => 'form-control', 'name' => 'timezone');
+                                                        $optionAttributes = array('customValue' => 'true');
+                                                    @endphp
+                                                    {!! Timezone::selectForm($selected, $placeholder, $formAttributes, $optionAttributes) !!}
+                                                </div>
                                             </div>
                                         </div>
 

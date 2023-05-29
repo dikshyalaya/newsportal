@@ -115,7 +115,7 @@
                                                             @foreach($mainMenu->children as $child)
                                                                 @php $key = 0 @endphp
                                                                 <li class="nav-item">
-                                                                    <a class="nav-link {{$mainMenu->children[$key]->id == $child->id? 'active':''}}" id="{{$child->label}}-tab" data-toggle="tab" href="#{{$child->category->slug}}" role="tab" aria-controls="{{$child->label}}" aria-selected="{{$mainMenu->children[$key]->id == $child->id? 'true':'false'}}">{{$child->label == 'gallery'? __('gallery'):$child->label}}</a>
+                                                                    <a class="nav-link {{$mainMenu->children[$key]->id == $child->id? 'active':''}}" id="{{$child->label}}-tab" data-toggle="tab" href="#@if($child->category) {{$child->category->slug}} @else '' @endif" role="tab" aria-controls="{{$child->label}}" aria-selected="{{$mainMenu->children[$key]->id == $child->id? 'true':'false'}}">{{$child->label == 'gallery'? __('gallery'):$child->label}}</a>
                                                                 </li>
                                                                 @php $key++ @endphp
                                                             @endforeach
@@ -124,7 +124,7 @@
                                                     <div class="col-md-10">
                                                         <div class="tab-content" id="myTabContent">
                                                             @foreach($mainMenu->children as $child)
-                                                                <div class="tab-pane fade {{$mainMenu->children[0]->id == $child->id? 'show active':''}}" id="{{$child->category->slug}}" role="tabpanel" aria-labelledby="{{$child->label}}-tab">
+                                                                <div class="tab-pane fade {{$mainMenu->children[0]->id == $child->id? 'show active':''}}" id="@if($child->category) {{$child->category->slug}} @else '' @endif" role="tabpanel" aria-labelledby="{{$child->label}}-tab">
                                                                     <div class="row">
                                                                         @foreach($child->postByCategory as $item)
                                                                             <div class="col-md-6 col-lg-3">

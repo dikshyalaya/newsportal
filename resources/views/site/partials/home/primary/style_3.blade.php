@@ -48,7 +48,7 @@
                                         </h2>
                                         <div class="entry-meta" data-animation="animated pulse">
                                             <ul class="global-list justify-content-center">
-                                                <li><a
+                                                <li> <a
                                                         href="{{ route('site.author',['id' => $post->user->id]) }}"> {{ data_get($post, 'user.first_name') }}</a>
                                                 </li>
                                                 <li>

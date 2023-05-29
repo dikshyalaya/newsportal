@@ -136,8 +136,7 @@ class UserController extends Controller
             'first_name'    => 'required',
             'last_name'     => 'required|min:2|max:30',
             'profile_image' => 'mimes:jpg,JPG,JPEG,jpeg,gif,png,ico|max:5120',
-            'phone'         => ['min:11','max:14'],
-            'dob'           => 'required',
+            'phone'         => ['min:11','max:14'],            
             'gender'        => 'required',
         ])->validate();
 

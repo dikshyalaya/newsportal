@@ -19,9 +19,14 @@ class CreatePostsTable extends Migration
             $table->string('slug')->unique();
             $table->text('content');
             $table->string('language');
-            $table->integer('user_id')->unsigned()->nullable();           
+
+            $table->integer('user_id')->unsigned()->nullable();
+            $table->bigInteger('category_id')->unsigned()->nullable();
+            $table->bigInteger('sub_category_id')->unsigned()->nullable();
             $table->enum('post_type', ['article', 'video', 'audio'])->default('article');
+
             $table->boolean('submitted')->default(0)->comment('0 Non Submitted, 1 submitted');
+
             $table->bigInteger('image_id')->unsigned()->nullable();
             $table->boolean('visibility')->default(0);
             $table->boolean('auth_required')->default(0);
@@ -52,7 +57,13 @@ class CreatePostsTable extends Migration
             $table->boolean('status')->default(0);
             $table->bigInteger('total_hit')->default(0);
 
-            $table->timestamps();            
+            $table->timestamps();
+
+            $table->foreign('category_id')->references('id')->on('categories')
+                ->onUpdate('cascade')->onDelete('set null');
+
+            $table->foreign('sub_category_id')->references('id')->on('sub_categories')
+                ->onUpdate('cascade')->onDelete('set null');
 
             $table->foreign('user_id')->references('id')->on('users')
                 ->onUpdate('cascade')->onDelete('set null');

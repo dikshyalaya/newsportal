@@ -540,7 +540,7 @@ active
 <script type="text/javascript">
 
 $(document).ready(function(){
-
+    tinyMceEditor.init("textarea.post-content");
     $('.post-categories').click(function() {
         checked = $("input[type=checkbox].post-categories:checked").length;
         if(checked==0) checked="";

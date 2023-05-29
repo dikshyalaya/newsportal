@@ -81,11 +81,11 @@
                                                    class="form-control" required>
                                         </div>
                                     </div>
-                                    <div class="col-sm-6">
+                                    <div class="col-sm-6 d-none">
                                         <div class="form-group">
                                             <label for="dob" class="col-form-label">{{ __('dob') }}  *</label>
                                             <input id="dob" name="dob" type="date" max="{{ date("Y-m-d") }}"
-                                                   pattern="\d{4}-\d{2}-\d{2}" class="form-control" required>
+                                                   pattern="\d{4}-\d{2}-\d{2}" class="form-control" >
                                         </div>
                                     </div>
                                     <div class="col-sm-6">

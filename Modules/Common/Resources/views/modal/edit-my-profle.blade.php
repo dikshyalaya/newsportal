@@ -21,7 +21,7 @@
             <label for="phone" class="col-form-label">{{ __('phone') }}</label>
             <input id="phone" name="phone" value="{{ $user->phone }}" type="text" class="form-control">
         </div>
-        <div class="form-group">
+        <div class="form-group d-none">
             <label for="dob" class="col-form-label">{{ __('dob') }}</label>
             <input id="dob" name="dob" value="{{ $user->dob }}" type="date" max="{{ date('Y-m-d') }}" pattern="\d{4}-\d{2}-\d{2}" class="form-control">
         </div>

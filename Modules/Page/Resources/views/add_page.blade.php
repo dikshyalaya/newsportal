@@ -95,7 +95,7 @@ show
                                     <div class="col-12" id="description">
                                         <div class="form-group">
                                             <label for="content" class="col-form-label">{{ __('description') }}</label>
-                                            <textarea name="description" id="content" class="form-control post-content"></textarea>
+                                            <textarea required name="description" id="content" class="form-control post-content"></textarea>
                                         </div>
                                     </div>
                                 </div>
@@ -291,4 +291,14 @@ show
     </div>
 </div>
 
+@endsection
+
+@section('script')
+<script type="text/javascript">
+    $(document).ready(function(){
+        tinyMceEditor.init("textarea.post-content");
+        
+
+    });
+</script>
 @endsection

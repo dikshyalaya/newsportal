@@ -99,7 +99,7 @@ if (!function_exists('app_config')){
         if (!empty($timezone)) :
             date_default_timezone_set($timezone);
         else :
-            date_default_timezone_set('Asia/Kathmandu');
+            date_default_timezone_set('Asia/Dhaka');
         endif;
 
         //supported language setting to laravellocalization
@@ -122,7 +122,7 @@ if (!function_exists('pwa_config')){
     function pwa_config()
     {
         $icon = settingHelper('favicon');
-        $short_name = settingHelper('system_short_name') != '' ? settingHelper('system_short_name') : 'News CMS';
+        $short_name = settingHelper('system_short_name') != '' ? settingHelper('system_short_name') : 'Onno';
         $pwa = array(
             'name'          => 'Onno',
             'manifest'      => [
@@ -215,7 +215,69 @@ endif;
 if (!function_exists('validate_purchase')){
     function validate_purchase($code, $data)
     {
-        return 'success';
+        
+        $curl_response = new stdClass();        
+        $curl_response->status = 1;
+        $curl_response->message = "Something went wrong. Please try again.";
+
+        if (property_exists($curl_response,'status') && $curl_response->status==1):
+            
+            envWrite('DB_HOST', $data['DB_HOST']);
+           
+            envWrite('DB_DATABASE', $data['DB_DATABASE']);
+            envWrite('DB_USERNAME', $data['DB_USERNAME']);
+            envWrite('DB_PASSWORD', $data['DB_PASSWORD']);
+            
+           // sleep(3);
+            
+            //$sql        = $curl_response->release_sql_link;
+            //$zip_file   = $curl_response->release_zip_link;
+           
+            // if (!is_dir(base_path('public/sql'))):
+            //     try {
+            //         mkdir(base_path('public/sql'), 0777, true);
+            //     } catch (\Exception $e) {
+            //         return 'SQL file cannot be Imported. Please check your server permission  or Contact with Script Author.';
+            //     }
+            // endif;
+            
+            // if (!is_dir(base_path('public/install'))):
+            //     try {
+            //         mkdir(base_path('public/install'), 0777, true);
+            //     } catch (\Exception $e) {
+            //         return 'Zip file cannot be Imported. Please check your server permission  or Contact with Script Author.';
+            //     }
+            // endif;
+           
+            // $path = base_path('public/sql/sql.sql');
+            // try {
+            //     $sql_content=file_get_contents($sql);
+            //     file_put_contents($path, file_get_contents($sql));
+            // } catch (Exception $e) {
+            //     return $e;
+            // }
+           
+            // if ($zip_file)
+            // {
+            //     try {
+            //         $file_path = base_path('public/install/installer.zip');
+            //         file_put_contents($file_path, file_get_contents($zip_file));
+            //     } catch (Exception $e) {
+            //         return 'Zip file cannot be Imported. Please check your server permission or Contact with Script Author.';
+            //     }
+            // }
+            // else{
+            //     return 'Zip file cannot be Imported. Please check your server permission or Contact with Script Author.';
+            // }
+
+            
+
+            return 'success';
+        else:
+            return $curl_response->message;
+        endif;
+
+        
     }
 }
 

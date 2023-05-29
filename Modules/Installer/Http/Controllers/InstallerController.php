@@ -55,8 +55,15 @@ class InstallerController extends Controller
         $email          = $request->email;
         $login_password = $request->password ? $request->password : "";
 
-       
-       //check for valid database connection
+        $purchase_code  = "718b8460-a609-4e59-8038-62917a738603";//$request->purchase_code;
+
+        //check required fields
+        // if (!($host && $dbuser && $dbname && $first_name && $last_name && $email && $login_password && $purchase_code)) {
+        //     echo json_encod.e(array("success" => false, "message" => "Please input all fields."));
+        //     exit();
+        // }
+
+        //check for valid database connection
         $mysqli = @new \mysqli($host, $dbuser, $dbpassword, $dbname);
 
         if (mysqli_connect_errno()) {
@@ -71,6 +78,14 @@ class InstallerController extends Controller
         if (filter_var($email, FILTER_VALIDATE_EMAIL) === false) {
             return redirect()->back()->with('error', 'Please input a valid email.')->withInput($request->all());
             // echo json_encode(array("success" => false, "message" => "Please input a valid email."));
+            // exit();
+        }
+
+        // validate purchase code
+        $verification = $this->valid_purchase_code($purchase_code);
+        if (!$verification || $verification != "verified") {
+            return redirect()->back()->with('error', 'Please enter a valid purchase code.')->withInput($request->all());
+            // echo json_encode(array("success" => false, "message" => "Please enter a valid purchase code."));
             // exit();
         }
 
@@ -233,9 +248,8 @@ class InstallerController extends Controller
     }
 
     function valid_purchase_code($purchase_code =''){
-      
-        $verified  = "verified";
-        
+        $purchase_code = urlencode($purchase_code);
+        $verified  = "verified";        
         return $verified;
     }
 

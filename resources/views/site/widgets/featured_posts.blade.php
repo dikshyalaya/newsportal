@@ -1,5 +1,10 @@
 @php
+
+   
     $firstPost = $content->first();
+    
+  
+    
 @endphp
 @if (!blank($content))
     <div class="sg-widget">
@@ -10,9 +15,11 @@
             <div class="entry-content absolute">
                 <div class="category">
                     <ul class="global-list">
-                        @isset($firstPost->category)
-                            <li><a href="{{ url('category',$firstPost->category->slug) }}">{{ data_get($firstPost, 'category.category_name') }}</a></li>
-                        @endisset
+                        @foreach($firstPost->categories as $category)
+                            <li>                                
+                                <a href="{{ url('category',$category->slug) }}">{{ data_get($category, 'category_name') }}</a>                            
+                            </li>
+                        @endforeach
                     </ul>
                 </div>
                 <h2 class="entry-title">

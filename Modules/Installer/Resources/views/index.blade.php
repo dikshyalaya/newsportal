@@ -559,6 +559,7 @@ if (!empty($_SERVER['HTTPS'])) {
                                     </div>
                                 </div>
 
+
                                 <div class="panel-footer">
                                     <button type="submit" class="btn btn-info form-next">
                                         <span class="loader hide"> Installing...</span>
@@ -572,7 +573,7 @@ if (!empty($_SERVER['HTTPS'])) {
                         <div role="tabpanel" class="tab-pane" id="finished-tab">
                             <div class="section">
                                 <div class="clearfix">
-                                    <i class="status fa fa-check-circle-o pull-left"> </i><span class="pull-left">Congratulation! You have successfully installed <strong>  News CMS </strong></span>
+                                    <i class="status fa fa-check-circle-o pull-left"> </i><span class="pull-left">Congratulation! You have successfully installed <strong>  News CMS</strong></span>
                                 </div>
 
                                 <a class="go-to-login-page" href="{{url('login')}}">

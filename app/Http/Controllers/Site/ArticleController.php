@@ -493,88 +493,18 @@ class ArticleController extends Controller
 
 	public function postByCategory($slug)
 	{
-
-
-		$id = Category::where('slug', $slug)->first()->id;
-		$category = Category::where('category_id', 4);
-
-		print_r($category);
-		exit;
-		//$posts= Post::with('categories')->where('category_post.category_id', $id)->get();
-			$posts =	$category->posts;
-		print_r($posts->count());
-		exit;
-
-
-
-
-
 		try {
-			$id = Category::where('slug', $slug)->first()->id;
-			//$category = Category::with('posts')->where('category_id', $id);
-				$posts =	Post::with('categories')->get();
-			print_r($category);
-			exit;
-
-			//$category = Category::with('posts')->where('category_id', $id);
-
-			 echo $slug. "::". $category->id ;
-			 echo "<hr>";
-			 exit;
-			 //$posts = $category->posts;
-			// $posts = Post::join('category_post', 'post.id', "category_post.post_id")->where("category_post.category_id", $id);
-
-			//..$posts= Post:with('')
-			 $totalPostCount = $posts->count();
-			 echo "count: ".$totalPostCount;
-			 $post = $posts->first();
-			 print_r($post);
-			 exit;
-
-			 foreach($posts as $post){
-				print_r($post);
-			 }
-			 exit;
-
 			
-
-			 echo $totalPostCount;
-			 //var_dump($posts->first());
-			 exit;
 			
-
-			// $posts = Post::with(['image', 'user'])->where('category_id', $id)->where('visibility', 1)
-			// 	->where('status', 1)
-			// 	->when(Sentinel::check() == false, function ($query) {
-			// 		$query->where('auth_required', 0);
-			// 	})
-			// 	->orderBy('id', 'desc')
-			// 	->where('language', \App::getLocale() ?? settingHelper('default_language'))->limit(6)
-			// 	->get();
-
+			$category = Category::with('categoryPosts')->where('slug', $slug)->first();
+			$id = $category->id;
+			$posts = $category->categoryPosts->take(10);
+			$totalPostCount = sizeof($posts);
 			
-
-// 			DB::table("posts")
-// ->innerJoin("category_post", function($join){
-// 	$join->on("posts.`id`", "=", "category_post.`post_id`");
-// })
-// ->where("category_post.`category_id`", "=", 4)
-// ->get();
-
-			// $totalPostCount = Post::where('category_id', $id)->where('visibility', 1)
-			// 	->where('status', 1)
-			// 	->when(Sentinel::check() == false, function ($query) {
-			// 		$query->where('auth_required', 0);
-			// 	})
-			// 	->orderBy('id', 'desc')
-			// 	->where('language', \App::getLocale() ?? settingHelper('default_language'))
-			// 	->count();
 
 			$widgetService = new WidgetService();
 			$widgets = $widgetService->getWidgetDetails();
 
-			//dd($relatedPost);
-			
 			$tracker = new VisitorTracker();
 			$tracker->page_type = \App\Enums\VisitorPageType::PostByCategoryPage;
 			$tracker->url = \Request::url();
@@ -582,7 +512,7 @@ class ArticleController extends Controller
 			$tracker->ip = \Request()->ip();
 			$tracker->agent_browser = UserAgentBrowser(\Request()->header('User-Agent'));
 			$tracker->save();
-		
+
 			return view('site.pages.category_posts', compact('posts', 'widgets', 'totalPostCount', 'id'));
 		} catch (\Exception $e) {
 			return view('site.pages.404');
@@ -595,6 +525,7 @@ class ArticleController extends Controller
 	{
 
 		$skip = $request->last_id * 6;
+		
 		$postCount = Post::where('category_id', $request->category_id)->where('visibility', 1)
 			->where('status', 1)
 			->when(Sentinel::check() == false, function ($query) {
@@ -1099,7 +1030,7 @@ class ArticleController extends Controller
 			$appendRow .= "<div class='sg-post medium-post-style-1'>";
 			$appendRow .= "<div class='entry-header'>";
 			$appendRow .= "<div class='entry-thumbnail'>";
-			$appendRow .= "<a href=' " . route('article.detail', ['id' => $post->slug]) . "'>";
+			//$appendRow .= "<a href=' " . route('article.detail', ['id' => $post->slug]) . "'>";
 
 			if (isFileExist($post->image, $result = @$post->image->medium_image)) {
 				$appendRow .= "<img  src=' " . basePath($post->image) . '/' . $result . " ' class='img-fluid'   alt='" . $post->title . "  '>";

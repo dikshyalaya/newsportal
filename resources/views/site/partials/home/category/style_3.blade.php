@@ -18,7 +18,7 @@
         </div>
         <div class="row">
             @foreach($topPosts as $firstPost)
-                <div class="col-lg-6">
+                <div class="col-lg-6  pl-0">
                     <div class="sg-post">
                         @include('site.partials.home.category.first_post')
                         <div class="entry-content">
@@ -36,7 +36,7 @@
             @endforeach
 
             @foreach($bottomPosts->chunk(3) as $postGroup)
-                <div class="col-lg-6">
+                <div class="col-lg-6 pl-0">
                     @foreach($postGroup as $post)
                         <div class="sg-post small-post post-style-1">
                             @include('site.partials.home.category.post_block')

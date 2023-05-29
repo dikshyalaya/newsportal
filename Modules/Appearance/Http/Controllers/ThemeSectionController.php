@@ -67,6 +67,9 @@ class ThemeSectionController extends Controller
         $section->theme_id      = 1;
         $section->type          = $request->type;
 
+        $order = ThemeSection::orderBy('id', 'desc')->pluck('order')->first()+1;
+        $section->order = $order;
+
         if($request->type == \Modules\Appearance\Enums\ThemeSectionType::CATEGORY):
 
         $category               = Category::findOrFail($request->category_id);

@@ -32,7 +32,7 @@
                 </div>
             </div>
 
-            <div class="col-lg-6">
+            <div class="col-lg-6 pl-0">
                 @foreach($blockPosts as $post)
                     <div class="sg-post small-post post-style-1">
                         @include('site.partials.home.category.post_block')

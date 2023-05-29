@@ -24,7 +24,7 @@
                     </h3>
                     <div class="entry-meta mb-2">
                         <ul class="global-list">
-                            <li>{{__('post_by')}} <a href="{{ route('site.author',['id' => $firstPost->user->id]) }}">{{ data_get($firstPost, 'user.first_name') }}</a></li>
+                            <li> <a href="{{ route('site.author',['id' => $firstPost->user->id]) }}">{{ data_get($firstPost, 'user.first_name') }}</a></li>
                             <li><a href="{{route('article.date', date('Y-m-d', strtotime($firstPost->updated_at)))}}">{{ Carbon\Carbon::parse($firstPost->updated_at)->translatedFormat('F j, Y') }}</a></li>
                         </ul>
                     </div>
@@ -34,7 +34,7 @@
         @endif
         <div class="row">
             @foreach($bottomPosts->chunk(3) as $postGroup)
-                <div class="col-lg-6">
+                <div class="col-lg-6 pl-0">
                     @foreach($postGroup as $post)
                         <div class="sg-post small-post post-style-1">
                             @include('site.partials.home.category.post_block')

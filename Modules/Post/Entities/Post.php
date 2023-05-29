@@ -22,17 +22,20 @@ class Post extends Model implements Feedable
         return $this->belongsTo('Modules\Gallery\Entities\Video', 'video_id','id');
     }
 
-    public function category(){
-        return $this->belongsTo('Modules\Post\Entities\Category');
-    }
-    
+     public function category(){
+        return $this->belongsToMany('Modules\Post\Entities\Category','category_post');
+    }    
+
     public function categories()
     {
-        return $this->belongsToMany('Modules\Post\Entities\Category');
+            //return $this->belongsToMany(RelatedModel, pivot_table_name, foreign_key_of_current_model_in_pivot_table, foreign_key_of_other_model_in_pivot_table);
+            return $this->belongsToMany(
+                    'Modules\Post\Entities\Category',
+                    'category_post',
+                    'post_id',
+                    'category_id');
     }
-    public function subCategory(){
-        return $this->belongsTo('Modules\Post\Entities\SubCategory');
-    }
+    
     public function user(){
         return $this->belongsTo('Modules\User\Entities\User');
     }

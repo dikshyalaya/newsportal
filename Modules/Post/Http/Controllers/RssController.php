@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\Log;
 use Modules\Post\Entities\Category;
 use Illuminate\Support\Facades\Cache;
 use Intervention\Image\Facades\Image;
-
+use Modules\Post\Entities\SubCategory;
 use Aws\S3\Exception\S3Exception as S3;
 use Illuminate\Support\Facades\Storage;
 use Modules\Language\Entities\Language;
@@ -31,7 +31,7 @@ class RssController extends Controller
     {
         $categories     = Category::all();
         $activeLang     = Language::where('status', 'active')->orderBy('name', 'ASC')->get();
-        $feeds          = RssFeed::orderBy('id','desc')->with('category')->paginate('15');
+        $feeds          = RssFeed::orderBy('id','desc')->with('category','subCategory')->paginate('15');
 
         return view('post::rss_feeds',compact('activeLang','categories','feeds'));
     }
@@ -43,9 +43,9 @@ class RssController extends Controller
     public function importRss()
     {
         $categories     = Category::where('language', \App::getLocale() ?? settingHelper('default_language'))->get();
-       
+        $subCategories  = SubCategory::all();
         $activeLang     = Language::where('status', 'active')->orderBy('name', 'ASC')->get();
-        return view('post::import_rss', compact('categories','activeLang'));
+        return view('post::import_rss', compact('categories','subCategories','activeLang'));
     }
 
     /**
@@ -74,8 +74,7 @@ class RssController extends Controller
             $rssFeed->name          = $request->name;
             $rssFeed->feed_url      = $request->feed_url;
             $rssFeed->language      = $request->language;
-            $rssFeed->category_id   = $request->category_id ;
-            $rssFeed->sub_category_id   = $request->sub_category_id  ;
+            $rssFeed->category_id   = $request->category_id ;            
             $rssFeed->post_limit        = $request->post_limit;
             $rssFeed->auto_update       = $request->auto_update;
             $rssFeed->show_read_more    = $request->show_read_more;
@@ -88,6 +87,7 @@ class RssController extends Controller
             $rssFeed->layout            = $request->layout;
 
             $rssFeed->save();
+           
 
             return redirect()->back()->with('success',__('successfully_added'));
         }
@@ -107,9 +107,8 @@ class RssController extends Controller
         $activeLang     = Language::where('status', 'active')->orderBy('name', 'ASC')->get();
         $feed           = RssFeed::findOrfail($id);
         $categories     = Category::where('language',$feed->language)->get();
-
-       
-        return view('post::edit_rss',compact('feed','activeLang','categories','subCategories'));
+        
+        return view('post::edit_rss',compact('feed','activeLang','categories'));
     }
 
     /**
@@ -137,8 +136,7 @@ class RssController extends Controller
             $rssFeed->name          = $request->name;
             $rssFeed->feed_url      = $request->feed_url;
             $rssFeed->language      = $request->language;
-            $rssFeed->category_id   = $request->category_id ;
-            $rssFeed->sub_category_id   = $request->sub_category_id;
+            $rssFeed->category_id   = $request->category_id ;           
             $rssFeed->post_limit        = $request->post_limit;
             $rssFeed->auto_update       = $request->auto_update;
             $rssFeed->show_read_more    = $request->show_read_more;
@@ -215,8 +213,7 @@ class RssController extends Controller
                     endif;
 
                     $post->language         = $feed->language;
-                    
-                    
+                   
                     $post->layout           = $feed->layout ;
 
                     if($feed->status == 2) :
@@ -260,7 +257,6 @@ class RssController extends Controller
                     endif;
 
                     $post->save();
-
                     $post->categories()->attach($feed->category_id);
                     $i++;
                 endforeach;

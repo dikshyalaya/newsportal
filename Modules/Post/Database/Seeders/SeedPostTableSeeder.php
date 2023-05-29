@@ -100,7 +100,8 @@ class SeedPostTableSeeder extends Seeder
                     'content' => htmlspecialchars($faker->realText(2000)),
                     'language' => 'en',
                     'user_id' => '1',
-                   
+                    'category_id' => $category,
+                    'sub_category_id' => $subCategory,
                     'post_type' => $type,
                     'visibility' => '1',
                     'status' => '1',
@@ -118,7 +119,70 @@ class SeedPostTableSeeder extends Seeder
                 ]);
 
             }
-            
+
+            // for arabic start
+
+            $faker = Faker::create('ar_JO');
+            $image = 20;
+
+            for ($i = 1; $i <= 30; $i++) {
+
+                if (($i <= 4) or ($i > 10 and $i <= 14) or ($i > 20 and $i <= 24)):
+                    $type = 'article';
+                elseif (($i > 4 and $i <= 7) or ($i > 14 and $i <= 17) or ($i >20 and $i<=27)):
+                    $type = 'video';
+                    $layout = 'style_3';
+                    if($i > 4 and $i <= 6):
+                        $video_id = 1;
+                        $video_thumbnail_id = 2;
+                    elseif($i > 14 and $i <= 16):
+                        $video_id = 2;
+                        $video_thumbnail_id = 3;
+                    elseif($i >20 and $i<=26):
+                        $video_id = 3;
+                        $video_thumbnail_id = 4;
+                    else:
+                        $video_id = 4;
+                        $video_thumbnail_id = 5;
+                    endif;
+
+                else:
+                    $type = 'audio';
+                    $layout = 'style_2';
+                endif;
+
+                if ($i <= 10):
+                    $category = 5;
+                    $subCategory = 7;
+                else:
+                    $category = 6;
+                    $subCategory = 8;
+                endif;
+
+                Post::create([
+                    'title' => htmlspecialchars($faker->realText(120)),
+                    'slug' => htmlspecialchars($this->make_slug($faker->realText(60) . '-' . $i)),
+                    'content' => $faker->realText(2000),
+                    'language' => 'ar',
+                    'user_id' => '1',
+                    'category_id' => $category,
+                    'sub_category_id' => $subCategory,
+                    'post_type' => $type,
+                    'visibility' => '1',
+                    'status' => '1',
+                    'slider' => ($i >= 30 and $i < 40) ? 1 : 0,
+                    'tags' => 'سياسة ,العالمية',
+                    'featured' => ($i >= 15 and $i < 25) ? 1 : 0,
+                    'breaking' => ($i >= 20 and $i < 30) ? 1 : 0,
+                    'recommended' => ($i >= 25 and $i < 35) ? 1 : 0,
+                    'editor_picks' => ($i >= 30 and $i < 40) ? 1 : 0,
+                    'image_id' => ++$image,
+                    'layout'    => $layout ?? 'default',
+                    'video_id' => $video_id ?? '',
+                    'video_thumbnail_id' => $video_thumbnail_id ?? '',
+                ]);
+
+            }
 
         else:
             DB::statement('SET FOREIGN_KEY_CHECKS=0;');
@@ -149,7 +213,8 @@ class SeedPostTableSeeder extends Seeder
                     'content'           => htmlspecialchars("Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."),
                     'language'          => 'en',
                     'user_id'           => '1',
-                    
+                    'category_id'       => $category,
+                    'sub_category_id'   => $subCategory,
                     'post_type'         => $type,
                     'visibility'        => '1',
                     'status'            => '1',

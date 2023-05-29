@@ -122,7 +122,7 @@
                                         <th>{{ __('language') }}</th>
                                         <th>{{ __('post_type') }}</th>
                                         <th>{{ __('category') }}</th>
-                                        <th>{{ __('post_by') }}</th>
+                                        <th></th>
                                         <th>{{ __('visibility') }}</th>
                                         <th>{{ __('view') }}</th>
                                         <th>{{ __('added_date') }}</th>

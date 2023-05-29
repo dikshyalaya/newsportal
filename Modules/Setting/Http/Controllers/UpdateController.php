@@ -99,7 +99,19 @@ class UpdateController extends Controller
 
     }
 
-   
+    public function updateSystemStore(){
+        
+        try {
+            $update = $this->downloadUpdateFile();
+            if (is_string($update))
+            {
+                return redirect()->back()->with('error', $update);
+            }
+            return redirect()->back()->with('success', 'Update Successfully');
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', $e->getMessage());
+        }
+    }
 
     public function updateDatabase()
     {

@@ -21,9 +21,12 @@
                     </div>
                     <div class="form-group text-left mb-0">
                         <label>{{ __('phone') }} </label>
-                        <input name="phone" type="text" class="form-control" placeholder="(xxx)-xxx-xxxx">
+                        <input name="phone" type="text" class="form-control" placeholder="{{ __('input_phone') }}">
                     </div>
-                 
+                    <div class="form-group text-left mb-0 d-none">
+                        <label>{{ __('dob') }} *</label>
+                        <input name="dob" type="date" max="{{ date("Y-m-d") }}" pattern="\d{4}-\d{2}-\d{2}" class="form-control" >
+                    </div>
                     <div class="form-group text-left mb-0">
                         <label>{{ __('gender') }} *</label>
                         <select class="form-control" name="gender" id="gender">

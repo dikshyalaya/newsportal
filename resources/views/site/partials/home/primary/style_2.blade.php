@@ -41,7 +41,7 @@
                                 </h2>
                                 <div class="entry-meta">
                                     <ul class="global-list">
-                                        <li><a
+                                        <li> <a
                                                 href="{{ route('site.author',['id' => $post->user->id]) }}">{{ data_get($post, 'user.first_name') }}</a>
                                         </li>
                                         <li><a href="{{route('article.date', date('Y-m-d', strtotime($post->updated_at)))}}">{{ Carbon\Carbon::parse($post->updated_at)->translatedFormat('F j, Y') }}</a>
@@ -71,7 +71,7 @@
             <div class="col-lg-5">
                 <div class="row">
                     @foreach($blockPosts as $post)
-                        <div class="col-md-6">
+                        <div class="col-md-6 p-0">
                             <div class="sg-post">
                                 <div class="entry-header">
                                     <div class="entry-thumbnail">
@@ -98,7 +98,6 @@
                                     @endif
                                     <div class="category">
                                         <ul class="global-list">
-                                            
                                             @isset($post->category->category_name)
                                                 <li>
                                                     <a href="{{ url('category',$post->category->slug) }}">{{ $post->category->category_name }}</a>
@@ -146,7 +145,7 @@
                                 <p>{!! \Illuminate\Support\Str::limit($post->title, 40) !!}</p></a>
                             <div class="entry-meta">
                                 <ul class="global-list">
-                                    <li><a
+                                    <li> <a
                                             href="{{ route('site.author',['id' => $post->user->id]) }}"> {{ data_get($post, 'user.first_name') }}</a>
                                     </li>
                                     <li> {{ Carbon\Carbon::parse($post->updated_at)->translatedFormat('F j, Y') }}</li>

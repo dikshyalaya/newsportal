@@ -15,7 +15,7 @@
         </div>
         <div class="row">
             @foreach($posts->take(3) as $post)
-                <div class="col-lg-4">
+                <div class="col-lg-4 pl-0">
                     <div class="sg-post">
                         <div class="entry-header">
                             <div class="entry-thumbnail">

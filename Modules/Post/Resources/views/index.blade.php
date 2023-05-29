@@ -14,22 +14,16 @@
 
 @section('content')
 
-    <div class="dashboard-ecommerce">
-        <div class="container-fluid dashboard-content ">
-            <!-- page info start-->
-            <div class="admin-section">
-                <div class="row clearfix m-t-30">
-                    <div class="col-12">
-                        <div class="navigation-list bg-white p-20">
-                            <div class="add-new-header clearfix m-b-20">
-                                <div class="row">
-                                    <div class="col-6">
-                                        <div class="block-header">
-                                            <h2>{{ __('posts') }}</h2>
-                                        </div>
-                                    </div>
+<div class="dashboard-ecommerce">
+    <div class="container-fluid dashboard-content ">
+
+        <div class="card">
+            <div class="card-header">
+                <h4 class="card-title"> {{ __('posts') }}</h4>
+                <div class="card-toolbar float-right">
+                    
                                     @if(Sentinel::getUser()->hasAccess(['post_write']))
-                                        <div class="col-6 text-right">
+                                        <div class="create-action">
                                             <a href="{{ route('create-article') }}"
                                             class="btn btn-primary btn-sm btn-add-new"><i class="mdi mdi-plus"></i>
                                                 {{ __('create_article') }}
@@ -37,14 +31,15 @@
                                             
                                         </div>
                                     @endif
-                                </div>
-                            </div>
-                            <div class="table-responsive all-pages">
+                </div>
+            </div>
+            <div class="card-body">
+                            <div class=" all-pages">
                                 <!-- Table Filter -->
                                 <div class="row table-filter-container m-b-20">
                                     <div class="col-sm-12">
                                         {!!  Form::open(['route' => 'filter-post','method' => 'GET']) !!}
-                                        <div class="item-table-filter">
+                                        <div class="item-table-filter d-none">
                                             <p class="text-muted"><small>{{ __('language') }}</small></p>
                                             <select class="form-control" name="language">
                                                 <option value="">{{ __('all') }}</option>
@@ -54,7 +49,7 @@
                                             </select>
                                         </div>
 
-                                        <div class="item-table-filter">
+                                        <div class="item-table-filter d-none">
                                             <p class="text-muted"><small>{{ __('post_type') }}</small></p>
                                             <select name="post_type" class="form-control">
                                                 <option value="">{{ __('all') }}</option>
@@ -63,7 +58,7 @@
                                             </select>
                                         </div>
 
-                                        <div class="item-table-filter">
+                                        <div class="item-table-filter d-none">
                                             <p class="text-muted"><small>{{ __('category') }}</small></p>
                                             <select class="form-control dynamic" id="category_id" name="category_id"
                                                     data-dependent="sub_category_id">
@@ -75,24 +70,16 @@
                                             </select>
                                         </div>
 
-                                        <div class="item-table-filter">
-                                            <div class="form-group">
-                                                <p class="text-muted"><small>{{ __('sub_category') }}</small></p>
-                                                <select class="form-control dynamic" id="sub_category_id"
-                                                        name="sub_category_id">
-                                                    <option value="">{{ __('all') }}</option>
-                                                </select>
-                                            </div>
-                                        </div>
+                                    
 
                                         <div class="item-table-filter">
-                                            <p class="text-muted"><small>{{__('search')}}</small></p>
+                                            
                                             <input name="search_key" class="form-control" placeholder="{{__('search')}}"
-                                                   type="search"  value="">
+                                                type="search"  value="">
                                         </div>
 
                                         <div class="item-table-filter md-top-10 item-table-style">
-                                            <p>&nbsp;</p>
+                                        
                                             <button type="submit" class="btn bg-primary">{{ __('filter') }}</button>
                                         </div>
                                         {!! Form::close() !!}
@@ -102,14 +89,14 @@
                                 <table class="table table-bordered table-striped" role="grid">
                                     <thead>
                                     <tr role="row">
-                                         <th width="20">
+                                        <th width="20">
                                             <input type="checkbox" class="checkbox-table" id="checkAll">
                                         </th> 
                                         <th width="20">#</th>
                                         <th>{{ __('post') }}</th>
                                         
                                         <th>{{ __('category') }}</th>
-                                        <th>{{ __('post_by') }}</th>
+                                        <th></th>
                                         <th>{{ __('visibility') }}</th>                                        
                                         <th>{{ __('posted_date') }}</th>
                                         <th>{{ __('views') }}</th>
@@ -137,8 +124,8 @@
 
                                                     @else
                                                         <img src="{{static_asset('default-image/default-100x100.png') }} " width="200"
-                                                             height="200" alt="image"
-                                                             class="img-responsive img-thumbnail">
+                                                            height="200" alt="image"
+                                                            class="img-responsive img-thumbnail">
                                                     @endif
                                                 </div> <a href="{{ route('article.detail', [$post->slug]) }}">{{ $post->title }} </a></td>
                                             
@@ -188,7 +175,7 @@
                                                     <label class="label bg-teal label-table">{{ __('slider') }}</label>
                                                 @endif
                                             </td>
-                                           
+                                        
                                             <td>{{ $post->created_at }}</td>
                                             <td>{{ $post->total_hit }}</td>
                                             @if(Sentinel::getUser()->hasAccess(['post_write']) || Sentinel::getUser()->hasAccess(['post_delete']))
@@ -208,14 +195,14 @@
                                                                 <li>
                                                                     @if($post->visibility==1)
                                                                         <a href="javascript:void(0)"
-                                                                           onclick="remove_post_form('index','visibility','{{ $post->id }}')"
-                                                                           name="option" class="btn-list-button">
+                                                                        onclick="remove_post_form('index','visibility','{{ $post->id }}')"
+                                                                        name="option" class="btn-list-button">
                                                                             <i class="fas fa-eye-slash option-icon"></i>{{ __('invisibile') }}
                                                                         </a>
                                                                     @else
                                                                         <a href="javascript:void(0)"
-                                                                           onclick="add_post_to('visibility','{{ $post->id }}')"
-                                                                           name="option" class="btn-list-button">
+                                                                        onclick="add_post_to('visibility','{{ $post->id }}')"
+                                                                        name="option" class="btn-list-button">
                                                                             <i class="fa fa-eye option-icon"></i> {{ __('visibile') }}
                                                                         </a>
                                                                     @endif
@@ -223,15 +210,15 @@
                                                                 <li>
                                                                     @if($post->status==1)
                                                                         <a href="javascript:void(0)"
-                                                                           onclick="remove_post_form('index','status','{{ $post->id }}')"
-                                                                           name="option" class="btn-list-button">
+                                                                        onclick="remove_post_form('index','status','{{ $post->id }}')"
+                                                                        name="option" class="btn-list-button">
                                                                             <i class="fas fa-times option-icon"></i></i>{{ __('unpublish') }}
                                                                         </a>
 
                                                                     @else
                                                                         <a href="javascript:void(0)"
-                                                                           onclick="add_post_to('status','{{ $post->id }}')"
-                                                                           name="option" class="btn-list-button">
+                                                                        onclick="add_post_to('status','{{ $post->id }}')"
+                                                                        name="option" class="btn-list-button">
                                                                             <i class="fa fa-check option-icon"></i> {{ __('publish') }}
                                                                         </a>
                                                                     @endif
@@ -239,15 +226,15 @@
                                                                 <li>
                                                                     @if($post->slider==1)
                                                                         <a href="javascript:void(0)"
-                                                                           onclick="remove_post_form('index','slider','{{ $post->id }}')"
-                                                                           name="option" class="btn-list-button">
+                                                                        onclick="remove_post_form('index','slider','{{ $post->id }}')"
+                                                                        name="option" class="btn-list-button">
                                                                             <i class="fa fa-minus option-icon"></i>{{ __('slider') }}
                                                                         </a>
 
                                                                     @else
                                                                         <a href="javascript:void(0)"
-                                                                           onclick="add_post_to('slider','{{ $post->id }}')"
-                                                                           name="option" class="btn-list-button">
+                                                                        onclick="add_post_to('slider','{{ $post->id }}')"
+                                                                        name="option" class="btn-list-button">
                                                                             <i class="fa fa-plus option-icon"></i>{{ __('slider') }}
                                                                         </a>
                                                                     @endif
@@ -256,15 +243,15 @@
 
                                                                     @if($post->featured==1)
                                                                         <a href="javascript:void(0)"
-                                                                           onclick="remove_post_form('index','featured','{{ $post->id }}')"
-                                                                           name="option" class="btn-list-button">
+                                                                        onclick="remove_post_form('index','featured','{{ $post->id }}')"
+                                                                        name="option" class="btn-list-button">
                                                                             <i class="fa fa-minus option-icon"></i>{{ __('featured') }}
                                                                         </a>
 
                                                                     @else
                                                                         <a href="javascript:void(0)"
-                                                                           onclick="add_post_to('featured','{{ $post->id }}')"
-                                                                           name="option" class="btn-list-button">
+                                                                        onclick="add_post_to('featured','{{ $post->id }}')"
+                                                                        name="option" class="btn-list-button">
                                                                             <i class="fa fa-plus option-icon"></i>{{ __('featured') }}
                                                                         </a>
                                                                     @endif
@@ -273,15 +260,15 @@
 
                                                                     @if($post->breaking==1)
                                                                         <a href="javascript:void(0)"
-                                                                           onclick="remove_post_form('index','breaking','{{ $post->id }}')"
-                                                                           name="option" class="btn-list-button">
+                                                                        onclick="remove_post_form('index','breaking','{{ $post->id }}')"
+                                                                        name="option" class="btn-list-button">
                                                                             <i class="fa fa-minus option-icon"></i>{{ __('breaking') }}
                                                                         </a>
 
                                                                     @else
                                                                         <a href="javascript:void(0)"
-                                                                           onclick="add_post_to('breaking','{{ $post->id }}')"
-                                                                           name="option" class="btn-list-button">
+                                                                        onclick="add_post_to('breaking','{{ $post->id }}')"
+                                                                        name="option" class="btn-list-button">
                                                                             <i class="fa fa-plus option-icon"></i>{{ __('breaking') }}
                                                                         </a>
                                                                     @endif
@@ -290,16 +277,16 @@
 
                                                                     @if($post->recommended==1)
                                                                         <a href="javascript:void(0)"
-                                                                           onclick="remove_post_form('index','recommended','{{ $post->id }}')"
-                                                                           name="option" class="btn-list-button">
+                                                                        onclick="remove_post_form('index','recommended','{{ $post->id }}')"
+                                                                        name="option" class="btn-list-button">
                                                                             <i class="fa fa-minus option-icon"></i>{{ __('recommend') }}
                                                                         </a>
                                                                         {{-- <a href="{{ route('remove-form',['feature'=>'recommended','post_id'=>$post->id]) }}" name="option" class="btn-list-button">
-                                                                          <i class="fa fa-minus option-icon"></i>{{ __('recommend') }} </a> --}}
+                                                                        <i class="fa fa-minus option-icon"></i>{{ __('recommend') }} </a> --}}
                                                                     @else
                                                                         <a href="javascript:void(0)"
-                                                                           onclick="add_post_to('recommended','{{ $post->id }}')"
-                                                                           name="option" class="btn-list-button">
+                                                                        onclick="add_post_to('recommended','{{ $post->id }}')"
+                                                                        name="option" class="btn-list-button">
                                                                             <i class="fa fa-plus option-icon"></i>{{ __('recommend') }}
                                                                         </a>
                                                                     @endif
@@ -308,16 +295,16 @@
 
                                                                     @if($post->editor_picks==1)
                                                                         <a href="javascript:void(0)"
-                                                                           onclick="remove_post_form('index','editor_picks','{{ $post->id }}')"
-                                                                           name="option" class="btn-list-button">
+                                                                        onclick="remove_post_form('index','editor_picks','{{ $post->id }}')"
+                                                                        name="option" class="btn-list-button">
                                                                             <i class="fa fa-minus option-icon"></i>{{ __('editor_picks') }}
                                                                         </a>
                                                                         {{-- <a href="{{ route('remove-form',['feature'=>'recommended','post_id'=>$post->id]) }}" name="option" class="btn-list-button">
-                                                                          <i class="fa fa-minus option-icon"></i>{{ __('recommend') }} </a> --}}
+                                                                        <i class="fa fa-minus option-icon"></i>{{ __('recommend') }} </a> --}}
                                                                     @else
                                                                         <a href="javascript:void(0)"
-                                                                           onclick="add_post_to('editor_picks','{{ $post->id }}')"
-                                                                           name="option" class="btn-list-button">
+                                                                        onclick="add_post_to('editor_picks','{{ $post->id }}')"
+                                                                        name="option" class="btn-list-button">
                                                                             <i class="fa fa-plus option-icon"></i>{{ __('editor_picks') }}
                                                                         </a>
                                                                     @endif
@@ -326,7 +313,7 @@
                                                             @if(Sentinel::getUser()->hasAccess(['post_delete']))
                                                                 <li>
                                                                     <a href="javascript:void(0)"
-                                                                       onclick="delete_item('posts','{{ $post->id }}')"><i
+                                                                    onclick="delete_item('posts','{{ $post->id }}')"><i
                                                                             class="fa fa-trash option-icon"></i>{{ __('delete') }}
                                                                     </a>
                                                                 </li>
@@ -352,14 +339,11 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                    </div>
-                </div>
+
             </div>
-            <!-- page info end-->
         </div>
     </div>
-
+</div>
 
 @endsection
 @section('script')
