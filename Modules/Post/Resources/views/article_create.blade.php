@@ -64,7 +64,7 @@ active
                                 <div class="card-title">
                                     <ul class="nav nav-tabs" id="myTab" role="tablist">
                                         <li class="nav-item">
-                                            <a class="nav-link active" id="post-tab" data-toggle="tab" href="#post-content" role="tab" aria-selected="true">Post Content</a>
+                                            <a class="nav-link active" id="post-tab" data-toggle="tab" href="#post-content-tab" role="tab" aria-selected="true">Post Content</a>
                                         </li>
                                         <li class="nav-item">
                                             <a class="nav-link" id="seo-tab" data-toggle="tab" href="#seo-content" role="tab" aria-selected="false">SEO</a>
@@ -78,7 +78,7 @@ active
                             </div>
                             <div class="card-body px-0">
                                 <div class="tab-content" id="myTabContent">
-                                    <div class="tab-pane fade show active" id="post-content" role="tabpanel" aria-labelledby="home-tab">
+                                    <div class="tab-pane fade show active" id="post-content-tab" role="tabpanel" aria-labelledby="home-tab">
 
                                         <div class="col-12">
                                             <div class="form-group">
