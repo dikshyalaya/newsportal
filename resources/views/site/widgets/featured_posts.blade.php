@@ -12,7 +12,8 @@
                 <div class="category">
                     <ul class="global-list">                       
                         @foreach($firstPost->categories as $category)
-                            <li>                                
+                            <li> 
+                                              
                                 <a href="{{ url('category',$category->slug) }}">{{ data_get($category, 'category_name') }}</a>                            
                             </li>
                         @endforeach

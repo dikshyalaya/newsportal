@@ -18,7 +18,7 @@ class LastpostComposer
     {
         if (Sentinel::check()):
             $lastPost    = Cache::rememberForever('lastPost',function (){
-                return Post::with('image')->select('id', 'title', 'slug' , 'image_id', 'category_id')
+                return Post::with('image','categories')->select('id', 'title', 'slug' , 'image_id')
                     ->orderBy('id', 'desc')
                     ->where('visibility', 1)
                     ->where('status', 1)
@@ -26,7 +26,7 @@ class LastpostComposer
             });
         else:
             $lastPost    = Cache::rememberForever('lastPost', function (){
-                return Post::with('image')->select('id', 'title', 'slug' , 'image_id', 'category_id')
+                return Post::with('image','categories')->select('id', 'title', 'slug' , 'image_id')
                     ->orderBy('id', 'desc')
                     ->where('visibility', 1)
                     ->where('status', 1)
